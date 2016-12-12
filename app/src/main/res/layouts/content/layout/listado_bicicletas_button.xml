@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btn_previous_page"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="a"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group_numbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn_num_page_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center"
+            android:text="1"
+            android:checked="true"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/btn_num_page_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center"
+            android:text="2"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/btn_num_page_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center"
+            android:text="3"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/btn_num_page_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center"
+            android:text="4"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/btn_num_page_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorSingle"
+            android:gravity="center"
+            android:text="5"
+            android:visibility="gone"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_next_page"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="s"
+        android:visibility="gone"/>
+
+</LinearLayout>
