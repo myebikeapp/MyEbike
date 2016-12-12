@@ -4,5 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFondoSpinnerTitulo"
-    android:textSize="16
-    dp"/>
+    android:textSize="16dp"/>
