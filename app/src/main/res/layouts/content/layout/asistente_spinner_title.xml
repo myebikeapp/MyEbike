@@ -10,15 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
-        android:textColor="@color/color_black"
-        android:text="tipo de uso"/>
+        android:textColor="@color/color_black"/>
 
     <TextView
         android:id="@+id/text_spinner_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_small"
-        android:textColor="@color/color_text_small"
-        android:text="el que toca"/>
+        android:textColor="@color/color_text_small"/>
 
 </LinearLayout>

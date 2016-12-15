@@ -1,6 +1,6 @@
 package net.asovel.myebike.main;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -58,21 +58,24 @@ public class MyEbike extends Fragment
     {
         radioGroupUso = (RadioGroup) getView().findViewById(R.id.radioGroup_tipo_uso);
 
-        spinnerDiametroRueda = (Spinner) getView().findViewById(R.id.spinner_diametro_rueda);
+        spinnerDiametroRueda = (Spinner) getView().findViewById(R.id.spinner_diametro_rueda_inf);
         String[] values = getResources().getStringArray(R.array.diametros_array);
-        CustomAdapter adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
+        CustomAdapter adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
+                values, "Diámetro rueda");
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerDiametroRueda.setAdapter(adaptador);
 
         spinnerAutonomia = (Spinner) getView().findViewById(R.id.spinner_autonomia);
         values = getResources().getStringArray(R.array.autonomia_array);
-        adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
+        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
+                values, "Autonomía Km");
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerAutonomia.setAdapter(adaptador);
 
         spinnerPrecio = (Spinner) getView().findViewById(R.id.spinner_precio);
         values = getResources().getStringArray(R.array.precios_array);
-        adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
+        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
+                values, "Presupuesto");
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerPrecio.setAdapter(adaptador);
 
@@ -87,9 +90,14 @@ public class MyEbike extends Fragment
 
     public class CustomAdapter extends ArrayAdapter<String>
     {
-        public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values)
+        private LayoutInflater inflater;
+        private String title;
+
+        public CustomAdapter(Activity context, int resource, int textViewResourceId, String[] values, String title)
         {
             super(context, resource, textViewResourceId, values);
+            this.inflater = context.getLayoutInflater();
+            this.title = title;
         }
 
         @Override
@@ -97,16 +105,14 @@ public class MyEbike extends Fragment
         {
             if (convertView == null)
             {
-                LayoutInflater inflater = getActivity().getLayoutInflater();
                 convertView = inflater.inflate(R.layout.asistente_spinner_title, null);
             }
+            TextView txtTitle = (TextView) convertView.findViewById(R.id.text_spinner_title);
+            txtTitle.setText(title);
+
             String value = getItem(position);
-
-            TextView titulo = (TextView) convertView.findViewById(R.id.text_spinner_title);
-            titulo.setText("hola ke ase");
-
-            TextView subTitulo = (TextView) convertView.findViewById(R.id.text_spinner_subtitle);
-            subTitulo.setText(value);
+            TextView txtSubTitle = (TextView) convertView.findViewById(R.id.text_spinner_subtitle);
+            txtSubTitle.setText(value);
 
             return convertView;
         }
@@ -120,9 +126,8 @@ public class MyEbike extends Fragment
                 convertView = inflater.inflate(R.layout.asistente_spinner_list, null);
             }
             String value = getItem(position);
-
-            TextView titulo = (TextView) convertView.findViewById(R.id.text_spinner);
-            titulo.setText(value);
+            TextView txtTitle = (TextView) convertView.findViewById(R.id.text_spinner);
+            txtTitle.setText(value);
 
             return convertView;
         }

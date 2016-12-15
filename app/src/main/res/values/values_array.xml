@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="precios_array">
-        <item>Seleccionar precio</item>
+        <item>Todos los precios</item>
         <item>600-800</item>
         <item>800-1000</item>
         <item>1000-1200</item>
@@ -13,7 +13,7 @@
     </string-array>
 
     <string-array name="diametros_array">
-        <item>Seleccionar diametro rueda</item>
+        <item>Todos los diámetros</item>
         <item>16</item>
         <item>18</item>
         <item>20</item>
@@ -25,7 +25,7 @@
     </string-array>
 
     <string-array name="autonomia_array">
-        <item>Seleccionar autonomia</item>
+        <item>Todas las autonomias</item>
         <item>30-50</item>
         <item>50-80</item>
         <item>80-120</item>
