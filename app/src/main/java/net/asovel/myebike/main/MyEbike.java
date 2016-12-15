@@ -1,5 +1,6 @@
 package net.asovel.myebike.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
@@ -57,17 +59,20 @@ public class MyEbike extends Fragment
         radioGroupUso = (RadioGroup) getView().findViewById(R.id.radioGroup_tipo_uso);
 
         spinnerDiametroRueda = (Spinner) getView().findViewById(R.id.spinner_diametro_rueda);
-        ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(getContext(), R.array.diametros_array, R.layout.asistente_spinner_title);
+        String[] values = getResources().getStringArray(R.array.diametros_array);
+        CustomAdapter adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerDiametroRueda.setAdapter(adaptador);
 
         spinnerAutonomia = (Spinner) getView().findViewById(R.id.spinner_autonomia);
-        adaptador = ArrayAdapter.createFromResource(getContext(), R.array.autonomia_array, R.layout.asistente_spinner_title);
+        values = getResources().getStringArray(R.array.autonomia_array);
+        adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerAutonomia.setAdapter(adaptador);
 
         spinnerPrecio = (Spinner) getView().findViewById(R.id.spinner_precio);
-        adaptador = ArrayAdapter.createFromResource(getContext(), R.array.precios_array, R.layout.asistente_spinner_title);
+        values = getResources().getStringArray(R.array.precios_array);
+        adaptador = new CustomAdapter(getContext(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle, values);
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerPrecio.setAdapter(adaptador);
 
@@ -78,6 +83,49 @@ public class MyEbike extends Fragment
         btnBuscar = (FloatingActionButton) getActivity().findViewById(R.id.btn_buscar_ebikes);
 
         setupListeners();
+    }
+
+    public class CustomAdapter extends ArrayAdapter<String>
+    {
+        public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values)
+        {
+            super(context, resource, textViewResourceId, values);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                convertView = inflater.inflate(R.layout.asistente_spinner_title, null);
+            }
+            String value = getItem(position);
+
+            TextView titulo = (TextView) convertView.findViewById(R.id.text_spinner_title);
+            titulo.setText("hola ke ase");
+
+            TextView subTitulo = (TextView) convertView.findViewById(R.id.text_spinner_subtitle);
+            subTitulo.setText(value);
+
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                convertView = inflater.inflate(R.layout.asistente_spinner_list, null);
+            }
+            String value = getItem(position);
+
+            TextView titulo = (TextView) convertView.findViewById(R.id.text_spinner);
+            titulo.setText(value);
+
+            return convertView;
+        }
     }
 
     public void setupListeners()
@@ -399,7 +447,7 @@ public class MyEbike extends Fragment
         });
 
 
-        final RadioButton btnMotorTrasero= (RadioButton) getView().findViewById(R.id.ubicacion_trasero);
+        final RadioButton btnMotorTrasero = (RadioButton) getView().findViewById(R.id.ubicacion_trasero);
         btnMotorTrasero.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -416,7 +464,7 @@ public class MyEbike extends Fragment
             }
         });
 
-        final RadioButton btnMotorCentral= (RadioButton) getView().findViewById(R.id.ubicacion_central);
+        final RadioButton btnMotorCentral = (RadioButton) getView().findViewById(R.id.ubicacion_central);
         btnMotorCentral.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -433,7 +481,7 @@ public class MyEbike extends Fragment
             }
         });
 
-        final RadioButton btnMotorDelantero= (RadioButton) getView().findViewById(R.id.ubicacion_delantero);
+        final RadioButton btnMotorDelantero = (RadioButton) getView().findViewById(R.id.ubicacion_delantero);
         btnMotorDelantero.setOnClickListener(new View.OnClickListener()
         {
             @Override

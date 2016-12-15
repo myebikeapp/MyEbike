@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFondoSpinnerTitulo"
-    android:textSize="16dp"/>
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_spinner_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_medium"
+        android:textColor="@color/color_black"
+        android:text="tipo de uso"/>
+
+    <TextView
+        android:id="@+id/text_spinner_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/color_text_small"
+        android:text="el que toca"/>
+
+</LinearLayout>
