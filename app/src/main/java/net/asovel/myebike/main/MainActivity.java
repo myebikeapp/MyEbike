@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+
     public static final String PAGINA_WEB = "PAGINA_WEB";
 
     private NavigationView navigationView;
