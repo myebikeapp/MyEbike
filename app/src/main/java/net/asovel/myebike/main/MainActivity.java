@@ -25,16 +25,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-    //PROba
 
 
 
 
-
-
-
-
-    //fgf
 
     public static final String PAGINA_WEB = "PAGINA_WEB";
 
