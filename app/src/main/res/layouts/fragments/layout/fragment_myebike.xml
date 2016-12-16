@@ -12,248 +12,170 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/title_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:background="@color/color_white">
+
+            <Spinner
+                android:id="@+id/spinner_uso"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+            </Spinner>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:background="@color/color_white">
+
+            <Spinner
+                android:id="@+id/spinner_cuadro"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+            </Spinner>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:background="@color/color_white">
+
+            <Spinner
+                android:id="@+id/spinner_rueda"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+            </Spinner>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:background="@color/color_white">
+
+            <Spinner
+                android:id="@+id/spinner_suspension"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+            </Spinner>
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/title_vertical_margin"
-            android:text="Tipo de Uso"
-            android:textSize="@dimen/text_large"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroup_tipo_uso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/uso_urbana"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="urbana"/>
-
-            <RadioButton
-                android:id="@+id/uso_interurbana"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="interurbana"/>
-
-            <RadioButton
-                android:id="@+id/uso_montana"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="montaña"/>
-
-        </RadioGroup>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
+            android:text="@string/autonomia_text"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner_diametro_rueda_inf"
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/color_white"/>
+                android:background="@color/color_white">
 
-            <Spinner
-                android:id="@+id/spinner_diametro_rueda_sup"
-                android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/spinner_autonomia_inf"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/color_white"/>
+                android:background="@color/color_white">
+
+                <Spinner
+                    android:id="@+id/spinner_autonomia_sup"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>
+
+            </FrameLayout>
 
         </LinearLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:background="@color/color_white">
 
-        <Spinner
-            android:id="@+id/spinner_autonomia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spinner_motor"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+            </Spinner>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/title_vertical_margin"
-            android:text="Presupuesto123 "
-            android:textSize="@dimen/text_large"/>
+            android:text="@string/presupuesto_text"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"/>
 
-        <Spinner
-            android:id="@+id/spinner_precio"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/title_vertical_margin"
-            android:text="Ubicación Motor"
-            android:textSize="@dimen/text_large"/>
+            android:layout_marginBottom="@dimen/inter_spinner_vertical_margin"
+            android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/radioGroup_ubicacion_motor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/ubicacion_trasero"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="trasero"/>
+                android:layout_weight="1"
+                android:background="@color/color_white">
 
-            <RadioButton
-                android:id="@+id/ubicacion_central"
-                android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/spinner_presupuesto_inf"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="central"/>
+                android:layout_weight="1"
+                android:background="@color/color_white">
 
-            <RadioButton
-                android:id="@+id/ubicacion_delantero"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="delantero"/>
+                <Spinner
+                    android:id="@+id/spinner_presupuesto_sup"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>
 
-        </RadioGroup>
+            </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/title_vertical_margin"
-            android:text="Suspensión"
-            android:textSize="@dimen/text_large"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroup_suspension"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/suspension_solo_sillin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="solo sillin"/>
-
-            <RadioButton
-                android:id="@+id/suspension_delantera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="delantera"/>
-
-            <RadioButton
-                android:id="@+id/suspension_delantera_sillin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="delantera sillin"/>
-
-            <RadioButton
-                android:id="@+id/suspension_no_suspension"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="no suspension"/>
-
-            <RadioButton
-                android:id="@+id/suspension_full_suspension"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="full suspension"/>
-
-        </RadioGroup>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/title_vertical_margin"
-            android:text="Tipo de cuadro"
-            android:textSize="@dimen/text_large"/>
-
-
-        <RadioGroup
-            android:id="@+id/radioGroup_cuadro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/cuadro_abierto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abierto"/>
-
-            <RadioButton
-                android:id="@+id/cuadro_semi_abierto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="semi abierto"/>
-
-            <RadioButton
-                android:id="@+id/cuadro_cerrado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="cerrado"/>
-
-            <RadioButton
-                android:id="@+id/cuadro_plegable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="plegable"/>
-
-        </RadioGroup>
+        </LinearLayout>
 
     </LinearLayout>
 

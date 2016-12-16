@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="precios_array">
-        <item>Todos los precios</item>
-        <item>600-800</item>
-        <item>800-1000</item>
-        <item>1000-1200</item>
-        <item>1200-1500</item>
-        <item>1500-1800</item>
-        <item>1800-2500</item>
-        <item>2500-5000</item>
-        <item>>5000</item>
+
+    <string-array name="uso_array">
+        <item>Todos los tipos</item>
+        <item>Urbana</item>
+        <item>Interurbana</item>
+        <item>Montaña</item>
     </string-array>
 
-    <string-array name="diametros_array">
-        <item>Todos los diámetros</item>
-        <item>16</item>
-        <item>18</item>
-        <item>20</item>
-        <item>24</item>
-        <item>26</item>
-        <item>27.5</item>
-        <item>28</item>
-        <item>29</item>
+    <string-array name="cuadro_array">
+        <item>Todos los cuadros</item>
+        <item>Abierto</item>
+        <item>Cerrado</item>
+        <item>Plegable</item>
+    </string-array>
+
+    <string-array name="rueda_array">
+        <item>Todos los tamaños</item>
+        <item>Pequeña 16-24</item>
+        <item>Mediana 26-27.5</item>
+        <item>Grande 28-29</item>
+    </string-array>
+
+    <string-array name="suspension_array">
+        <item>Todas las suspesiones</item>
+        <item>Sin suspensión</item>
+        <item>Solo en sillín</item>
+        <item>Delantera</item>
+        <item>Delantera y sillín</item>
+        <item>Full suspensión</item>
     </string-array>
 
     <string-array name="autonomia_array">
-        <item>Todas las autonomias</item>
-        <item>30-50</item>
-        <item>50-80</item>
-        <item>80-120</item>
-        <item>120-150</item>
+        <item>0 Km</item>
+        <item>30 Km</item>
+        <item>50 Km</item>
+        <item>80 Km</item>
+        <item>120 Km</item>
+        <item>150 Km</item>
     </string-array>
+
+    <string-array name="motor_array">
+        <item>Todas las ubicaciones</item>
+        <item>Delantero</item>
+        <item>Central</item>
+        <item>Trasero</item>
+    </string-array>
+
+    <string-array name="presupuesto_array">
+        <item>0 €</item>
+        <item>600 €</item>
+        <item>800 €</item>
+        <item>1.000 €</item>
+        <item>1.200 €</item>
+        <item>1.500 €</item>
+        <item>1.800 €</item>
+        <item>2.500 €</item>
+        <item>+ 5.000 €</item>
+    </string-array>
+
 </resources>

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/spinner_text_horizontal_margin">
 
     <TextView
         android:id="@+id/text_spinner_title"
@@ -17,6 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_small"
-        android:textColor="@color/color_text_small"/>
+        android:textColor="@color/color_gray"/>
 
 </LinearLayout>
