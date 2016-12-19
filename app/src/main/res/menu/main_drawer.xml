@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_top_ventas"
+            android:icon="@drawable/ic_menu_novedades"
+            android:title="Top Ventas"/>
+        <item
+            android:id="@+id/menu_myebike"
+            android:icon="@drawable/ic_menu_buscador"
+            android:title="MyEBike"/>
+        <item
+            android:id="@+id/menu_antes"
+            android:icon="@drawable/ic_menu_antescomprar"
+            android:title="Antes de comprar"/>
+        <item
+            android:id="@+id/menu_asovel"
+            android:icon="@drawable/ic_menu_asovel"
+            android:title="Asovel"/>
+        <item
+            android:id="@+id/menu_nosotros"
+            android:icon="@drawable/ic_menu_nosotros"
+            android:title="Sobre nosotros"/>
+        <item
+            android:id="@+id/menu_registro"
+            android:icon="@drawable/ic_menu_registro"
+            android:title="Registrate"/>
+    </group>
+
+</menu>
