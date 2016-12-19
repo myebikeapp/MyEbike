@@ -20,7 +20,7 @@ import net.asovel.myebike.main.MainActivity;
 
 public class LoginActivity extends Activity
 {
-    public static final String EMAIL = "EMAI";
+    public static final String EMAIL = "EMAIL";
 
     private Button facebookButton;
     private Button twitterButton;
