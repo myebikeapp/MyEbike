@@ -104,6 +104,7 @@ public class EBikeListActivity extends AppCompatActivity
         queryOptions.setSortBy(sortBy);
 
         dataQuery.setQueryOptions(queryOptions);
+        
         Backendless.Persistence.of(EBike.class).find(dataQuery, new DefaultCallback<BackendlessCollection<EBike>>(this)
         {
             @Override

@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab = (FloatingActionButton) findViewById(R.id.btn_buscar_ebikes);
 
         Bundle bundle = getIntent().getExtras();
-       // String email = bundle.getString(LoginActivity.EMAIL);
+        // String email = bundle.getString(LoginActivity.EMAIL);
 
         View navHeader = navigationView.getHeaderView(0);
         TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
-       // textEmail.setText(email);
+        // textEmail.setText(email);
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
@@ -93,9 +94,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.menu_myebike_appbar:
+                Fragment fragment = new MyEBike();
+                fab.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment).commit();
+                item.setChecked(true);
+                getSupportActionBar().setTitle(item.getTitle());
+                return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -108,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId())
         {
-            case R.id.menu_inicio:
-
-                break;
             case R.id.menu_top_ventas:
                 Intent intent = new Intent(this, EBikeListActivity.class);
                 Bundle bundle = new Bundle();
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.menu_myebike:
-                fragment = new MyEbike();
+                fragment = new MyEBike();
                 fragmentTransaction = true;
                 fabVisibility = true;
                 break;

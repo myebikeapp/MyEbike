@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="uso_array">
-        <item>Todos los tipos</item>
+    <string-array name="uso">
+        <item>Todos los usos</item>
         <item>Urbana</item>
         <item>Interurbana</item>
         <item>Montaña</item>
     </string-array>
 
-    <string-array name="cuadro_array">
+    <string-array name="cuadro">
         <item>Todos los cuadros</item>
         <item>Abierto</item>
         <item>Cerrado</item>
         <item>Plegable</item>
     </string-array>
 
-    <string-array name="rueda_array">
+    <string-array name="tamano_rueda">
         <item>Todos los tamaños</item>
         <item>Pequeña 16-24</item>
         <item>Mediana 26-27.5</item>
         <item>Grande 28-29</item>
     </string-array>
 
-    <string-array name="suspension_array">
+    <string-array name="suspension">
         <item>Todas las suspesiones</item>
         <item>Sin suspensión</item>
         <item>Solo en sillín</item>
@@ -31,24 +31,28 @@
         <item>Full suspensión</item>
     </string-array>
 
-    <string-array name="autonomia_array">
-        <item>0 Km</item>
+    <string-array name="autonomia">
         <item>30 Km</item>
+        <item>40 Km</item>
         <item>50 Km</item>
+        <item>60 Km</item>
+        <item>70 Km</item>
         <item>80 Km</item>
+        <item>90 Km</item>
+        <item>100 Km</item>
+        <item>110 Km</item>
         <item>120 Km</item>
-        <item>150 Km</item>
+        <item>+ 120 Km</item>
     </string-array>
 
-    <string-array name="motor_array">
+    <string-array name="motor">
         <item>Todas las ubicaciones</item>
         <item>Delantero</item>
         <item>Central</item>
         <item>Trasero</item>
     </string-array>
 
-    <string-array name="presupuesto_array">
-        <item>0 €</item>
+    <string-array name="presupuesto">
         <item>600 €</item>
         <item>800 €</item>
         <item>1.000 €</item>
@@ -56,6 +60,7 @@
         <item>1.500 €</item>
         <item>1.800 €</item>
         <item>2.500 €</item>
+        <item>5.000 €</item>
         <item>+ 5.000 €</item>
     </string-array>
 
