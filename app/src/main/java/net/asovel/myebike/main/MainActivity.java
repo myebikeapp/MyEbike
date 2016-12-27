@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-    public static final String PAGINA_WEB = "PAGINA_WEB";
-
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // textEmail.setText(email);
 
         navigationView.setNavigationItemSelectedListener(this);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -95,11 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.menu_myebike_appbar:
-                Fragment fragment = new MyEBike();
-                fab.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment).commit();
-                item.setChecked(true);
-                getSupportActionBar().setTitle(item.getTitle());
+                MenuItem item1 = navigationView.getMenu().getItem(1);
+                onNavigationItemSelected(item1);
                 return true;
         }
         return false;
@@ -111,18 +107,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean fabVisibility = false;
 
         boolean fragmentTransaction = false;
+
         Fragment fragment = null;
+        Bundle bundle;
 
         switch (item.getItemId())
         {
             case R.id.menu_top_ventas:
-                Intent intent = new Intent(this, EBikeListActivity.class);
-                Bundle bundle = new Bundle();
+                fragment = new TopVentas();
+                bundle = new Bundle();
                 ArrayList<String> listClauses = new ArrayList<>();
                 listClauses.add("valoracion_SORT1 = 5");
                 bundle.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                fragment.setArguments(bundle);
+                fragmentTransaction = true;
                 break;
             case R.id.menu_myebike:
                 fragment = new MyEBike();
@@ -131,33 +129,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
-                Bundle bundle1 = new Bundle();
-                bundle1.putString(PAGINA_WEB, "http://www.asovel.net/?page_id=484");
-                fragment.setArguments(bundle1);
+                bundle = new Bundle();
+                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=484");
+                fragment.setArguments(bundle);
                 fragmentTransaction = true;
                 break;
             case R.id.menu_antes:
                 fragment = new WebAsovel();
-                Bundle bundle2 = new Bundle();
-                bundle2.putString(PAGINA_WEB, "http://www.asovel.net/?page_id=475");
-                fragment.setArguments(bundle2);
+                bundle = new Bundle();
+                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=475");
+                fragment.setArguments(bundle);
                 fragmentTransaction = true;
                 break;
             case R.id.menu_asovel:
                 fragment = new WebAsovel();
-                Bundle bundle3 = new Bundle();
-                bundle3.putString(PAGINA_WEB, "http://www.asovel.net/");
-                fragment.setArguments(bundle3);
+                bundle = new Bundle();
+                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/");
+                fragment.setArguments(bundle);
                 fragmentTransaction = true;
                 break;
-        }
-
-        int id = item.getItemId();
-
-        if (id == R.id.menu_registro)
-        {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            case R.id.menu_registro:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
         }
 
         if (fabVisibility)

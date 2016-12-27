@@ -11,6 +11,8 @@ import net.asovel.myebike.R;
 
 public class WebAsovel extends Fragment
 {
+    public static final String PAGINA_WEB = "PAGINA_WEB";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -24,7 +26,7 @@ public class WebAsovel extends Fragment
         super.onActivityCreated(state);
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(MainActivity.PAGINA_WEB);
+        String web = bundle.getString(PAGINA_WEB);
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);
