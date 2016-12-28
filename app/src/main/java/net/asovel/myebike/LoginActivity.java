@@ -1,7 +1,9 @@
 package net.asovel.myebike;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,41 +20,38 @@ import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.MainActivity;
 
-public class LoginActivity extends Activity
-{
+public class LoginActivity extends Activity {
     public static final String EMAIL = "EMAIL";
 
     private Button facebookButton;
-    private Button twitterButton;
     private Button googleButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String email = prefs.getString("EMAIL", "");
+        String password = prefs.getString("PASSWORD", "");
+
+
 
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
         initUI();
 
-        Backendless.UserService.isValidLogin(new DefaultCallback<Boolean>(this)
-        {
+        Backendless.UserService.isValidLogin(new DefaultCallback<Boolean>(this) {
             @Override
-            public void handleResponse(Boolean isValidLogin)
-            {
-                if (isValidLogin && Backendless.UserService.CurrentUser() == null)
-                {
+            public void handleResponse(Boolean isValidLogin) {
+                if (isValidLogin && Backendless.UserService.CurrentUser() == null) {
                     String currentUserId = Backendless.UserService.loggedInUser();
 
-                    if (!currentUserId.equals(""))
-                    {
-                        Backendless.UserService.findById(currentUserId, new DefaultCallback<BackendlessUser>(LoginActivity.this, "Logging in...")
-                        {
+                    if (!currentUserId.equals("")) {
+                        Backendless.UserService.findById(currentUserId, new DefaultCallback<BackendlessUser>(LoginActivity.this, "Logging in...") {
                             @Override
-                            public void handleResponse(BackendlessUser user)
-                            {
+                            public void handleResponse(BackendlessUser user) {
                                 super.handleResponse(user);
                                 Backendless.UserService.setCurrentUser(user);
 
@@ -68,7 +67,6 @@ public class LoginActivity extends Activity
                         });
                     }
                 }
-
                 super.handleResponse(isValidLogin);
             }
         });
@@ -77,7 +75,6 @@ public class LoginActivity extends Activity
     private void initUI()
     {
         facebookButton = (Button) findViewById(R.id.loginFacebookButton);
-        twitterButton = (Button) findViewById(R.id.loginTwitterButton);
         googleButton = (Button) findViewById(R.id.loginGoogleButton);
 
         facebookButton.setOnClickListener(new View.OnClickListener()
@@ -86,15 +83,6 @@ public class LoginActivity extends Activity
             public void onClick(View view)
             {
                 onLoginWithFacebookButtonClicked();
-            }
-        });
-
-        twitterButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                onLoginWithTwitterButtonClicked();
             }
         });
 
@@ -121,32 +109,6 @@ public class LoginActivity extends Activity
         facebookPermissions.add("email");
 
         Backendless.UserService.loginWithFacebook(LoginActivity.this, null, facebookFieldsMapping, facebookPermissions,
-                new DefaultCallback<BackendlessUser>(LoginActivity.this)
-                {
-                    @Override
-                    public void handleResponse(BackendlessUser user)
-                    {
-                        super.handleResponse(user);
-                        Backendless.UserService.setCurrentUser(user);
-
-                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString(EMAIL, user.getEmail());
-                        intent.putExtras(bundle);
-
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-    }
-
-    public void onLoginWithTwitterButtonClicked()
-    {
-        Map<String, String> twitterFieldsMapping = new HashMap<>();
-        twitterFieldsMapping.put("name", "name");
-
-        Backendless.UserService.loginWithTwitter(LoginActivity.this, twitterFieldsMapping,
                 new DefaultCallback<BackendlessUser>(LoginActivity.this)
                 {
                     @Override

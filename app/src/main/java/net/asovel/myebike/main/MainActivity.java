@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private int mSelectedId = -1;
 
     private FloatingActionButton fab;
 
@@ -104,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
+        if(mSelectedId == item.getItemId()){
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        mSelectedId = item.getItemId();
+
         boolean fabVisibility = false;
 
         boolean fragmentTransaction = false;

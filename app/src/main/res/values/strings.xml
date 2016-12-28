@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">MyEBike</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,34 +17,4 @@
     <string name="twitter_button_text">Twitter</string>
     <string name="google_button_text">Google+</string>
 
-
-
-
-
-    <string name="login_success_message">Login successful! This concludes an example.</string>
-    <string name="login_text">Log in</string>
-    <string name="logout_text">Log out</string>
-
-    <string name="register_text">Register</string>
-    <string name="restore_link">restore</string>
-    <string name="password_recovered_message">We sent an email to your email address with a link to a password change page. Please check your email and follow the link for further instructions.</string>
-    <string name="restore_password_page_name">Password Restoration</string>
-    <string name="registration_page_name">Registration</string>
-    <string name="login_prompt">Login:</string>
-    <string name="password_prompt">Password:</string>
-    <string name="password_recovery_page_name">Password Recovery</string>
-    <string name="warning_icon_description">warning icon</string>
-    <string name="remember_login_text">Remember me</string>
-
-    <string name="email_field_prompt">Email:</string>
-
-    <string name="gender_field_prompt">Gender:</string>
-
-    <string name="id_field_prompt">Id:</string>
-
-    <string name="name_field_prompt">Name:</string>
-
-    <string name="password_field_prompt">Password:</string>
-
-    <string name="registration_confirmation_message">We sent and email to your email address. The email contains a link you must visit to confirm your email address. Once you visit the link, you will be able to login ti the application.</string>
 </resources>

@@ -24,7 +24,8 @@
             android:required="true"/>
 
         <activity
-            android:name=".LoginActivity">
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.ActionBar">
 
         </activity>
 
