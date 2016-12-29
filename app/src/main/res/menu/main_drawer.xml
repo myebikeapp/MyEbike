@@ -24,9 +24,9 @@
             android:icon="@drawable/ic_menu_nosotros"
             android:title="Sobre nosotros"/>
         <item
-            android:id="@+id/menu_registro"
+            android:id="@+id/menu_sesion"
             android:icon="@drawable/ic_menu_registro"
-            android:title="Registrate"/>
+            android:title=""/>
     </group>
 
 </menu>

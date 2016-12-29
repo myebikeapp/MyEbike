@@ -1,6 +1,8 @@
 package net.asovel.myebike.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,17 +25,20 @@ import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String NAME = MainActivity.class.getName();
+    public static final String EMAIL = "EMAIL";
+
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private int mSelectedId = -1;
+    private boolean connected;
 
     private FloatingActionButton fab;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         iniUI();
     }
 
-    private void iniUI()
-    {
+    private void iniUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
@@ -56,41 +60,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fab = (FloatingActionButton) findViewById(R.id.btn_buscar_ebikes);
 
-        Bundle bundle = getIntent().getExtras();
-        // String email = bundle.getString(LoginActivity.EMAIL);
-
-        View navHeader = navigationView.getHeaderView(0);
-        TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
-        // textEmail.setText(email);
-
         navigationView.setNavigationItemSelectedListener(this);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
+    private void setConnected(boolean connected) {
+
+        String email;
+        MenuItem item = navigationView.getMenu().getItem(5);
+
+        if (connected) {
+            this.connected = true;
+            Bundle bundle = getIntent().getExtras();
+            email = bundle.getString(EMAIL);
+            item.setTitle("Cerrar sesión");
+        } else {
+            this.connected = false;
+            email = "Desconectado";
+            item.setTitle("Iniciar sesión");
+        }
+
+        View navHeader = navigationView.getHeaderView(0);
+        TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
+        textEmail.setText(email);
+    }
+
     @Override
-    public void onBackPressed()
-    {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", "");
+
+        if (!email.equals(""))
+            setConnected(true);
+        else
+            setConnected(false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else
-        {
+        } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
@@ -103,75 +127,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
-        if(mSelectedId == item.getItemId()){
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (mSelectedId == id) {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
-        mSelectedId = item.getItemId();
-
-        boolean fabVisibility = false;
-
-        boolean fragmentTransaction = false;
 
         Fragment fragment = null;
-        Bundle bundle;
+        Bundle bundle = new Bundle();
+        boolean fabVisibility = false;
 
-        switch (item.getItemId())
-        {
+        switch (id) {
             case R.id.menu_top_ventas:
                 fragment = new TopVentas();
-                bundle = new Bundle();
                 ArrayList<String> listClauses = new ArrayList<>();
                 listClauses.add("valoracion_SORT1 = 5");
                 bundle.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
                 fragment.setArguments(bundle);
-                fragmentTransaction = true;
                 break;
             case R.id.menu_myebike:
                 fragment = new MyEBike();
-                fragmentTransaction = true;
                 fabVisibility = true;
                 break;
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
-                bundle = new Bundle();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=484");
                 fragment.setArguments(bundle);
-                fragmentTransaction = true;
                 break;
             case R.id.menu_antes:
                 fragment = new WebAsovel();
-                bundle = new Bundle();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=475");
                 fragment.setArguments(bundle);
-                fragmentTransaction = true;
                 break;
             case R.id.menu_asovel:
                 fragment = new WebAsovel();
-                bundle = new Bundle();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/");
                 fragment.setArguments(bundle);
-                fragmentTransaction = true;
                 break;
-            case R.id.menu_registro:
+            case R.id.menu_sesion:
+                if (connected) {
+                    SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("email", "");
+                    editor.commit();
+                    setConnected(false);
+                    return true;
+                }
                 Intent intent = new Intent(this, LoginActivity.class);
+                bundle.putString("CALLER", NAME);
+                intent.putExtras(bundle);
                 startActivity(intent);
-                break;
+                return true;
         }
+
+        mSelectedId = id;
 
         if (fabVisibility)
             fab.setVisibility(View.VISIBLE);
         else
             fab.setVisibility(View.INVISIBLE);
 
-        if (fragmentTransaction)
-        {
-            getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment).commit();
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment).commit();
+        item.setChecked(true);
+        getSupportActionBar().setTitle(item.getTitle());
+
         drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
