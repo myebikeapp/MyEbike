@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class MyEBike extends Fragment {
 
-    public static final String NAME = MyEBike.class.getName();
+    public static final String NAME = "MyEBike";
 
     public static final String[] USO = {null, "urbana", "interurbana", "montana"};
     public static final String[] CUADRO = {null, "abierto", "cerrado", "plegable"};
@@ -350,7 +350,7 @@ public class MyEBike extends Fragment {
 
                 if (email.equals("")) {
                     intent = new Intent(getContext(), LoginActivity.class);
-                    bundle.putString("CALLER", NAME);
+                    bundle.putString(LoginActivity.CALLER, NAME);
                 } else {
                     intent = new Intent(getContext(), EBikeListActivity.class);
                 }

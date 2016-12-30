@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String NAME = MainActivity.class.getName();
+    public static final String NAME = "MainActivity";
     public static final String EMAIL = "EMAIL";
 
     private NavigationView navigationView;
@@ -64,15 +64,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
-    private void setConnected(boolean connected) {
+    private void setConnected(String email) {
 
-        String email;
         MenuItem item = navigationView.getMenu().getItem(5);
 
-        if (connected) {
+        if (!email.equals("")) {
             this.connected = true;
-            Bundle bundle = getIntent().getExtras();
-            email = bundle.getString(EMAIL);
             item.setTitle("Cerrar sesión");
         } else {
             this.connected = false;
@@ -91,10 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
-        if (!email.equals(""))
-            setConnected(true);
-        else
-            setConnected(false);
+        setConnected(email);
     }
 
     @Override
@@ -173,11 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("email", "");
                     editor.commit();
-                    setConnected(false);
+                    setConnected("");
                     return true;
                 }
                 Intent intent = new Intent(this, LoginActivity.class);
-                bundle.putString("CALLER", NAME);
+                bundle.putString(LoginActivity.CALLER, NAME);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 return true;

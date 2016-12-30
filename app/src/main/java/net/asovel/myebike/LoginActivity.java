@@ -25,6 +25,8 @@ import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 
 public class LoginActivity extends Activity {
 
+    public static final String CALLER = "CALLER";
+
     private Button facebookButton;
     private Button googleButton;
 
@@ -151,9 +153,9 @@ public class LoginActivity extends Activity {
 
         Bundle bundle = getIntent().getExtras();
 
-        String caller = null;
+        String caller = "";
         if (bundle != null)
-            caller = bundle.getString("CALLER");
+            caller = bundle.getString(CALLER, "");
 
         Intent intent;
 
@@ -165,7 +167,7 @@ public class LoginActivity extends Activity {
             intent.putExtras(bundletransmitter);
 
         } else if (caller.equals(MainActivity.NAME)){
-            intent = new Intent(this, MainActivity.class);
+            intent = new Intent(getBaseContext(), MainActivity.class);
             NavUtils.navigateUpTo(this, intent);
 
         } else {
