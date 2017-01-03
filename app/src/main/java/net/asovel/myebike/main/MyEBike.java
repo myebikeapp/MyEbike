@@ -31,8 +31,7 @@ public class MyEBike extends Fragment {
 
     public static final String NAME = "MyEBike";
 
-    public static final String[] USO = {null, "urbana", "interurbana", "montana"};
-    public static final String[] CUADRO = {null, "abierto", "cerrado", "plegable"};
+    public static final String[] USO = {null, "ciudad", "trecking", "montana", "plegables", "otras"};
     public static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
     public static final String[] SUSPENSION = {null, "no susp", "solo sillin", "delantera", "delantera/sillin", "full susp"};
     public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
@@ -40,7 +39,6 @@ public class MyEBike extends Fragment {
     public static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
 
     private Spinner spinnerUso;
-    private Spinner spinnerCuadro;
     private Spinner spinnerRueda;
     private Spinner spinnerSuspension;
     private Spinner spinnerAutonomiaInf;
@@ -51,7 +49,6 @@ public class MyEBike extends Fragment {
     private FloatingActionButton btnBuscar;
 
     private String uso;
-    private String cuadro;
     private int diametroRuedaInf;
     private int diametroRuedaSup;
     private String suspension;
@@ -82,13 +79,6 @@ public class MyEBike extends Fragment {
                 values, "Tipo de uso", 0);
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerUso.setAdapter(adaptador);
-
-        spinnerCuadro = (Spinner) getView().findViewById(R.id.spinner_cuadro);
-        values = getResources().getStringArray(R.array.cuadro);
-        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
-                values, "Cuadro", 0);
-        adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
-        spinnerCuadro.setAdapter(adaptador);
 
         spinnerRueda = (Spinner) getView().findViewById(R.id.spinner_rueda);
         values = getResources().getStringArray(R.array.tamano_rueda);
@@ -227,17 +217,6 @@ public class MyEBike extends Fragment {
             }
         });
 
-        spinnerCuadro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                cuadro = CUADRO[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
         spinnerRueda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -366,8 +345,6 @@ public class MyEBike extends Fragment {
 
         if (uso != null)
             listClauses.add("uso = '" + uso + "'");
-        if (cuadro != null)
-            listClauses.add("tipo_cuadro = '" + cuadro + "'");
         if (diametroRuedaInf != 0)
             listClauses.add("tamano_ruedas >= " + diametroRuedaInf + " and tamano_ruedas <= " + diametroRuedaSup);
         if (suspension != null)
@@ -391,7 +368,6 @@ public class MyEBike extends Fragment {
 
     public void limpiarSeleccion() {
         spinnerUso.setSelection(0);
-        spinnerCuadro.setSelection(0);
         spinnerRueda.setSelection(0);
         spinnerSuspension.setSelection(0);
         spinnerAutonomiaInf.setSelection(0);

@@ -54,7 +54,7 @@
             android:name=".resultadosebikes.EBikeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Detalles del Modelo"
-            android:parentActivityName=".main.MainActivity"
+            android:parentActivityName=".resultadosebikes.EBikeListActivity"
             android:theme="@style/AppTheme.NoTransparent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

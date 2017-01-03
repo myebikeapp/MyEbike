@@ -104,6 +104,11 @@ public class LoginActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void onLoginWithFacebookButtonClicked() {
         Map<String, String> facebookFieldsMapping = new HashMap<>();
         facebookFieldsMapping.put("name", "name");

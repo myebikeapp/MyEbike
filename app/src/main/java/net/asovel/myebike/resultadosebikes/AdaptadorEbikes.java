@@ -20,14 +20,13 @@ import net.asovel.myebike.backendless.data.EBike;
 import java.util.List;
 
 public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements View.OnClickListener
-{
+        implements View.OnClickListener {
+
     private static final int VIEW_TYPE_ITEM = 0;
     private static final int VIEW_TYPE_BUTTON = 1;
 
-    public interface OnAdaptadorButtonsListener
-    {
-        void onButtonsClick(int page);
+    public interface OnAdaptadorButtonsListener {
+        void onButtonsClick();
     }
 
     private final Context context;
@@ -37,36 +36,30 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int totalPages;
     private int page;
 
-    public AdaptadorEbikes(Context context, int totalPages)
-    {
+    public AdaptadorEbikes(Context context, int totalPages) {
         this.context = context;
         this.totalPages = totalPages;
     }
 
-    public int getPage()
-    {
+    public int getPage() {
         return page;
     }
 
-    public void setListener(View.OnClickListener listener)
-    {
+    public void setListener(View.OnClickListener listener) {
         this.listener = listener;
     }
 
-    public void setButtonsListener(OnAdaptadorButtonsListener listener)
-    {
+    public void setButtonsListener(OnAdaptadorButtonsListener listener) {
         this.buttonsListener = listener;
     }
 
-    public void setEBikes(List<EBike> eBikes)
-    {
+    public void setEBikes(List<EBike> eBikes) {
         this.eBikes = eBikes;
         notifyDataSetChanged();
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         int numEBikes = eBikes.size();
         if (totalPages == 0)
             return numEBikes;
@@ -75,18 +68,15 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
+    public int getItemViewType(int position) {
         return (position < eBikes.size()) ? VIEW_TYPE_ITEM : VIEW_TYPE_BUTTON;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
-    {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
 
-        if (viewType == VIEW_TYPE_ITEM)
-        {
+        if (viewType == VIEW_TYPE_ITEM) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.listado_bicicletas_item, viewGroup, false);
             view.setOnClickListener(this);
@@ -100,26 +90,21 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i)
-    {
-        if (i < eBikes.size())
-        {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        if (i < eBikes.size()) {
             EBike eBikeActual = eBikes.get(i);
             ((BicicletasViewHolder) viewHolder).bindBicicleta(eBikeActual);
-        } else
-        {
+        } else {
             ((ButtonsViewHolder) viewHolder).bindButtons();
         }
     }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         listener.onClick(view);
     }
 
-    public class BicicletasViewHolder extends RecyclerView.ViewHolder
-    {
+    public class BicicletasViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagen;
         private TextView marca;
@@ -127,8 +112,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView precio;
         private RatingBar valoracion;
 
-        public BicicletasViewHolder(View view)
-        {
+        public BicicletasViewHolder(View view) {
             super(view);
 
             imagen = (ImageView) view.findViewById(R.id.list_imagen);
@@ -138,34 +122,34 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             valoracion = (RatingBar) view.findViewById(R.id.list_valoracion);
         }
 
-        public void bindBicicleta(EBike eBike)
-        {
-            int imagenW = 120;//(int) context.getResources().getDimension(R.dimen.recycleViewImageWidth);
-            int imagenH = 90; //(int) context.getResources().getDimension(R.dimen.recycleViewImageHeight);
-
-            /*if (eBike.getFoto() != null && BitmapWorker.cancelPotentialWork(eBike.getFoto(), imagen)) {
-                final DownloadBitmapTask task = new DownloadBitmapTask(imagen, imagenW, imagenH);
-                final AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), imagen.getDrawingCache(), task);
-                imagen.setImageDrawable(asyncDrawable);
-                task.execute(eBike.getFoto());
-            }*/
-
-            if (eBike.getFoto() != null)
-                Picasso.with(context).load(eBike.getFoto()).resize(140, 120).into(imagen);
-
-            if (eBike.getMarca() != null)
-                marca.setText("Marca: " + eBike.getMarca().getNombre());
-            if (eBike.getModelo() != null)
-                modelo.setText("Modelo: " + eBike.getModelo());
-            if (eBike.getPrecio_SORT2() != null)
-                precio.setText("Precio: " + eBike.getPrecio_SORT2());
-            if (eBike.getValoracion_SORT1() != null)
+        public void bindBicicleta(EBike eBike) {
+            if (eBike.getFoto() != null) {
+                Picasso.with(context)
+                        .load(eBike.getFoto())
+                        .placeholder(R.drawable.ebike)
+                        .fit().centerCrop()
+                        .into(imagen);
+            }
+            if (eBike.getMarca() != null) {
+                marca.setText(eBike.getMarca().getNombre() + " ");
+                marca.setVisibility(View.VISIBLE);
+            }
+            if (eBike.getModelo() != null) {
+                modelo.setText(eBike.getModelo());
+                modelo.setVisibility(View.VISIBLE);
+            }
+            if (eBike.getPrecio_SORT2() != null) {
+                precio.setText("" + eBike.getPrecio_SORT2() + " €");
+                precio.setVisibility(View.VISIBLE);
+            }
+            if (eBike.getValoracion_SORT1() != null) {
                 valoracion.setRating(eBike.getValoracion_SORT1());
+                valoracion.setVisibility(View.VISIBLE);
+            }
         }
     }
 
-    public class ButtonsViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ButtonsViewHolder extends RecyclerView.ViewHolder {
         private Button btnNextPage;
         private Button btnPreviousPage;
         private RadioGroup radioGroup;
@@ -178,19 +162,16 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private int lastPosition;
         private int lastID;
 
-        public ButtonsViewHolder(View view)
-        {
+        public ButtonsViewHolder(View view) {
             super(view);
 
-            listener = new View.OnClickListener()
-            {
+            listener = new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
                     if (view.getId() == lastID)
                         return;
                     setUpRadioGroup(view.getId());
-                    buttonsListener.onButtonsClick(page);
+                    buttonsListener.onButtonsClick();
                 }
             };
 
@@ -203,10 +184,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             iniRadioButtons(view);
         }
 
-        private void iniRadioButtons(View view)
-        {
-            if (totalPages > 1)
-            {
+        private void iniRadioButtons(View view) {
+            if (totalPages > 1) {
                 radioGroup = (RadioGroup) view.findViewById(R.id.radio_group_numbers);
                 lastID = R.id.btn_num_page_0;
 
@@ -222,32 +201,26 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 radioButton2.setVisibility(View.VISIBLE);
                 radioButton2.setOnClickListener(listener);
             }
-            if (totalPages > 2)
-            {
+            if (totalPages > 2) {
                 radioButton3 = (RadioButton) view.findViewById(R.id.btn_num_page_3);
                 radioButton3.setVisibility(View.VISIBLE);
                 radioButton3.setOnClickListener(listener);
             }
-            if (totalPages > 3)
-            {
+            if (totalPages > 3) {
                 radioButton4 = (RadioButton) view.findViewById(R.id.btn_num_page_4);
                 radioButton4.setVisibility(View.VISIBLE);
                 radioButton4.setOnClickListener(listener);
             }
         }
 
-        private void setUpRadioGroup(int id)
-        {
-            if (totalPages < 2)
-            {
+        private void setUpRadioGroup(int id) {
+            if (totalPages < 2) {
                 if (id == R.id.btn_next_page)
                     page += 1;
                 else
                     page -= 1;
-            } else if (totalPages < 5)
-            {
-                switch (id)
-                {
+            } else if (totalPages < 5) {
+                switch (id) {
                     case R.id.btn_next_page:
                         lastID = getRadioPosition1(1);
                         radioGroup.check(lastID);
@@ -279,10 +252,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         page = 4;
                         break;
                 }
-            } else
-            {
-                switch (id)
-                {
+            } else {
+                switch (id) {
                     case R.id.btn_next_page:
                         lastID = getRadioPosition2(1);
                         break;
@@ -309,12 +280,9 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
-        private int getRadioPosition1(int step)
-        {
-            if (step < 0)
-            {
-                switch (page)
-                {
+        private int getRadioPosition1(int step) {
+            if (step < 0) {
+                switch (page) {
                     case 4:
                         return R.id.btn_num_page_3;
                     case 3:
@@ -325,8 +293,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         return R.id.btn_num_page_0;
                 }
             }
-            switch (page)
-            {
+            switch (page) {
                 case 0:
                     return R.id.btn_num_page_1;
                 case 1:
@@ -339,52 +306,41 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return 0;
         }
 
-        private int getRadioPosition2(int step)
-        {
+        private int getRadioPosition2(int step) {
             int id;
-            if (step > 0)
-            {
+            if (step > 0) {
                 if (totalPages >= page + step + 2)
-                    if (lastPosition == 0 && step == 1)
-                    {
+                    if (lastPosition == 0 && step == 1) {
                         lastPosition = 1;
                         id = R.id.btn_num_page_1;
-                    } else
-                    {
+                    } else {
                         lastPosition = 2;
                         setUpRadioButtonsText(page + step);
                         id = R.id.btn_num_page_2;
                     }
-                else if (totalPages == page + step + 1)
-                {
+                else if (totalPages == page + step + 1) {
                     lastPosition = 3;
                     setUpRadioButtonsText(totalPages - 2);
                     id = R.id.btn_num_page_3;
-                } else
-                {
+                } else {
                     lastPosition = 4;
                     id = R.id.btn_num_page_4;
                 }
-            } else
-            {
+            } else {
                 if (0 <= page + step - 2)
-                    if (lastPosition == 4 && step == -1)
-                    {
+                    if (lastPosition == 4 && step == -1) {
                         lastPosition = 3;
                         id = R.id.btn_num_page_3;
-                    } else
-                    {
+                    } else {
                         lastPosition = 2;
                         setUpRadioButtonsText(page + step);
                         id = R.id.btn_num_page_2;
                     }
-                else if (0 == page + step - 1)
-                {
+                else if (0 == page + step - 1) {
                     lastPosition = 1;
                     setUpRadioButtonsText(2);
                     id = R.id.btn_num_page_1;
-                } else
-                {
+                } else {
                     lastPosition = 0;
                     id = R.id.btn_num_page_0;
                 }
@@ -393,8 +349,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return id;
         }
 
-        private void setUpRadioButtonsText(int number)
-        {
+        private void setUpRadioButtonsText(int number) {
             radioButton0.setText("" + (number - 1));
             radioButton1.setText("" + number);
             radioButton2.setText("" + (number + 1));
@@ -402,8 +357,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             radioButton4.setText("" + (number + 3));
         }
 
-        public void bindButtons()
-        {
+        public void bindButtons() {
             if (page < totalPages)
                 btnNextPage.setVisibility(View.VISIBLE);
             else

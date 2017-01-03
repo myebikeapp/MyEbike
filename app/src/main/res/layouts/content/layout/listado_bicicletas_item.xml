@@ -1,61 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeight">
+    android:layout_marginBottom="@dimen/cardview_margin"
+    android:layout_marginLeft="@dimen/cardview_margin"
+    android:layout_marginRight="@dimen/cardview_margin"
+    android:layout_marginTop="@dimen/cardview_margin"
+    card_view:cardBackgroundColor="#ffffff"
+    card_view:cardCornerRadius="6dp"
+    card_view:cardElevation="6dp">
 
-    <ImageView
-        android:id="@+id/list_imagen"
-        android:layout_width="@dimen/recycleViewImageWidth"
-        android:layout_height="@dimen/recycleViewImageHeight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
-
-    <TextView
-        android:id="@+id/list_marca"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/list_imagen"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="Marca: sin datos"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/list_modelo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/list_marca"
-        android:layout_toRightOf="@+id/list_imagen"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="Modelo: sin datos" />
+        <ImageView
+            android:id="@+id/list_imagen"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cardview_image_height"
+            android:layout_marginBottom="@dimen/cardview_image_margin"
+            android:layout_marginLeft="@dimen/cardview_image_margin"
+            android:layout_marginRight="@dimen/cardview_image_margin"
+            android:layout_marginTop="@dimen/cardview_image_margin" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/cardview_text_vertical_margin"
+            android:layout_marginLeft="@dimen/cardview_text_horizontal_margin"
+            android:layout_marginBottom="@dimen/cardview_text_vertical_margin">
 
-    <TextView
-        android:id="@+id/list_precio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/list_modelo"
-        android:layout_toRightOf="@+id/list_imagen"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="Precio: sin datos"/>
+            <TextView
+                android:id="@+id/list_marca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/text_marca_y_modelo"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/list_text_valoracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/list_precio"
-        android:layout_toRightOf="@+id/list_imagen"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="Valoración: "/>
+            <TextView
+                android:id="@+id/list_modelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/text_marca_y_modelo"
+                android:visibility="gone" />
 
-    <RatingBar
-        android:id="@+id/list_valoracion"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/list_precio"
-        android:layout_toRightOf="@+id/list_text_valoracion"
-        android:progressTint="#FDDB39"/>
+        </LinearLayout>
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/cardview_text_vertical_margin"
+            android:layout_marginLeft="@dimen/cardview_text_horizontal_margin">
+
+            <TextView
+                android:id="@+id/list_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="@dimen/text_precio"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RatingBar
+                android:id="@+id/list_valoracion"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:progressTint="@color/color_ratingbar"
+                android:rating="5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:transformPivotX="130dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

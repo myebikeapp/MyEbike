@@ -148,15 +148,14 @@ public class EBikeListActivity extends AppCompatActivity
         adaptador.setButtonsListener(new AdaptadorEbikes.OnAdaptadorButtonsListener()
         {
             @Override
-            public void onButtonsClick(int page)
+            public void onButtonsClick()
             {
-                setUpPage(page);
+                setUpPage();
             }
         });
         adaptador.setEBikes(eBikes);
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     private void onItemClick(View view)
@@ -181,9 +180,10 @@ public class EBikeListActivity extends AppCompatActivity
         return limInf;
     }
 
-    private void setUpPage(final int page)
+    private void setUpPage()
     {
         final int limInf = getlimInf();
+        final int page = adaptador.getPage();
 
         if (isPageLoaded[page])
         {

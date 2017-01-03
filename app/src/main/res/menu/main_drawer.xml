@@ -10,7 +10,7 @@
         <item
             android:id="@+id/menu_myebike"
             android:icon="@drawable/ic_menu_buscador"
-            android:title="MyEBike"/>
+            android:title="Buscador"/>
         <item
             android:id="@+id/menu_antes"
             android:icon="@drawable/ic_menu_antescomprar"

@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#0277BD</color>
     <color name="colorAccent">#2E7D32</color>
 
-    <color name="color_fondo_asistente">#fefcf0</color>
+    <color name="color_fondo_main">#ffeddb</color>
+
+    <color name="color_ratingbar">#FDDB39</color>
 
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>

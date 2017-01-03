@@ -1,5 +1,5 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,24 +8,32 @@
     tools:context=".resultadosebikes.EBikeDetailActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="@dimen/toolbar_detail_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_detail"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/actionModeSplitBackground"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
+            <ImageView
+                android:id="@+id/toolbar_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax" />
 
-        <ImageView
-            android:id="@+id/detail_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -46,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Modelo: sin datos"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/detail_precio"
@@ -54,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="Precio: sin datos"
                 android:textColor="?colorPrimary"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <RatingBar
                 android:id="@+id/detail_valoracion"
@@ -62,14 +70,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:progressTint="#FDDB39"/>
+                android:progressTint="#FDDB39" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:text="CARACTERÍSTICAS"
-                android:textColor="?colorPrimary"/>
+                android:textColor="?colorPrimary" />
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -81,82 +89,71 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de uso :"/>
+                    android:text="Tipo de uso :" />
 
                 <TextView
                     android:id="@+id/detail_uso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
+                    android:paddingLeft="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Autonomia :"/>
+                    android:text="Autonomia :" />
 
                 <TextView
                     android:id="@+id/detail_autonomia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
+                    android:text="@string/sin_datos" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Peso :"/>
+                    android:text="Peso :" />
 
                 <TextView
                     android:id="@+id/detail_peso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
+                    android:text="@string/sin_datos" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suspensión :"/>
+                    android:text="Suspensión :" />
 
                 <TextView
                     android:id="@+id/detail_suspension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
+                    android:paddingLeft="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tamaño de rueda :"/>
+                    android:text="Tamaño de rueda :" />
 
                 <TextView
                     android:id="@+id/detail_tamano_rueda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
+                    android:text="@string/sin_datos" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de cuadro :"/>
-
-                <TextView
-                    android:id="@+id/detail_tipo_cuadro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ubicación del Motor :"/>
+                    android:text="Ubicación del Motor :" />
 
                 <TextView
                     android:id="@+id/detail_ubicacion_motor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
+                    android:paddingLeft="16dp" />
 
             </GridLayout>
 
@@ -165,13 +162,13 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:text="DESCRIPCION"
-                android:textColor="?colorPrimary"/>
+                android:textColor="?colorPrimary" />
 
             <TextView
                 android:id="@+id/detail_descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"/>
+                android:paddingLeft="16dp" />
 
         </LinearLayout>
 
@@ -183,7 +180,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_shopping_cart"/>
+        app:srcCompat="@drawable/ic_shopping_cart" />
 
 </android.support.design.widget.CoordinatorLayout>
 

@@ -137,10 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
             case R.id.menu_top_ventas:
                 fragment = new TopVentas();
-                ArrayList<String> listClauses = new ArrayList<>();
-                listClauses.add("valoracion_SORT1 = 5");
-                bundle.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
-                fragment.setArguments(bundle);
                 break;
             case R.id.menu_myebike:
                 fragment = new MyEBike();
@@ -149,17 +145,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=484");
-                fragment.setArguments(bundle);
                 break;
             case R.id.menu_antes:
                 fragment = new WebAsovel();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=475");
-                fragment.setArguments(bundle);
                 break;
             case R.id.menu_asovel:
                 fragment = new WebAsovel();
                 bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/");
-                fragment.setArguments(bundle);
                 break;
             case R.id.menu_sesion:
                 if (connected) {
@@ -177,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
         }
 
+        fragment.setArguments(bundle);
         mSelectedId = id;
 
         if (fabVisibility)

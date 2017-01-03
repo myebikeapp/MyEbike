@@ -3,16 +3,11 @@
 
     <string-array name="uso">
         <item>Todos los usos</item>
-        <item>Urbana</item>
-        <item>Interurbana</item>
+        <item>Ciudad</item>
+        <item>Trekking</item>
         <item>Montaña</item>
-    </string-array>
-
-    <string-array name="cuadro">
-        <item>Todos los cuadros</item>
-        <item>Abierto</item>
-        <item>Cerrado</item>
-        <item>Plegable</item>
+        <item>Plegables y Compactas</item>
+        <item>Otras</item>
     </string-array>
 
     <string-array name="tamano_rueda">

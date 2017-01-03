@@ -13,8 +13,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.asovel.myebike.R;
-import net.asovel.myebike.utils.BitmapWorker;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
 
@@ -33,7 +34,6 @@ public class EBikeDetailActivity extends AppCompatActivity
     private TextView peso;
     private TextView suspension;
     private TextView tamanoRueda;
-    private TextView tipoCuadro;
     private TextView ubicacionMotor;
     private TextView descripcion;
 
@@ -44,14 +44,18 @@ public class EBikeDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebike_detail);
 
-        setToolbar();
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
         initUI();
     }
 
     private void initUI()
     {
-        imagen = (ImageView) findViewById(R.id.detail_image);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
         modelo = (TextView) findViewById(R.id.detail_modelo);
         precio = (TextView) findViewById(R.id.detail_precio);
         uso = (TextView) findViewById(R.id.detail_uso);
@@ -59,15 +63,17 @@ public class EBikeDetailActivity extends AppCompatActivity
         peso = (TextView) findViewById(R.id.detail_peso);
         suspension = (TextView) findViewById(R.id.detail_suspension);
         tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
-        tipoCuadro = (TextView) findViewById(R.id.detail_tipo_cuadro);
         ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
         valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
         descripcion = (TextView) findViewById(R.id.detail_descripcion);
 
         if (parcelableEBike.getFoto() != null)
         {
-            BitmapWorker.DownloadBitmapTask load = new BitmapWorker.DownloadBitmapTask(imagen, 300, 300);
-            load.execute(parcelableEBike.getFoto());
+            Picasso.with(getBaseContext())
+                    .load(parcelableEBike.getFoto())
+                    .placeholder(R.drawable.ebike)
+                    .fit().centerCrop()
+                    .into(imagen);
         }
 
         modelo.setText(parcelableEBike.getModelo());
@@ -85,7 +91,6 @@ public class EBikeDetailActivity extends AppCompatActivity
         if (parcelableEBike.getTamano_ruedas() != -1)
             tamanoRueda.setText("" + parcelableEBike.getTamano_ruedas() + "\"");
 
-        tipoCuadro.setText(parcelableEBike.getTipo_cuadro());
         ubicacionMotor.setText(parcelableEBike.getUbicacion_motor());
 
         if (parcelableEBike.getValoracion_SORT1() != -1)
@@ -115,14 +120,6 @@ public class EBikeDetailActivity extends AppCompatActivity
         bundle.putString(MapsActivity.NOMBRE_MARCA, nombreMarca);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    private void setToolbar()
-    {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
