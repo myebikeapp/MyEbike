@@ -2,17 +2,14 @@ package net.asovel.myebike.backendless.data;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
-import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 
-public class EBike
-{
+public class EBike {
+
     private String suspension;
     private Integer autonomia;
     private java.util.Date created;
-    private String tipo_cuadro;
     private Integer precio_SORT2;
     private Integer valoracion_SORT1;
     private String ubicacion_motor;
@@ -28,179 +25,135 @@ public class EBike
     private java.util.Date updated;
     private Marca marca;
 
-    public String getSuspension()
-    {
+    public String getSuspension() {
         return suspension;
     }
 
-    public void setSuspension(String suspension)
-    {
+    public void setSuspension(String suspension) {
         this.suspension = suspension;
     }
 
-    public Integer getAutonomia()
-    {
+    public Integer getAutonomia() {
         return autonomia;
     }
 
-    public void setAutonomia(Integer autonomia)
-    {
+    public void setAutonomia(Integer autonomia) {
         this.autonomia = autonomia;
     }
 
-    public java.util.Date getCreated()
-    {
+    public java.util.Date getCreated() {
         return created;
     }
 
-    public String getTipo_cuadro()
-    {
-        return tipo_cuadro;
-    }
-
-    public void setTipo_cuadro(String tipo_cuadro)
-    {
-        this.tipo_cuadro = tipo_cuadro;
-    }
-
-    public Integer getPrecio_SORT2()
-    {
+    public Integer getPrecio_SORT2() {
         return precio_SORT2;
     }
 
-    public void setPrecio_SORT2(Integer precio_SORT2)
-    {
+    public void setPrecio_SORT2(Integer precio_SORT2) {
         this.precio_SORT2 = precio_SORT2;
     }
 
-    public Integer getValoracion_SORT1()
-    {
+    public Integer getValoracion_SORT1() {
         return valoracion_SORT1;
     }
 
-    public void setValoracion_SORT1(Integer valoracion_SORT1)
-    {
+    public void setValoracion_SORT1(Integer valoracion_SORT1) {
         this.valoracion_SORT1 = valoracion_SORT1;
     }
 
-    public String getUbicacion_motor()
-    {
+    public String getUbicacion_motor() {
         return ubicacion_motor;
     }
 
-    public void setUbicacion_motor(String ubicacion_motor)
-    {
+    public void setUbicacion_motor(String ubicacion_motor) {
         this.ubicacion_motor = ubicacion_motor;
     }
 
-    public String getUso()
-    {
+    public String getUso() {
         return uso;
     }
 
-    public void setUso(String uso)
-    {
+    public void setUso(String uso) {
         this.uso = uso;
     }
 
-    public Integer getPeso()
-    {
+    public Integer getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso)
-    {
+    public void setPeso(Integer peso) {
         this.peso = peso;
     }
 
-    public String getFoto()
-    {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto)
-    {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
-    public String getOwnerId()
-    {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public Integer getPatrocinado_SORT0()
-    {
+    public Integer getPatrocinado_SORT0() {
         return patrocinado_SORT0;
     }
 
-    public void setPatrocinado_SORT0(Integer patrocinado_SORT0)
-    {
+    public void setPatrocinado_SORT0(Integer patrocinado_SORT0) {
         this.patrocinado_SORT0 = patrocinado_SORT0;
     }
 
-    public String getModelo()
-    {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo)
-    {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public String getDescripcion()
-    {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion)
-    {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public String getObjectId()
-    {
+    public String getObjectId() {
         return objectId;
     }
 
-    public Integer getTamano_ruedas()
-    {
+    public Integer getTamano_ruedas() {
         return tamano_ruedas;
     }
 
-    public void setTamano_ruedas(Integer tamano_ruedas)
-    {
+    public void setTamano_ruedas(Integer tamano_ruedas) {
         this.tamano_ruedas = tamano_ruedas;
     }
 
-    public java.util.Date getUpdated()
-    {
+    public java.util.Date getUpdated() {
         return updated;
     }
 
-    public Marca getMarca()
-    {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(Marca marca)
-    {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
 
-    public EBike save()
-    {
+    public EBike save() {
         return Backendless.Data.of(EBike.class).save(this);
     }
 
-    public Future<EBike> saveAsync()
-    {
-        if (Backendless.isAndroid())
-        {
+    public Future<EBike> saveAsync() {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<EBike> future = new Future<EBike>();
             Backendless.Data.of(EBike.class).save(this, future);
 
@@ -208,23 +161,18 @@ public class EBike
         }
     }
 
-    public void saveAsync(AsyncCallback<EBike> callback)
-    {
+    public void saveAsync(AsyncCallback<EBike> callback) {
         Backendless.Data.of(EBike.class).save(this, callback);
     }
 
-    public Long remove()
-    {
+    public Long remove() {
         return Backendless.Data.of(EBike.class).remove(this);
     }
 
-    public Future<Long> removeAsync()
-    {
-        if (Backendless.isAndroid())
-        {
+    public Future<Long> removeAsync() {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<Long> future = new Future<Long>();
             Backendless.Data.of(EBike.class).remove(this, future);
 
@@ -232,23 +180,18 @@ public class EBike
         }
     }
 
-    public void removeAsync(AsyncCallback<Long> callback)
-    {
+    public void removeAsync(AsyncCallback<Long> callback) {
         Backendless.Data.of(EBike.class).remove(this, callback);
     }
 
-    public static EBike findById(String id)
-    {
+    public static EBike findById(String id) {
         return Backendless.Data.of(EBike.class).findById(id);
     }
 
-    public static Future<EBike> findByIdAsync(String id)
-    {
-        if (Backendless.isAndroid())
-        {
+    public static Future<EBike> findByIdAsync(String id) {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<EBike> future = new Future<EBike>();
             Backendless.Data.of(EBike.class).findById(id, future);
 
@@ -256,23 +199,18 @@ public class EBike
         }
     }
 
-    public static void findByIdAsync(String id, AsyncCallback<EBike> callback)
-    {
+    public static void findByIdAsync(String id, AsyncCallback<EBike> callback) {
         Backendless.Data.of(EBike.class).findById(id, callback);
     }
 
-    public static EBike findFirst()
-    {
+    public static EBike findFirst() {
         return Backendless.Data.of(EBike.class).findFirst();
     }
 
-    public static Future<EBike> findFirstAsync()
-    {
-        if (Backendless.isAndroid())
-        {
+    public static Future<EBike> findFirstAsync() {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<EBike> future = new Future<EBike>();
             Backendless.Data.of(EBike.class).findFirst(future);
 
@@ -280,23 +218,18 @@ public class EBike
         }
     }
 
-    public static void findFirstAsync(AsyncCallback<EBike> callback)
-    {
+    public static void findFirstAsync(AsyncCallback<EBike> callback) {
         Backendless.Data.of(EBike.class).findFirst(callback);
     }
 
-    public static EBike findLast()
-    {
+    public static EBike findLast() {
         return Backendless.Data.of(EBike.class).findLast();
     }
 
-    public static Future<EBike> findLastAsync()
-    {
-        if (Backendless.isAndroid())
-        {
+    public static Future<EBike> findLastAsync() {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<EBike> future = new Future<EBike>();
             Backendless.Data.of(EBike.class).findLast(future);
 
@@ -304,23 +237,18 @@ public class EBike
         }
     }
 
-    public static void findLastAsync(AsyncCallback<EBike> callback)
-    {
+    public static void findLastAsync(AsyncCallback<EBike> callback) {
         Backendless.Data.of(EBike.class).findLast(callback);
     }
 
-    public static BackendlessCollection<EBike> find(BackendlessDataQuery query)
-    {
+    public static BackendlessCollection<EBike> find(BackendlessDataQuery query) {
         return Backendless.Data.of(EBike.class).find(query);
     }
 
-    public static Future<BackendlessCollection<EBike>> findAsync(BackendlessDataQuery query)
-    {
-        if (Backendless.isAndroid())
-        {
+    public static Future<BackendlessCollection<EBike>> findAsync(BackendlessDataQuery query) {
+        if (Backendless.isAndroid()) {
             throw new UnsupportedOperationException("Using this method is restricted in Android");
-        } else
-        {
+        } else {
             Future<BackendlessCollection<EBike>> future = new Future<BackendlessCollection<EBike>>();
             Backendless.Data.of(EBike.class).find(query, future);
 
@@ -328,8 +256,7 @@ public class EBike
         }
     }
 
-    public static void findAsync(BackendlessDataQuery query, AsyncCallback<BackendlessCollection<EBike>> callback)
-    {
+    public static void findAsync(BackendlessDataQuery query, AsyncCallback<BackendlessCollection<EBike>> callback) {
         Backendless.Data.of(EBike.class).find(query, callback);
     }
 }

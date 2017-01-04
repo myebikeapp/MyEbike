@@ -96,6 +96,7 @@ public class Query {
             @Override
             public void handleResponse(BackendlessCollection<EBike> response) {
                 super.handleResponse(response);
+                collection = response;
                 callback.onQueryCallback(collection);
             }
         });

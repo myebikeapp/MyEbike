@@ -24,13 +24,13 @@ import java.util.List;
 
 public class TopVentas extends Fragment implements EBikesCallback {
 
-    private RecyclerView recyclerView;
+    public static final int PAGESIZE = 7;
 
+    private RecyclerView recyclerView;
     private Query query;
     private List<EBike> eBikes = new ArrayList<>();
     private boolean[] isPageLoaded = new boolean[20];
     private AdaptadorEbikes adaptador;
-    private int pageSize = 7;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +48,14 @@ public class TopVentas extends Fragment implements EBikesCallback {
         listClauses.add("valoracion_SORT1 = 5");
 
         query = new Query(getContext(), this);
-        query.launchQuery(listClauses, null, 7);
+        query.launchQuery(null, null, 7);
     }
 
     @Override
     public void onQueryCallback(BackendlessCollection<EBike> collection) {
-        TopVentas.this.eBikes.addAll(collection.getCurrentPage());
 
         if (!isPageLoaded[0]) {
+            eBikes.addAll(collection.getCurrentPage());
             isPageLoaded[0] = true;
             setUpRecyclerView();
 
@@ -68,7 +68,7 @@ public class TopVentas extends Fragment implements EBikesCallback {
     }
 
     private void setUpRecyclerView() {
-        int totalPages = query.getTotalPages(pageSize);
+        int totalPages = query.getTotalPages(PAGESIZE);
         adaptador = new AdaptadorEbikes(getContext(), totalPages);
         adaptador.setListener(new View.OnClickListener() {
             @Override
@@ -103,13 +103,13 @@ public class TopVentas extends Fragment implements EBikesCallback {
 
         if (isPageLoaded[page]) {
             int numEBikes = eBikes.size();
-            int aux2 = limInf + pageSize;
+            int aux2 = limInf + PAGESIZE;
             int limSup = (numEBikes < aux2) ? numEBikes : aux2;
             adaptador.setEBikes(eBikes.subList(limInf, limSup));
             recyclerView.scrollToPosition(0);
 
         } else {
-            query.nextPage(page, pageSize);
+            query.nextPage(page, PAGESIZE);
         }
     }
 
@@ -117,7 +117,7 @@ public class TopVentas extends Fragment implements EBikesCallback {
         int limInf = 0;
         for (int i = 0; i < adaptador.getPage(); i++) {
             if (isPageLoaded[i])
-                limInf += pageSize;
+                limInf += PAGESIZE;
         }
         return limInf;
     }

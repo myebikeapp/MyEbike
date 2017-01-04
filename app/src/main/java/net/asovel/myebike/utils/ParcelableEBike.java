@@ -12,7 +12,6 @@ public class ParcelableEBike implements Parcelable
     private String uso;
     private String suspension;
     private int autonomia;
-    private String tipo_cuadro;
     private int precio_SORT2;
     private int valoracion_SORT1;
     private String ubicacion_motor;
@@ -23,14 +22,13 @@ public class ParcelableEBike implements Parcelable
     private int tamano_ruedas;
     private ParcelableMarca marca;
 
-    public ParcelableEBike(String uso, String suspension, int autonomia, String tipo_cuadro, int precio_SORT2,
+    public ParcelableEBike(String uso, String suspension, int autonomia, int precio_SORT2,
                            int valoracion_SORT1, String ubicacion_motor, int peso, String foto, String modelo,
                            String descripcion, int tamano_ruedas, ParcelableMarca marca)
     {
         this.uso = uso;
         this.suspension = suspension;
         this.autonomia = autonomia;
-        this.tipo_cuadro = tipo_cuadro;
         this.precio_SORT2 = precio_SORT2;
         this.valoracion_SORT1 = valoracion_SORT1;
         this.ubicacion_motor = ubicacion_motor;
@@ -55,11 +53,6 @@ public class ParcelableEBike implements Parcelable
     public int getAutonomia()
     {
         return autonomia;
-    }
-
-    public String getTipo_cuadro()
-    {
-        return tipo_cuadro;
     }
 
     public int getPrecio_SORT2()
@@ -119,7 +112,6 @@ public class ParcelableEBike implements Parcelable
         parcel.writeString(uso);
         parcel.writeString(suspension);
         parcel.writeInt(autonomia);
-        parcel.writeString(tipo_cuadro);
         parcel.writeInt(precio_SORT2);
         parcel.writeInt(valoracion_SORT1);
         parcel.writeString(ubicacion_motor);
@@ -136,7 +128,6 @@ public class ParcelableEBike implements Parcelable
         uso = in.readString();
         suspension = in.readString();
         autonomia = in.readInt();
-        tipo_cuadro = in.readString();
         precio_SORT2 = in.readInt();
         valoracion_SORT1 = in.readInt();
         ubicacion_motor = in.readString();
@@ -179,10 +170,6 @@ public class ParcelableEBike implements Parcelable
         if (eBike.getAutonomia() != null)
             autonomia = eBike.getAutonomia().intValue();
 
-        String cuadro = eBike.getTipo_cuadro();
-        if (cuadro == null)
-            cuadro = sinDatos;
-
         int precio = -1;
         if (eBike.getPrecio_SORT2() != null)
             precio = eBike.getPrecio_SORT2().intValue();
@@ -219,7 +206,6 @@ public class ParcelableEBike implements Parcelable
                 uso,
                 suspension,
                 autonomia,
-                cuadro,
                 precio,
                 valoracion,
                 motor,

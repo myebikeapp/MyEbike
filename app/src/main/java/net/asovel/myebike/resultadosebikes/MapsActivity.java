@@ -94,6 +94,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < tiendas.size(); i++)
         {
             Tienda tienda = tiendas.get(i);
+
             LatLng latLng = new LatLng(Double.valueOf(tienda.getLatitud()), Double.valueOf(tienda.getLongitud()));
             Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
             marker.setTag(tienda);

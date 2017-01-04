@@ -72,7 +72,7 @@ public class EBikeDetailActivity extends AppCompatActivity
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
-                    .fit().centerCrop()
+                    .resize(350, 256).centerCrop()
                     .into(imagen);
         }
 

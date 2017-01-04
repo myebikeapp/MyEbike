@@ -127,7 +127,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Picasso.with(context)
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
-                        .fit().centerCrop()
+                        .resize(350, 256).centerInside()
                         .into(imagen);
             }
             if (eBike.getMarca() != null) {
