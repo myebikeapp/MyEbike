@@ -186,10 +186,6 @@ public class ParcelableEBike implements Parcelable
         if (eBike.getPeso() != null)
             peso = eBike.getPeso().intValue();
 
-        String modelo = eBike.getModelo();
-        if (modelo == null)
-            modelo = sinDatos;
-
         String descripcion = eBike.getDescripcion();
         if (descripcion == null)
             descripcion = sinDatos;
@@ -211,7 +207,7 @@ public class ParcelableEBike implements Parcelable
                 motor,
                 peso,
                 eBike.getFoto(),
-                modelo,
+                eBike.getModelo(),
                 descripcion,
                 ruedas,
                 marca);

@@ -1,6 +1,7 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -34,8 +36,7 @@ import net.asovel.myebike.backendless.data.Tienda;
 
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback
-{
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String NOMBRE_MARCA = "NOMBRE_MARCA";
 
     private GoogleMap map;
@@ -43,8 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private List<Tienda> tiendas;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
@@ -59,8 +59,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //launchQuery();
     }
 
-    private void launchQuery()
-    {
+    private void launchQuery() {
         Bundle bundle = getIntent().getExtras();
 
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
@@ -75,11 +74,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         dataQuery.setQueryOptions(queryOptions);
 
-        Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(this)
-        {
+        Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(this) {
             @Override
-            public void handleResponse(BackendlessCollection<Marca> response)
-            {
+            public void handleResponse(BackendlessCollection<Marca> response) {
                 super.handleResponse(response);
 
                 Marca marca = response.getCurrentPage().get(0);
@@ -89,127 +86,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private void setUpMarcadores()
-    {
-        for (int i = 0; i < tiendas.size(); i++)
-        {
-            Tienda tienda = tiendas.get(i);
-
-            LatLng latLng = new LatLng(Double.valueOf(tienda.getLatitud()), Double.valueOf(tienda.getLongitud()));
-            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
-            marker.setTag(tienda);
-        }
-    }
-
-    private void insertarMarcador()
-    {
-
-    }
-
-    private void mostrarLineas()
-    {
-        PolylineOptions lineas = new PolylineOptions()
-                .add(new LatLng(45.0, -12.0))
-                .add(new LatLng(45.0, 5.0))
-                .add(new LatLng(34.5, 5.0))
-                .add(new LatLng(34.5, -12.0))
-                .add(new LatLng(45.0, -12.0));
-
-        lineas.width(8);
-        lineas.color(Color.RED);
-
-        map.addPolyline(lineas);
-    }
-
-    private void mostrarPoligono()
-    {
-        PolygonOptions rectangulo = new PolygonOptions()
-                .add(new LatLng(45.0, -12.0),
-                        new LatLng(45.0, 5.0),
-                        new LatLng(34.5, 5.0),
-                        new LatLng(34.5, -12.0),
-                        new LatLng(45.0, -12.0));
-
-        rectangulo.strokeWidth(8);
-        rectangulo.strokeColor(Color.RED);
-
-        map.addPolygon(rectangulo);
-    }
-
-    private void cambiarOpciones()
-    {
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        map.getUiSettings().setZoomControlsEnabled(true);
-    }
-
-
-    private void animarMadrid()
-    {
-        LatLng madrid = new LatLng(40.417325, -3.683081);
-
-        CameraPosition camPos = new CameraPosition.Builder()
-                .target(madrid)   //Centramos el mapa en Madrid
-                .zoom(19)         //Establecemos el zoom en 19
-                .bearing(45)      //Establecemos la orientación con el noreste arriba
-                .tilt(70)         //Bajamos el punto de vista de la cámara 70 grados
-                .build();
-
-        CameraUpdate camUpd3 =
-                CameraUpdateFactory.newCameraPosition(camPos);
-
-        map.animateCamera(camUpd3);
-    }
-
-    private void obtenerPosicion()
-    {
-        CameraPosition camPos = map.getCameraPosition();
-
-        LatLng coordenadas = camPos.target;
-        double latitud = coordenadas.latitude;
-        double longitud = coordenadas.longitude;
-
-
-        Toast.makeText(this, "Lat: " + latitud + " | Long: " + longitud, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
+    public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
         launchQuery();
 
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
-        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter()
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener()
         {
-            @Override
-            public View getInfoWindow(Marker marker)
+            public void onMapClick(LatLng point)
             {
+                Projection proj = map.getProjection();
+                Point coord = proj.toScreenLocation(point);
+
+                Toast.makeText(MapsActivity.this,
+                        "Click\n" +
+                                "Lat: " + point.latitude + "\n" +
+                                "Lng: " + point.longitude + "\n" +
+                                "X: " + coord.x + " - Y: " + coord.y,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
                 return null;
             }
 
             @Override
-            public View getInfoContents(Marker marker)
-            {
+            public View getInfoContents(Marker marker) {
                 View view = getLayoutInflater().inflate(R.layout.maps_marker, null);
 
                 TextView nombre = (TextView) view.findViewById(R.id.marker_nombre);
@@ -238,22 +147,99 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.moveCamera(camUpd1);
 
 
-        /*
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener()
-        {
-            public void onMapClick(LatLng point)
-            {
-                Projection proj = map.getProjection();
-                Point coord = proj.toScreenLocation(point);
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.isInfoWindowShown())
+                    marker.hideInfoWindow();
+                else
+                    marker.showInfoWindow();
+                LatLng latLng = marker.getPosition();
+                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                map.animateCamera(camUp);
 
-                Toast.makeText(MapsActivity.this,
-                        "Click\n" +
-                                "Lat: " + point.latitude + "\n" +
-                                "Lng: " + point.longitude + "\n" +
-                                "X: " + coord.x + " - Y: " + coord.y,
-                        Toast.LENGTH_LONG).show();
+
+                return true;
             }
         });
+    }
+
+    private void setUpMarcadores() {
+        for (int i = 0; i < tiendas.size(); i++) {
+            Tienda tienda = tiendas.get(i);
+
+            LatLng latLng = new LatLng(Double.valueOf(tienda.getLatitud()), Double.valueOf(tienda.getLongitud()));
+            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
+            marker.setTag(tienda);
+        }
+    }
+
+    private void insertarMarcador() {
+
+    }
+
+    private void mostrarLineas() {
+        PolylineOptions lineas = new PolylineOptions()
+                .add(new LatLng(45.0, -12.0))
+                .add(new LatLng(45.0, 5.0))
+                .add(new LatLng(34.5, 5.0))
+                .add(new LatLng(34.5, -12.0))
+                .add(new LatLng(45.0, -12.0));
+
+        lineas.width(8);
+        lineas.color(Color.RED);
+
+        map.addPolyline(lineas);
+    }
+
+    private void mostrarPoligono() {
+        PolygonOptions rectangulo = new PolygonOptions()
+                .add(new LatLng(45.0, -12.0),
+                        new LatLng(45.0, 5.0),
+                        new LatLng(34.5, 5.0),
+                        new LatLng(34.5, -12.0),
+                        new LatLng(45.0, -12.0));
+
+        rectangulo.strokeWidth(8);
+        rectangulo.strokeColor(Color.RED);
+
+        map.addPolygon(rectangulo);
+    }
+
+
+    private void animarMadrid() {
+        LatLng madrid = new LatLng(40.417325, -3.683081);
+
+        CameraPosition camPos = new CameraPosition.Builder()
+                .target(madrid)   //Centramos el mapa en Madrid
+                .zoom(19)         //Establecemos el zoom en 19
+                .bearing(45)      //Establecemos la orientación con el noreste arriba
+                .tilt(70)         //Bajamos el punto de vista de la cámara 70 grados
+                .build();
+
+        CameraUpdate camUpd3 =
+                CameraUpdateFactory.newCameraPosition(camPos);
+
+        map.animateCamera(camUpd3);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+
+        /*
 
         map.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener()
         {
@@ -300,21 +286,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });*/
 
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-        {
-            public boolean onMarkerClick(Marker marker)
-            {
-                if (marker.isInfoWindowShown())
-                    marker.hideInfoWindow();
-                else
-                    marker.showInfoWindow();
-                LatLng latLng = marker.getPosition();
-                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, 15 );
-                map.animateCamera(camUp);
 
 
-                return true;
-            }
-        });
-    }
-}

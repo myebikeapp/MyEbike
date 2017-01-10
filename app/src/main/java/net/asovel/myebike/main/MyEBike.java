@@ -31,7 +31,7 @@ public class MyEBike extends Fragment {
 
     public static final String NAME = "MyEBike";
 
-    public static final String[] USO = {null, "ciudad", "trecking", "montana", "plegables", "otras"};
+    public static final String[] USO = {null, "ciudad", "trekking", "montana", "plegables", "otras"};
     public static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
     public static final String[] SUSPENSION = {null, "no susp", "solo sillin", "delantera", "delantera/sillin", "full susp"};
     public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};

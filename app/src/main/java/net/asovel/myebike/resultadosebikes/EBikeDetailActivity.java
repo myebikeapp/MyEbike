@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,28 +20,12 @@ import net.asovel.myebike.R;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
 
-public class EBikeDetailActivity extends AppCompatActivity
-{
+public class EBikeDetailActivity extends AppCompatActivity {
+
     private ParcelableEBike parcelableEBike;
 
-    private ImageView imagen;
-    private TextView marca;
-    private TextView modelo;
-    private TextView precio;
-    private RatingBar valoracion;
-
-    private TextView uso;
-    private TextView autonomia;
-    private TextView peso;
-    private TextView suspension;
-    private TextView tamanoRueda;
-    private TextView ubicacionMotor;
-    private TextView descripcion;
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebike_detail);
 
@@ -48,35 +33,37 @@ public class EBikeDetailActivity extends AppCompatActivity
         initUI();
     }
 
-    private void initUI()
-    {
+    private void initUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
-        modelo = (TextView) findViewById(R.id.detail_modelo);
-        precio = (TextView) findViewById(R.id.detail_precio);
-        uso = (TextView) findViewById(R.id.detail_uso);
-        autonomia = (TextView) findViewById(R.id.detail_autonomia);
-        peso = (TextView) findViewById(R.id.detail_peso);
-        suspension = (TextView) findViewById(R.id.detail_suspension);
-        tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
-        ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
-        valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
-        descripcion = (TextView) findViewById(R.id.detail_descripcion);
+        ImageView imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
+        TextView marcaModelo = (TextView) findViewById(R.id.detail_marca_modelo);
+        TextView precio = (TextView) findViewById(R.id.detail_precio);
+        TextView uso = (TextView) findViewById(R.id.detail_uso);
+        TextView autonomia = (TextView) findViewById(R.id.detail_autonomia);
+        TextView peso = (TextView) findViewById(R.id.detail_peso);
+        TextView suspension = (TextView) findViewById(R.id.detail_suspension);
+        TextView tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
+        TextView ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
+        RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
+        TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
 
-        if (parcelableEBike.getFoto() != null)
-        {
+        if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
-                    .resize(350, 256).centerCrop()
+                    .resize(350, 256)
                     .into(imagen);
         }
 
-        modelo.setText(parcelableEBike.getModelo());
+        if (parcelableEBike.getMarca() != null)
+            marcaModelo.setText(parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo());
+        else
+            marcaModelo.setText(parcelableEBike.getModelo());
+
         if (parcelableEBike.getPrecio_SORT2() != -1)
             precio.setText("" + parcelableEBike.getPrecio_SORT2() + " €");
 
@@ -98,19 +85,16 @@ public class EBikeDetailActivity extends AppCompatActivity
 
         descripcion.setText(parcelableEBike.getDescripcion());
 
-        FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.btn_buscar_tiendas);
-        buscarTiendas.setOnClickListener(new View.OnClickListener()
-        {
+        ImageButton buscarTiendas = (ImageButton) findViewById(R.id.btn_buscar_tiendas);
+        buscarTiendas.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 localizarTiendas();
             }
         });
     }
 
-    private void localizarTiendas()
-    {
+    private void localizarTiendas() {
         ParcelableMarca marca = parcelableEBike.getMarca();
         if (marca == null || marca.getNombre().equals("sin datos"))
             return;
@@ -123,10 +107,8 @@ public class EBikeDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -135,8 +117,7 @@ public class EBikeDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 }

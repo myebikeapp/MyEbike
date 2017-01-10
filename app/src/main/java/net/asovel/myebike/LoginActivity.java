@@ -27,9 +27,6 @@ public class LoginActivity extends Activity {
 
     public static final String CALLER = "CALLER";
 
-    private Button facebookButton;
-    private Button googleButton;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +82,8 @@ public class LoginActivity extends Activity {
     }
 
     private void initUI() {
-        facebookButton = (Button) findViewById(R.id.loginFacebookButton);
-        googleButton = (Button) findViewById(R.id.loginGoogleButton);
+        Button facebookButton = (Button) findViewById(R.id.loginFacebookButton);
+        Button googleButton = (Button) findViewById(R.id.loginGoogleButton);
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +99,23 @@ public class LoginActivity extends Activity {
             }
         });
 
+        Bundle bundle = getIntent().getExtras();
+        String caller = "";
+        if (bundle != null)
+            caller = bundle.getString(CALLER, "");
+
+        if (caller.equals("")) {
+            Button sinLogin = (Button) findViewById(R.id.sin_login_button);
+            sinLogin.setVisibility(View.VISIBLE);
+            sinLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
     }
 
     @Override

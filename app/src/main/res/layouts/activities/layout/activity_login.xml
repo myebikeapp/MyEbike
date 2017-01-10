@@ -34,8 +34,16 @@
             android:id="@+id/loginGoogleButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/login_button_height"
+            android:layout_marginBottom="@dimen/login_button_vertical_margin"
             android:background="@drawable/btn_google"
             android:text="@string/google_button_text" />
+
+        <Button
+            android:id="@+id/sin_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_button_height"
+            android:text="Entrar sin login"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

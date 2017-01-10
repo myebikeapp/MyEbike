@@ -71,16 +71,6 @@ public class ParcelableMarca implements Parcelable
 
     public static ParcelableMarca fromMarca(Marca marca)
     {
-        String sinDatos = "sin datos";
-
-        String nombre = marca.getNombre();
-        if (nombre == null)
-            nombre = sinDatos;
-
-        String web = marca.getPagina_web();
-        if (web == null)
-            web = sinDatos;
-
-        return new ParcelableMarca(web, nombre, marca.getLogo());
+        return new ParcelableMarca(marca.getPagina_web(), marca.getNombre(), marca.getLogo());
     }
 }

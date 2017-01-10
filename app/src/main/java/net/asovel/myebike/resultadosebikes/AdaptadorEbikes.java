@@ -107,8 +107,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class BicicletasViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imagen;
-        private TextView marca;
-        private TextView modelo;
+        private TextView marcaModelo;
         private TextView precio;
         private RatingBar valoracion;
 
@@ -116,8 +115,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(view);
 
             imagen = (ImageView) view.findViewById(R.id.list_imagen);
-            marca = (TextView) view.findViewById(R.id.list_marca);
-            modelo = (TextView) view.findViewById(R.id.list_modelo);
+            marcaModelo = (TextView) view.findViewById(R.id.list_marca_modelo);
             precio = (TextView) view.findViewById(R.id.list_precio);
             valoracion = (RatingBar) view.findViewById(R.id.list_valoracion);
         }
@@ -127,16 +125,16 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Picasso.with(context)
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
-                        .resize(350, 256).centerInside()
+                        .resize(350, 256)
                         .into(imagen);
             }
             if (eBike.getMarca() != null) {
-                marca.setText(eBike.getMarca().getNombre() + " ");
-                marca.setVisibility(View.VISIBLE);
+                marcaModelo.setText(eBike.getMarca().getNombre());
+                marcaModelo.setVisibility(View.VISIBLE);
             }
             if (eBike.getModelo() != null) {
-                modelo.setText(eBike.getModelo());
-                modelo.setVisibility(View.VISIBLE);
+                marcaModelo.setText(marcaModelo.getText() + " " + eBike.getModelo());
+                marcaModelo.setVisibility(View.VISIBLE);
             }
             if (eBike.getPrecio_SORT2() != null) {
                 precio.setText("" + eBike.getPrecio_SORT2() + " €");

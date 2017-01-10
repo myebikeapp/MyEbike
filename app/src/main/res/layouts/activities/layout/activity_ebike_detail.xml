@@ -49,33 +49,55 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
-            <TextView
-                android:id="@+id/detail_modelo"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Modelo: sin datos"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:paddingTop="@dimen/text_marca_y_modelo">
+
+                <TextView
+                    android:id="@+id/detail_marca_modelo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_marca_y_modelo" />
+
+                <TextView
+                    android:id="@+id/detail_precio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_marca_modelo"
+                    android:textColor="?colorPrimary"
+                    android:textSize="@dimen/text_marca_y_modelo"
+                    android:textStyle="bold" />
+
+                <RatingBar
+                    android:id="@+id/detail_valoracion"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detail_precio"
+                    android:progressTint="@color/color_ratingbar"
+                    android:paddingTop="4dp"
+                    android:rating="5"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:transformPivotX="-10dp" />
+
+                <Button
+                    android:id="@+id/btn_buscar_tiendas"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/maps_icon" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/detail_precio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precio: sin datos"
-                android:textColor="?colorPrimary"
-                android:textStyle="bold" />
-
-            <RatingBar
-                android:id="@+id/detail_valoracion"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:progressTint="#FDDB39" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="8dp"
+                android:paddingTop="4dp"
                 android:text="CARACTERÍSTICAS"
                 android:textColor="?colorPrimary" />
 
@@ -160,7 +182,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="DESCRIPCION"
                 android:textColor="?colorPrimary" />
 
@@ -173,14 +196,6 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_buscar_tiendas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_shopping_cart" />
 
 </android.support.design.widget.CoordinatorLayout>
 

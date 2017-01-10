@@ -64,24 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
-    private void setConnected(String email) {
-
-        MenuItem item = navigationView.getMenu().getItem(5);
-
-        if (!email.equals("")) {
-            this.connected = true;
-            item.setTitle("Cerrar sesión");
-        } else {
-            this.connected = false;
-            email = "Desconectado";
-            item.setTitle("Iniciar sesión");
-        }
-
-        View navHeader = navigationView.getHeaderView(0);
-        TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
-        textEmail.setText(email);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -89,6 +71,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String email = prefs.getString("email", "");
 
         setConnected(email);
+    }
+
+    private void setConnected(String email) {
+
+        MenuItem item = navigationView.getMenu().getItem(5);
+
+        if (!email.equals("")) {
+            connected = true;
+            item.setTitle("Cerrar sesión");
+        } else {
+            connected = false;
+            email = "Desconectado";
+            item.setTitle("Iniciar sesión");
+        }
+
+        View navHeader = navigationView.getHeaderView(0);
+        TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
+        textEmail.setText(email);
     }
 
     @Override
