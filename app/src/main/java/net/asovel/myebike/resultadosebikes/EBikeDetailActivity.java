@@ -2,14 +2,13 @@ package net.asovel.myebike.resultadosebikes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -55,7 +54,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
-                    .resize(350, 256)
+                    .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
                     .into(imagen);
         }
 
@@ -85,7 +84,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
 
         descripcion.setText(parcelableEBike.getDescripcion());
 
-        ImageButton buscarTiendas = (ImageButton) findViewById(R.id.btn_buscar_tiendas);
+        Button buscarTiendas = (Button) findViewById(R.id.btn_buscar_tiendas);
         buscarTiendas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +95,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
 
     private void localizarTiendas() {
         ParcelableMarca marca = parcelableEBike.getMarca();
-        if (marca == null || marca.getNombre().equals("sin datos"))
+        if (marca == null)
             return;
         Intent intent = new Intent(EBikeDetailActivity.this, MapsActivity.class);
         Bundle bundle = new Bundle();

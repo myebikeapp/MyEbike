@@ -1,6 +1,9 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.data.EBike;
@@ -100,16 +104,21 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)   {
         listener.onClick(view);
     }
 
     public class BicicletasViewHolder extends RecyclerView.ViewHolder {
 
+        public static final int IMAGE_WIDTH = 350;
+        public static final int IMAGE_HEIGHT = 256;
+
         private ImageView imagen;
         private TextView marcaModelo;
         private TextView precio;
         private RatingBar valoracion;
+
+        private Target target;
 
         public BicicletasViewHolder(View view) {
             super(view);
@@ -118,6 +127,29 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             marcaModelo = (TextView) view.findViewById(R.id.list_marca_modelo);
             precio = (TextView) view.findViewById(R.id.list_precio);
             valoracion = (RatingBar) view.findViewById(R.id.list_valoracion);
+
+            target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(0.7f, 0.9f);
+                   // Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+                    imagen.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable drawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable drawable) {
+
+                }
+            };
         }
 
         public void bindBicicleta(EBike eBike) {
@@ -125,8 +157,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Picasso.with(context)
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
-                        .resize(350, 256)
-                        .into(imagen);
+                        .resize(IMAGE_WIDTH, IMAGE_HEIGHT)
+                        .into(target);
             }
             if (eBike.getMarca() != null) {
                 marcaModelo.setText(eBike.getMarca().getNombre());
@@ -148,6 +180,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class ButtonsViewHolder extends RecyclerView.ViewHolder {
+
         private Button btnNextPage;
         private Button btnPreviousPage;
         private RadioGroup radioGroup;

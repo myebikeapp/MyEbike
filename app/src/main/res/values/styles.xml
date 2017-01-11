@@ -12,6 +12,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="activity_detail_toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/color_arrow_actionbar</item>
+    </style>
+
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

@@ -1,7 +1,5 @@
 package net.asovel.myebike.resultadosebikes;
 
-import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -20,13 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
@@ -37,11 +30,13 @@ import net.asovel.myebike.backendless.data.Tienda;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+
     public static final String NOMBRE_MARCA = "NOMBRE_MARCA";
 
     private GoogleMap map;
-
     private List<Tienda> tiendas;
+    private Object object = new Object();
+    private volatile boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //launchQuery();
+        launchQuery();
     }
 
     private void launchQuery() {
@@ -64,7 +59,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
 
-        String nombre = bundle.getString(NOMBRE_MARCA);
+        String nombre = bundle.getString(NOMBRE_MARCA, "sin nombre");
         String whereClause = "nombre = '" + nombre + "'";
         dataQuery.setWhereClause(whereClause);
 
@@ -81,33 +76,55 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Marca marca = response.getCurrentPage().get(0);
                 tiendas = marca.getTiendas();
+
+                while (!flag) {
+                    try {
+                        object.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 setUpMarcadores();
             }
         });
+    }
+
+    private void setUpMarcadores() {
+        for (int i = 0; i < tiendas.size(); i++) {
+            Tienda tienda = tiendas.get(i);
+
+            Double latitud = tienda.getLatitud();
+            Double longitud = tienda.getLongitud();
+
+            if (latitud != null && longitud != null) {
+                LatLng latLng = new LatLng(latitud, longitud);
+                Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
+                marker.setTag(tienda);
+            }
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
-        launchQuery();
-
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
 
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener()
-        {
-            public void onMapClick(LatLng point)
-            {
-                Projection proj = map.getProjection();
-                Point coord = proj.toScreenLocation(point);
+        CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
+        map.moveCamera(camUpd);
 
-                Toast.makeText(MapsActivity.this,
-                        "Click\n" +
-                                "Lat: " + point.latitude + "\n" +
-                                "Lng: " + point.longitude + "\n" +
-                                "X: " + coord.x + " - Y: " + coord.y,
-                        Toast.LENGTH_LONG).show();
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.isInfoWindowShown())
+                    marker.hideInfoWindow();
+                else
+                    marker.showInfoWindow();
+                LatLng latLng = marker.getPosition();
+                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                map.animateCamera(camUp);
+
+                return true;
             }
         });
 
@@ -120,106 +137,64 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public View getInfoContents(Marker marker) {
                 View view = getLayoutInflater().inflate(R.layout.maps_marker, null);
-
-                TextView nombre = (TextView) view.findViewById(R.id.marker_nombre);
-                TextView ciudad = (TextView) view.findViewById(R.id.marker_ciudad);
-                TextView direccion = (TextView) view.findViewById(R.id.marker_direccion);
-                TextView codigo = (TextView) view.findViewById(R.id.marker_codigo);
-                TextView telefono = (TextView) view.findViewById(R.id.marker_telefono);
-                TextView web = (TextView) view.findViewById(R.id.marker_web);
-                TextView email = (TextView) view.findViewById(R.id.marker_email);
-
                 Tienda tienda = (Tienda) marker.getTag();
 
-                nombre.setText(tienda.getNombre_tienda());
-                ciudad.setText(tienda.getCiudad());
-                direccion.setText(tienda.getDireccion() + " " + tienda.getNumero());
-                codigo.setText(tienda.getCodigo_postal());
-                telefono.setText("" + tienda.getTelefono());
-                web.setText(tienda.getPagina_web());
-                email.setText(tienda.getEmail());
+                String nombre = tienda.getNombre_tienda();
+                if (nombre != null) {
+                    TextView nombreV = (TextView) view.findViewById(R.id.marker_nombre);
+                    nombreV.setText(nombre);
+                    nombreV.setVisibility(View.VISIBLE);
+                }
 
+                String ciudad = tienda.getCiudad();
+                if (ciudad != null) {
+                    TextView ciudadV = (TextView) view.findViewById(R.id.marker_ciudad);
+                    ciudadV.setText(ciudad);
+                    ciudadV.setVisibility(View.VISIBLE);
+                }
+
+                String direccion = tienda.getDireccion();
+                if (direccion != null) {
+                    TextView direccionV = (TextView) view.findViewById(R.id.marker_direccion);
+                    direccionV.setText(direccion);
+                    direccionV.setVisibility(View.VISIBLE);
+                }
+
+                String codigo = tienda.getCodigo_postal();
+                if (codigo != null) {
+                    TextView codigoV = (TextView) view.findViewById(R.id.marker_codigo);
+                    codigoV.setText(codigo);
+                    codigoV.setVisibility(View.VISIBLE);
+                }
+
+                Integer telefono = tienda.getTelefono();
+                if (telefono != null) {
+                    TextView telefonoV = (TextView) view.findViewById(R.id.marker_telefono);
+                    telefonoV.setText("" + telefono.intValue());
+                    telefonoV.setVisibility(View.VISIBLE);
+                }
+
+                String web = tienda.getPagina_web();
+                if (web != null) {
+                    TextView webV = (TextView) view.findViewById(R.id.marker_web);
+                    webV.setText(web);
+                    webV.setVisibility(View.VISIBLE);
+                }
+
+                String email = tienda.getEmail();
+                if (email != null) {
+                    TextView emailV = (TextView) view.findViewById(R.id.marker_email);
+                    emailV.setText(email);
+                    emailV.setVisibility(View.VISIBLE);
+                }
                 return view;
             }
         });
 
-        CameraUpdate camUpd1 = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
-        map.moveCamera(camUpd1);
-
-
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(Marker marker) {
-                if (marker.isInfoWindowShown())
-                    marker.hideInfoWindow();
-                else
-                    marker.showInfoWindow();
-                LatLng latLng = marker.getPosition();
-                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-                map.animateCamera(camUp);
-
-
-                return true;
-            }
-        });
-    }
-
-    private void setUpMarcadores() {
-        for (int i = 0; i < tiendas.size(); i++) {
-            Tienda tienda = tiendas.get(i);
-
-            LatLng latLng = new LatLng(Double.valueOf(tienda.getLatitud()), Double.valueOf(tienda.getLongitud()));
-            Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
-            marker.setTag(tienda);
+        synchronized (object) {
+            object.notify();
         }
-    }
-
-    private void insertarMarcador() {
-
-    }
-
-    private void mostrarLineas() {
-        PolylineOptions lineas = new PolylineOptions()
-                .add(new LatLng(45.0, -12.0))
-                .add(new LatLng(45.0, 5.0))
-                .add(new LatLng(34.5, 5.0))
-                .add(new LatLng(34.5, -12.0))
-                .add(new LatLng(45.0, -12.0));
-
-        lineas.width(8);
-        lineas.color(Color.RED);
-
-        map.addPolyline(lineas);
-    }
-
-    private void mostrarPoligono() {
-        PolygonOptions rectangulo = new PolygonOptions()
-                .add(new LatLng(45.0, -12.0),
-                        new LatLng(45.0, 5.0),
-                        new LatLng(34.5, 5.0),
-                        new LatLng(34.5, -12.0),
-                        new LatLng(45.0, -12.0));
-
-        rectangulo.strokeWidth(8);
-        rectangulo.strokeColor(Color.RED);
-
-        map.addPolygon(rectangulo);
-    }
-
-
-    private void animarMadrid() {
-        LatLng madrid = new LatLng(40.417325, -3.683081);
-
-        CameraPosition camPos = new CameraPosition.Builder()
-                .target(madrid)   //Centramos el mapa en Madrid
-                .zoom(19)         //Establecemos el zoom en 19
-                .bearing(45)      //Establecemos la orientación con el noreste arriba
-                .tilt(70)         //Bajamos el punto de vista de la cámara 70 grados
-                .build();
-
-        CameraUpdate camUpd3 =
-                CameraUpdateFactory.newCameraPosition(camPos);
-
-        map.animateCamera(camUpd3);
+        flag = true;
     }
 
     @Override
@@ -237,54 +212,3 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 }
-
-
-        /*
-
-        map.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener()
-        {
-            @Override
-            public void onCameraMoveStarted(int i)
-            {
-
-            }
-        });
-
-        map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener()
-        {
-            @Override
-            public void onCameraMove()
-            {
-
-            }
-        });
-
-        map.setOnCameraMoveCanceledListener(new GoogleMap.OnCameraMoveCanceledListener()
-        {
-            @Override
-            public void onCameraMoveCanceled()
-            {
-
-            }
-        });
-
-        map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener()
-        {
-            @Override
-            public void onCameraIdle()
-            {
-                CameraPosition position = map.getCameraPosition();
-                Toast.makeText(MapsActivity.this,
-                        "Cambio Cámara\n" +
-                                "Lat: " + position.target.latitude + "\n" +
-                                "Lng: " + position.target.longitude + "\n" +
-                                "Zoom: " + position.zoom + "\n" +
-                                "Orientación: " + position.bearing + "\n" +
-                                "Ángulo: " + position.tilt,
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-
-
-
