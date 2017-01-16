@@ -132,12 +132,12 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
 
-                    int width = bitmap.getWidth();
+                    /*int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
                     Matrix matrix = new Matrix();
                     matrix.postScale(0.7f, 0.9f);
-                   // Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-                    imagen.setImageBitmap(bitmap);
+                    Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+                    imagen.setImageBitmap(bitmap);*/
                 }
 
                 @Override
@@ -158,7 +158,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
                         .resize(IMAGE_WIDTH, IMAGE_HEIGHT)
-                        .into(target);
+                        .into(imagen);
             }
             if (eBike.getMarca() != null) {
                 marcaModelo.setText(eBike.getMarca().getNombre());

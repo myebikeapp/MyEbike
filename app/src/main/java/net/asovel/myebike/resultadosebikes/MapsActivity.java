@@ -121,7 +121,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 else
                     marker.showInfoWindow();
                 LatLng latLng = marker.getPosition();
-                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                float zoom = map.getCameraPosition().zoom;
+                zoom = (zoom >= 15) ? zoom : 15;
+                CameraUpdate camUp = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
                 map.animateCamera(camUp);
 
                 return true;
@@ -188,6 +190,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     emailV.setVisibility(View.VISIBLE);
                 }
                 return view;
+            }
+        });
+
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
             }
         });
 

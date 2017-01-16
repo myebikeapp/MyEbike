@@ -32,18 +32,21 @@
         android:id="@+id/marker_telefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="phone"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/marker_web"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="web"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/marker_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="email"
         android:visibility="gone" />
 
 </LinearLayout>
