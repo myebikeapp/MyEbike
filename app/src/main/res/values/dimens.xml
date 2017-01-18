@@ -1,7 +1,7 @@
 <resources>
 
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_height">170dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -34,5 +34,12 @@
 
     <dimen name="text_marca_y_modelo">16sp</dimen>
     <dimen name="text_precio">24sp</dimen>
+
+    <dimen name="arrow_button_side">24dp</dimen>
+    <dimen name="arrow_button_vertical_margin">8dp</dimen>
+    <dimen name="arrow_button_horizontal_margin">8dp</dimen>
+
+    <dimen name="navview_image_height">80dp</dimen>
+    <dimen name="navview_image_width">80dp</dimen>
 
 </resources>

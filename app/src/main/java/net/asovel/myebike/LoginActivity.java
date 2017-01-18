@@ -24,7 +24,7 @@ import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 
 public class LoginActivity extends Activity {
-//
+
     public static final String CALLER = "CALLER";
 
     @Override

@@ -5,12 +5,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_top_ventas"
-            android:icon="@drawable/ic_menu_novedades"
+            android:icon="@drawable/ic_menu_top_ventas"
             android:title="Top Ventas"/>
         <item
             android:id="@+id/menu_myebike"
             android:icon="@drawable/ic_menu_buscador"
-            android:title="Buscador"/>
+            android:title="Encuentra tu Bici Eléctrica"/>
         <item
             android:id="@+id/menu_antes"
             android:icon="@drawable/ic_menu_antescomprar"

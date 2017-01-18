@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_myebike_appbar"
-        android:icon="@drawable/ic_menu_buscador"
+        android:icon="@drawable/ic_menu_buscador_white"
         android:title="MyEBike"
         app:showAsAction="always"/>
 </menu>

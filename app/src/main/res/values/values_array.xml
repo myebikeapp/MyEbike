@@ -4,9 +4,10 @@
     <string-array name="uso">
         <item>Todos los usos</item>
         <item>Ciudad</item>
-        <item>Trekking</item>
+        <item>Carretera</item>
         <item>Montaña</item>
-        <item>Plegables y Compactas</item>
+        <item>Trekking</item>
+        <item>Plegables</item>
         <item>Otras</item>
     </string-array>
 
@@ -20,10 +21,8 @@
     <string-array name="suspension">
         <item>Todas las suspesiones</item>
         <item>Sin suspensión</item>
-        <item>Solo en sillín</item>
         <item>Delantera</item>
-        <item>Delantera y sillín</item>
-        <item>Full suspensión</item>
+        <item>Delantera y trasera</item>
     </string-array>
 
     <string-array name="autonomia">

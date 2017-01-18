@@ -67,6 +67,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
             precio.setText("" + parcelableEBike.getPrecio_SORT2() + " €");
 
         uso.setText(parcelableEBike.getUso());
+
         if (parcelableEBike.getAutonomia() != -1)
             autonomia.setText("" + parcelableEBike.getAutonomia() + " Km");
 
@@ -74,8 +75,15 @@ public class EBikeDetailActivity extends AppCompatActivity {
             peso.setText("" + parcelableEBike.getPeso() + " Kg");
 
         suspension.setText(parcelableEBike.getSuspension());
-        if (parcelableEBike.getTamano_ruedas() != -1)
-            tamanoRueda.setText("" + parcelableEBike.getTamano_ruedas() + "\"");
+
+        int tamano = parcelableEBike.getTamano_ruedas();
+        if (tamano != -1) {
+
+            if (tamano != 27)
+                tamanoRueda.setText("" + tamano + "\"");
+            else
+                tamanoRueda.setText("27.5\"");
+        }
 
         ubicacionMotor.setText(parcelableEBike.getUbicacion_motor());
 

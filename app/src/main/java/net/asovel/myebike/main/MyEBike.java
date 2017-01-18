@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,19 +30,18 @@ public class MyEBike extends Fragment {
 
     public static final String NAME = "MyEBike";
 
-    public static final String[] USO = {null, "ciudad", "trekking", "montana", "plegables", "otras"};
+    public static final String[] USO = {null, "ciudad", "carretera", "montana", "trekking", "plegables", "otras"};
     public static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
-    public static final String[] SUSPENSION = {null, "no susp", "solo sillin", "delantera", "delantera/sillin", "full susp"};
-    public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
+    public static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
     public static final String[] MOTOR = {null, "delantero", "central", "trasero"};
+    public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
     public static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
 
     private Spinner spinnerUso;
     private Spinner spinnerRueda;
     private Spinner spinnerSuspension;
-    private Spinner spinnerAutonomiaInf;
-    private Spinner spinnerAutonomiaSup;
     private Spinner spinnerMotor;
+    private Spinner spinnerAutonomia;
     private Spinner spinnerPresupuestoInf;
     private Spinner spinnerPresupuestoSup;
     private FloatingActionButton btnBuscar;
@@ -52,9 +50,8 @@ public class MyEBike extends Fragment {
     private int diametroRuedaInf;
     private int diametroRuedaSup;
     private String suspension;
-    private int autonomiaInf = AUTONOMIA[0];
-    private int autonomiaSup = AUTONOMIA[AUTONOMIA.length - 1];
     private String motor;
+    private int autonomia = AUTONOMIA[AUTONOMIA.length - 1];
     private int presupuestoInf = PRESUPUESTO[0];
     private int presupuestoSup = PRESUPUESTO[PRESUPUESTO.length - 1];
 
@@ -94,26 +91,20 @@ public class MyEBike extends Fragment {
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerSuspension.setAdapter(adaptador);
 
-        spinnerAutonomiaInf = (Spinner) getView().findViewById(R.id.spinner_autonomia_inf);
-        values = getResources().getStringArray(R.array.autonomia);
-        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
-                values, "Desde", 0, "Todos");
-        adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
-        spinnerAutonomiaInf.setAdapter(adaptador);
-
-        spinnerAutonomiaSup = (Spinner) getView().findViewById(R.id.spinner_autonomia_sup);
-        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
-                values, "Hasta", AUTONOMIA.length - 1, "Todos");
-        adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
-        spinnerAutonomiaSup.setAdapter(adaptador);
-        spinnerAutonomiaSup.setSelection(AUTONOMIA.length - 1);
-
         spinnerMotor = (Spinner) getView().findViewById(R.id.spinner_motor);
         values = getResources().getStringArray(R.array.motor);
         adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
                 values, "Ubicación del motor", 0);
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerMotor.setAdapter(adaptador);
+
+        spinnerAutonomia = (Spinner) getView().findViewById(R.id.spinner_autonomia);
+        values = getResources().getStringArray(R.array.autonomia);
+        adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
+                values, "Hasta", AUTONOMIA.length - 1, "Todas");
+        adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
+        spinnerAutonomia.setAdapter(adaptador);
+        spinnerAutonomia.setSelection(AUTONOMIA.length - 1);
 
         spinnerPresupuestoInf = (Spinner) getView().findViewById(R.id.spinner_presupuesto_inf);
         values = getResources().getStringArray(R.array.presupuesto);
@@ -135,6 +126,7 @@ public class MyEBike extends Fragment {
     }
 
     public class CustomAdapter extends ArrayAdapter<String> {
+
         private LayoutInflater inflater;
         private String title;
         private int specialPosition;
@@ -181,7 +173,7 @@ public class MyEBike extends Fragment {
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 int color;
                 if (currentapiVersion < 23)
-                    color = getResources().getColor(R.color.colorAccent);
+                    color = getResources().getColor(R.color.colorAccent, null);
                 else
                     color = getResources().getColor(R.color.colorAccent, null);
 
@@ -193,8 +185,8 @@ public class MyEBike extends Fragment {
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
 
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.asistente_spinner_list, null);
             }
             String value = getItem(position);
@@ -240,42 +232,21 @@ public class MyEBike extends Fragment {
             }
         });
 
-        spinnerAutonomiaInf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                if (autonomiaSup < AUTONOMIA[position]) {
-                    spinnerAutonomiaInf.setSelection(spinnerAutonomiaSup.getSelectedItemPosition());
-                    spinnerAutonomiaSup.setSelection(position);
-                } else {
-                    autonomiaInf = AUTONOMIA[position];
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        spinnerAutonomiaSup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                if (autonomiaInf > AUTONOMIA[position]) {
-                    spinnerAutonomiaSup.setSelection(spinnerAutonomiaInf.getSelectedItemPosition());
-                    spinnerAutonomiaInf.setSelection(position);
-                } else {
-                    autonomiaSup = AUTONOMIA[position];
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
         spinnerMotor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
                 motor = MOTOR[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        spinnerAutonomia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                autonomia = AUTONOMIA[position];
             }
 
             @Override
@@ -349,10 +320,8 @@ public class MyEBike extends Fragment {
             listClauses.add("tamano_ruedas >= " + diametroRuedaInf + " and tamano_ruedas <= " + diametroRuedaSup);
         if (suspension != null)
             listClauses.add("suspension = '" + suspension + "'");
-        if (autonomiaInf != AUTONOMIA[0])
-            listClauses.add("autonomia >= " + autonomiaInf);
-        if (autonomiaSup != AUTONOMIA[AUTONOMIA.length - 1])
-            listClauses.add("autonomia <= " + autonomiaSup);
+        if (autonomia != AUTONOMIA[AUTONOMIA.length - 1])
+            listClauses.add("autonomia <= " + autonomia);
         if (motor != null)
             listClauses.add("ubicacion_motor = '" + motor + "'");
         if (presupuestoInf != PRESUPUESTO[0])
@@ -370,8 +339,7 @@ public class MyEBike extends Fragment {
         spinnerUso.setSelection(0);
         spinnerRueda.setSelection(0);
         spinnerSuspension.setSelection(0);
-        spinnerAutonomiaInf.setSelection(0);
-        spinnerAutonomiaSup.setSelection(AUTONOMIA.length - 1);
+        spinnerAutonomia.setSelection(AUTONOMIA.length - 1);
         spinnerMotor.setSelection(0);
         spinnerPresupuestoInf.setSelection(0);
         spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
