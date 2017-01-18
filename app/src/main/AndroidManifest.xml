@@ -24,12 +24,17 @@
             android:required="true"/>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".WelcomeActivity"
             android:theme="@style/AppTheme.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.ActionBar">
         </activity>
 
         <activity

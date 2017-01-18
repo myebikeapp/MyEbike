@@ -35,20 +35,6 @@ public class LoginActivity extends Activity {
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
-        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
-        String email = prefs.getString("email", "");
-
-        if (!email.equals("")) {
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putString(MainActivity.EMAIL, email);
-            intent.putExtras(bundle);
-
-            startActivity(intent);
-            finish();
-        }
-
         initUI();
 
        /* Backendless.UserService.isValidLogin(new DefaultCallback<Boolean>(this) {
@@ -82,8 +68,8 @@ public class LoginActivity extends Activity {
     }
 
     private void initUI() {
-        Button facebookButton = (Button) findViewById(R.id.loginFacebookButton);
-        Button googleButton = (Button) findViewById(R.id.loginGoogleButton);
+        Button facebookButton = (Button) findViewById(R.id.login_facebook_button);
+        Button googleButton = (Button) findViewById(R.id.login_google_button);
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,24 +84,6 @@ public class LoginActivity extends Activity {
                 onLoginWithGoogleButtonClicked();
             }
         });
-
-        Bundle bundle = getIntent().getExtras();
-        String caller = "";
-        if (bundle != null)
-            caller = bundle.getString(CALLER, "");
-
-        if (caller.equals("")) {
-            Button sinLogin = (Button) findViewById(R.id.sin_login_button);
-            sinLogin.setVisibility(View.VISIBLE);
-            sinLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
     }
 
     @Override
@@ -184,6 +152,8 @@ public class LoginActivity extends Activity {
             ArrayList<String> listClauses = bundle.getStringArrayList(EBikeListActivity.WHERECLAUSE);
             bundletransmitter.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
             intent.putExtras(bundletransmitter);
+            startActivity(intent);
+            finish();
 
         } else if (caller.equals(MainActivity.NAME)){
             intent = new Intent(getBaseContext(), MainActivity.class);
@@ -191,8 +161,8 @@ public class LoginActivity extends Activity {
 
         } else {
             intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
-        startActivity(intent);
-        finish();
     }
 }
