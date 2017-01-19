@@ -23,11 +23,6 @@ public class WelcomeActivity extends Activity {
 
         if (!email.equals("")) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putString(MainActivity.EMAIL, email);
-            intent.putExtras(bundle);
-
             startActivity(intent);
             finish();
         }

@@ -22,10 +22,9 @@ import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.Constants;
 
 public class LoginActivity extends Activity {
-
-    public static final String CALLER = "CALLER";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,7 +141,7 @@ public class LoginActivity extends Activity {
 
         String caller = "";
         if (bundle != null)
-            caller = bundle.getString(CALLER, "");
+            caller = bundle.getString(Constants.CALLER, "");
 
         Intent intent;
 

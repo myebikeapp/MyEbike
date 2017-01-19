@@ -16,12 +16,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import net.asovel.myebike.R;
+import net.asovel.myebike.main.MainActivity;
+import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
 
 public class EBikeDetailActivity extends AppCompatActivity {
 
     private ParcelableEBike parcelableEBike;
+    private String caller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ebike_detail);
 
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
+        caller = getIntent().getExtras().getString(Constants.CALLER, "");
         initUI();
     }
 
@@ -109,6 +113,10 @@ public class EBikeDetailActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         String nombreMarca = marca.getNombre();
         bundle.putString(MapsActivity.NOMBRE_MARCA, nombreMarca);
+
+        if (!caller.equals(""))
+            bundle.putString(Constants.CALLER, caller);
+
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -117,7 +125,12 @@ public class EBikeDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                if (!caller.equals("")) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    NavUtils.navigateUpTo(this, intent);
+                } else
+                    NavUtils.navigateUpFromSameTask(this);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

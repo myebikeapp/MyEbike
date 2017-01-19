@@ -22,13 +22,13 @@ import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String NAME = "MainActivity";
-    public static final String EMAIL = "EMAIL";
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -144,15 +144,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
-                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=484");
+                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=484");
                 break;
             case R.id.menu_antes:
                 fragment = new WebAsovel();
-                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/?page_id=475");
+                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=475");
                 break;
             case R.id.menu_asovel:
                 fragment = new WebAsovel();
-                bundle.putString(WebAsovel.PAGINA_WEB, "http://www.asovel.net/");
+                bundle.putString(Constants.URL, "http://www.asovel.net/");
                 break;
             case R.id.menu_sesion:
                 if (connected) {
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 }
                 Intent intent = new Intent(this, LoginActivity.class);
-                bundle.putString(LoginActivity.CALLER, NAME);
+                bundle.putString(Constants.CALLER, NAME);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 return true;

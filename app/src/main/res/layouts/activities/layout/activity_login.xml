@@ -4,48 +4,38 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
         android:text="@string/app_name"
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_large" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="@string/login_text"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/text_medium" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/login_button_vertical_margin"
-            android:text="@string/login_text"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/text_medium" />
+    <Button
+        android:id="@+id/login_facebook_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/login_button_height"
+        android:layout_marginTop="@dimen/login_button_vertical_margin"
+        android:background="@drawable/btn_facebook"
+        android:text="@string/facebook_button_text" />
 
-        <Button
-            android:id="@+id/login_facebook_button"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/login_button_height"
-            android:layout_marginBottom="@dimen/login_button_vertical_margin"
-            android:background="@drawable/btn_facebook"
-            android:text="@string/facebook_button_text" />
-
-        <Button
-            android:id="@+id/login_google_button"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/login_button_height"
-            android:layout_marginBottom="@dimen/login_button_vertical_margin"
-            android:background="@drawable/btn_google"
-            android:text="@string/google_button_text" />
-
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/login_google_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/login_button_height"
+        android:layout_marginTop="@dimen/login_button_vertical_margin"
+        android:background="@drawable/btn_google"
+        android:text="@string/google_button_text" />
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import net.asovel.myebike.resultadosebikes.AdaptadorEbikes;
 import net.asovel.myebike.resultadosebikes.EBikeDetailActivity;
 import net.asovel.myebike.resultadosebikes.EBikesCallback;
 import net.asovel.myebike.resultadosebikes.Query;
+import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class TopVentas extends Fragment implements EBikesCallback {
         int position = getlimInf() + recyclerView.getChildAdapterPosition(view);
         ParcelableEBike parcelableEBike = ParcelableEBike.fromEBike(eBikes.get(position));
         bundle.putParcelable(ParcelableEBike.PARCELABLEEBIKE, parcelableEBike);
+        bundle.putString(Constants.CALLER, MainActivity.NAME);
         intent.putExtras(bundle);
         getContext().startActivity(intent);
     }

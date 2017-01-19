@@ -23,6 +23,7 @@ import android.widget.TextView;
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -300,7 +301,7 @@ public class MyEBike extends Fragment {
 
                 if (email.equals("")) {
                     intent = new Intent(getContext(), LoginActivity.class);
-                    bundle.putString(LoginActivity.CALLER, NAME);
+                    bundle.putString(Constants.CALLER, NAME);
                 } else {
                     intent = new Intent(getContext(), EBikeListActivity.class);
                 }

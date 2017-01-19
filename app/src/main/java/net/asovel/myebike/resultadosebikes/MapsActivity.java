@@ -1,5 +1,6 @@
 package net.asovel.myebike.resultadosebikes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,9 @@ import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
+import net.asovel.myebike.main.MainActivity;
+import net.asovel.myebike.utils.Constants;
+import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
@@ -77,11 +81,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Marca marca = response.getCurrentPage().get(0);
                 tiendas = marca.getTiendas();
 
-                while (!flag) {
-                    try {
-                        object.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                synchronized (object) {
+                    while (!flag) {
+                        try {
+                            object.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 setUpMarcadores();
@@ -98,7 +104,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (latitud != null && longitud != null) {
                 LatLng latLng = new LatLng(latitud, longitud);
-                Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(tienda.getNombre_tienda()));
+                Marker marker = map.addMarker(new MarkerOptions().position(latLng));
                 marker.setTag(tienda);
             }
         }
@@ -131,6 +137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
             @Override
             public View getInfoWindow(Marker marker) {
                 return null;
@@ -138,6 +145,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public View getInfoContents(Marker marker) {
+
                 View view = getLayoutInflater().inflate(R.layout.maps_marker, null);
                 Tienda tienda = (Tienda) marker.getTag();
 
@@ -196,7 +204,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-
+                onWindowClick(marker);
             }
         });
 
@@ -204,6 +212,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             object.notify();
         }
         flag = true;
+    }
+
+    private void onWindowClick(Marker marker) {
+        Tienda tienda = (Tienda) marker.getTag();
+        String url = tienda.getPagina_web();
+
+        if (url != null) {
+            Intent intent = new Intent(this, WebActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.URL, url);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -215,7 +236,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                if (!getIntent().getExtras().getString(Constants.CALLER, "").equals("")) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    NavUtils.navigateUpTo(this, intent);
+                } else
+                    NavUtils.navigateUpFromSameTask(this);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

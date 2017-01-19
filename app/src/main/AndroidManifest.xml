@@ -77,6 +77,11 @@
                 android:value=".resultadosebikes.EBikeListActivity"/>
         </activity>
 
+        <activity
+            android:name=".utils.WebActivity"
+            android:theme="@style/AppTheme.ActionBar">
+        </activity>
+
         <service android:name="com.backendless.AndroidService"/>
 
     </application>

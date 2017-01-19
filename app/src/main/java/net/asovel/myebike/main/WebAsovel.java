@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import net.asovel.myebike.R;
+import net.asovel.myebike.utils.Constants;
 
 public class WebAsovel extends Fragment
 {
-    public static final String PAGINA_WEB = "PAGINA_WEB";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,10 +26,9 @@ public class WebAsovel extends Fragment
         super.onActivityCreated(state);
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(PAGINA_WEB);
+        String web = bundle.getString(Constants.URL);
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);
     }
 }
-//"https://docs.google.com/forms/d/e/1FAIpQLSfeXj1fan4L3Uc2O88EoLkUuwIyW2V4jXPDl1sNuX1a01q27A/viewform?c=0&w=1"
