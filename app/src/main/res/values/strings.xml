@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">My e-bike</string>
+    <string name="app_name">My e-Bike</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -13,11 +13,11 @@
     <string name="autonomia_text">Autonomía Km</string>
     <string name="presupuesto_text">Presupuesto</string>
 
-    <string name="welcome_title">Bienvenidos a My e-bike</string>
-    <string name="welcome_text">My e-bike, el mejor buscador de bicis eléctricas del sur de Europa.
+    <string name="welcome_title">Bienvenidos a My e-Bike</string>
+    <string name="welcome_text">My e-Bike, el mejor buscador de bicis eléctricas del sur de Europa.
         Encuentra la tuya entre miles de modelos y encargala al mejor precio en tu tienda más cercana.</string>
     <string name="welcome_button_sesion">Iniciar sesión</string>
-    <string name="welcome_button_sin_sesion">Usar ya</string>
+    <string name="welcome_button_sin_sesion">Comenzar</string>
 
     <string name="login_text">Iniciar sesión con:</string>
     <string name="facebook_button_text">Facebook</string>

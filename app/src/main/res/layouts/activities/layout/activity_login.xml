@@ -28,7 +28,8 @@
         android:layout_height="@dimen/login_button_height"
         android:layout_marginTop="@dimen/login_button_vertical_margin"
         android:background="@drawable/btn_facebook"
-        android:text="@string/facebook_button_text" />
+        android:text="@string/facebook_button_text"
+        android:textColor="@color/color_white" />
 
     <Button
         android:id="@+id/login_google_button"
@@ -36,6 +37,7 @@
         android:layout_height="@dimen/login_button_height"
         android:layout_marginTop="@dimen/login_button_vertical_margin"
         android:background="@drawable/btn_google"
-        android:text="@string/google_button_text" />
+        android:text="@string/google_button_text"
+        android:textColor="@color/color_white" />
 
 </LinearLayout>

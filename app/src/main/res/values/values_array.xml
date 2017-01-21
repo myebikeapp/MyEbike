@@ -36,7 +36,6 @@
         <item>100 Km</item>
         <item>110 Km</item>
         <item>120 Km</item>
-        <item>+ 120 Km</item>
     </string-array>
 
     <string-array name="motor">

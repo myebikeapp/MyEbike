@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
@@ -31,12 +32,12 @@ public class MyEBike extends Fragment {
 
     public static final String NAME = "MyEBike";
 
-    public static final String[] USO = {null, "ciudad", "carretera", "montana", "trekking", "plegables", "otras"};
-    public static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
-    public static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
-    public static final String[] MOTOR = {null, "delantero", "central", "trasero"};
-    public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
-    public static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
+    private static final String[] USO = {null, "ciudad", "carretera", "montaña", "trekking", "plegables", "otras"};
+    private static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
+    private static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
+    private static final String[] MOTOR = {null, "delantero", "central", "trasero"};
+    private static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
+    private static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
 
     private Spinner spinnerUso;
     private Spinner spinnerRueda;
@@ -102,10 +103,9 @@ public class MyEBike extends Fragment {
         spinnerAutonomia = (Spinner) getView().findViewById(R.id.spinner_autonomia);
         values = getResources().getStringArray(R.array.autonomia);
         adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
-                values, "Hasta", AUTONOMIA.length - 1, "Todas");
+                values, "Autonomía Km", 0, "Todas");
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerAutonomia.setAdapter(adaptador);
-        spinnerAutonomia.setSelection(AUTONOMIA.length - 1);
 
         spinnerPresupuestoInf = (Spinner) getView().findViewById(R.id.spinner_presupuesto_inf);
         values = getResources().getStringArray(R.array.presupuesto);
@@ -153,6 +153,7 @@ public class MyEBike extends Fragment {
         @Override
         @TargetApi(23)
         public View getView(int position, View convertView, ViewGroup parent) {
+
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.asistente_spinner_title, null);
             }
@@ -171,10 +172,10 @@ public class MyEBike extends Fragment {
             } else {
                 txtSubTitle.setTextSize(18);
 
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                int currentApiVersion = android.os.Build.VERSION.SDK_INT;
                 int color;
-                if (currentapiVersion < 23)
-                    color = getResources().getColor(R.color.colorAccent, null);
+                if (currentApiVersion < 23)
+                    color = getResources().getColor(R.color.colorAccent);
                 else
                     color = getResources().getColor(R.color.colorAccent, null);
 
@@ -202,6 +203,17 @@ public class MyEBike extends Fragment {
         spinnerUso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+                if ((position == 2 || position == 3 || position == 4) && diametroRuedaInf == DIAMETRO_RUEDA[2]) {
+                    spinnerUso.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + USO[position] + " con un diámetro de rueda pequeño", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (position == 5 && diametroRuedaInf == DIAMETRO_RUEDA[6]) {
+                    spinnerUso.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes " + USO[position] + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 uso = USO[position];
             }
 
@@ -213,6 +225,18 @@ public class MyEBike extends Fragment {
         spinnerRueda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+
+                if (position == 1 && (uso == USO[2] || uso == USO[3] || uso == USO[4])) {
+                    spinnerRueda.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + uso + " con un diámetro de rueda pequeño", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (position == 3 && uso == USO[5]) {
+                    spinnerRueda.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes " + uso + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 diametroRuedaInf = DIAMETRO_RUEDA[position * 2];
                 diametroRuedaSup = DIAMETRO_RUEDA[position * 2 + 1];
             }
@@ -247,6 +271,13 @@ public class MyEBike extends Fragment {
         spinnerAutonomia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+             /*   //if (position >= 2 && presupuestoInf)
+
+                if (position >= 2 && motor == "central") {
+                    spinnerAutonomia.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes con motor " + motor + " i una autonomía superior a 50 km", Toast.LENGTH_LONG).show();
+                }*/
                 autonomia = AUTONOMIA[position];
             }
 
@@ -316,13 +347,16 @@ public class MyEBike extends Fragment {
         ArrayList<String> listClauses = new ArrayList<>();
 
         if (uso != null)
-            listClauses.add("uso = '" + uso + "'");
+            if (uso != "montaña")
+                listClauses.add("uso = '" + uso + "'");
+            else
+                listClauses.add("uso = 'montana'");
         if (diametroRuedaInf != 0)
             listClauses.add("tamano_ruedas >= " + diametroRuedaInf + " and tamano_ruedas <= " + diametroRuedaSup);
         if (suspension != null)
             listClauses.add("suspension = '" + suspension + "'");
-        if (autonomia != AUTONOMIA[AUTONOMIA.length - 1])
-            listClauses.add("autonomia <= " + autonomia);
+        if (autonomia != AUTONOMIA[0])
+            listClauses.add("autonomia >= " + autonomia);
         if (motor != null)
             listClauses.add("ubicacion_motor = '" + motor + "'");
         if (presupuestoInf != PRESUPUESTO[0])
@@ -340,8 +374,8 @@ public class MyEBike extends Fragment {
         spinnerUso.setSelection(0);
         spinnerRueda.setSelection(0);
         spinnerSuspension.setSelection(0);
-        spinnerAutonomia.setSelection(AUTONOMIA.length - 1);
         spinnerMotor.setSelection(0);
+        spinnerAutonomia.setSelection(0);
         spinnerPresupuestoInf.setSelection(0);
         spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
     }
