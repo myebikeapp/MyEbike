@@ -60,7 +60,7 @@ public class Query {
 
         dataQuery.setQueryOptions(queryOptions);
 
-        Backendless.Persistence.of(EBike.class).find(dataQuery, new DefaultCallback<BackendlessCollection<EBike>>(context) {
+        Backendless.Data.of(EBike.class).find(dataQuery, new DefaultCallback<BackendlessCollection<EBike>>(context) {
             @Override
             public void handleResponse(BackendlessCollection<EBike> response) {
                 super.handleResponse(response);
@@ -75,8 +75,7 @@ public class Query {
         });
     }
 
-    public int getTotalPages(int pageSize)
-    {
+    public int getTotalPages(int pageSize) {
         if (collection == null)
             return 0;
 

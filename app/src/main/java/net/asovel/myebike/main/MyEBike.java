@@ -219,6 +219,9 @@ public class MyEBike extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                int a=8;
+                double b = 5.3;
+                a = (int) (a*b);
             }
         });
 

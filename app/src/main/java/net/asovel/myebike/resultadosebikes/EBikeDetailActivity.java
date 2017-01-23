@@ -112,7 +112,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(EBikeDetailActivity.this, MapsActivity.class);
         Bundle bundle = new Bundle();
         String nombreMarca = marca.getNombre();
-        bundle.putString(MapsActivity.NOMBRE_MARCA, nombreMarca);
+        bundle.putString(Constants.NOMBRE_MARCA, nombreMarca);
 
         if (!caller.equals(""))
             bundle.putString(Constants.CALLER, caller);

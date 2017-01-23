@@ -1,23 +1,35 @@
 package net.asovel.myebike.resultadosebikes;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,9 +45,10 @@ import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMyLocationButtonClickListener {
 
-    public static final String NOMBRE_MARCA = "NOMBRE_MARCA";
+    private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
     private GoogleMap map;
     private List<Tienda> tiendas;
@@ -63,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
 
-        String nombre = bundle.getString(NOMBRE_MARCA, "sin nombre");
+        String nombre = bundle.getString(Constants.NOMBRE_MARCA, "sin nombre");
         String whereClause = "nombre = '" + nombre + "'";
         dataQuery.setWhereClause(whereClause);
 
@@ -114,7 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
-        map.getUiSettings().setZoomControlsEnabled(true);
+        //map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
 
         CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
@@ -208,10 +221,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        ImageView v = (ImageView) findViewById(R.id.localization_image);
+        v.setVisibility(View.VISIBLE);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                localizacion1();
+            }
+        });
+
+        flag = true;
         synchronized (object) {
             object.notify();
         }
-        flag = true;
     }
 
     private void onWindowClick(Marker marker) {
@@ -225,6 +247,79 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             intent.putExtras(bundle);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+
+        /*Location l = map.getMyLocation();
+        CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(l.getLatitude(), l.getLongitude()), 12);
+        map.moveCamera(camUpd);
+        return true;*/
+        return true;
+    }
+
+    private void localizacion1() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PETICION_PERMISO_LOCALIZACION);
+        } else {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+            Log.d("TAG", "loc click");
+            map.setOnMyLocationButtonClickListener(this);
+            onMyLocationButtonClick();
+        }
+    }
+
+    private void localizacion2() {
+
+        GoogleApiClient apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .build();
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PETICION_PERMISO_LOCALIZACION);
+        } else {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+            Log.d("TAG", "loc click");
+            map.setOnMyLocationButtonClickListener(this);
+            onMyLocationButtonClick();
+
+        }
+    }
+
+    @SuppressWarnings("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
+
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                map.setMyLocationEnabled(true);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+                onMyLocationButtonClick();
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        Toast.makeText(this, "Error grave al conectar con Google Play Services", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -246,4 +341,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

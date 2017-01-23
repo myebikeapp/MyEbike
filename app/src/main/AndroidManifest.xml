@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.asovel.myebike">
+    package="net.asovel.myebike">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".backendless.common.DataApplication"
@@ -13,46 +14,44 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAmCJ4HNTFRQZZhd_7W4eIPLMX-v8QhzEQ"/>
+            android:value="AIzaSyAmCJ4HNTFRQZZhd_7W4eIPLMX-v8QhzEQ" />
 
         <uses-feature
             android:glEsVersion="0x00020000"
-            android:required="true"/>
+            android:required="true" />
 
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/AppTheme.ActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.ActionBar">
-        </activity>
+            android:theme="@style/AppTheme.ActionBar"></activity>
 
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"></activity>
 
         <activity
             android:name=".resultadosebikes.EBikeListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Resultados de Búsqueda"
-            android:parentActivityName=".main.MainActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppTheme.NoTransparent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".main.MainActivity"/>
+                android:value=".main.MainActivity" />
         </activity>
 
         <activity
@@ -63,7 +62,7 @@
             android:theme="@style/AppTheme.NoTransparent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".resultadosebikes.EBikeListActivity"/>
+                android:value=".resultadosebikes.EBikeListActivity" />
         </activity>
 
         <activity
@@ -74,15 +73,14 @@
             android:theme="@style/AppTheme.ActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".resultadosebikes.EBikeListActivity"/>
+                android:value=".resultadosebikes.EBikeListActivity" />
         </activity>
 
         <activity
             android:name=".utils.WebActivity"
-            android:theme="@style/AppTheme.ActionBar">
-        </activity>
+            android:theme="@style/AppTheme.ActionBar"></activity>
 
-        <service android:name="com.backendless.AndroidService"/>
+        <service android:name="com.backendless.AndroidService" />
 
     </application>
 
