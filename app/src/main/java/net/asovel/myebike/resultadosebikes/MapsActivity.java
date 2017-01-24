@@ -1,7 +1,9 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,12 +26,20 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -46,11 +56,20 @@ import net.asovel.myebike.utils.WebActivity;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleMap.OnMyLocationButtonClickListener {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
+
+    private static final String TAG = MapsActivity.class.getSimpleName();
 
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
+    private static final int PETICION_CONFIG_UBICACION = 201;
 
     private GoogleMap map;
+    private GoogleApiClient apiClient;
+    private LocationRequest locRequest;
+    private Location location;
+    private boolean is = false;
+    private boolean so = false;
+
     private List<Tienda> tiendas;
     private Object object = new Object();
     private volatile boolean flag = false;
@@ -65,6 +84,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -125,7 +150,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         this.map = googleMap;
+
+        ImageView localizationImage = (ImageView) findViewById(R.id.localization_image);
+        localizationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (is)
+                    updateLocation();
+                else
+                    enableLocation();
+            }
+        });
 
         //map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
@@ -178,9 +215,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 String direccion = tienda.getDireccion();
                 if (direccion != null) {
+
                     TextView direccionV = (TextView) view.findViewById(R.id.marker_direccion);
-                    direccionV.setText(direccion);
                     direccionV.setVisibility(View.VISIBLE);
+
+                    Integer numero = tienda.getNumero();
+                    if (numero != null)
+                        direccionV.setText(direccion + " " + numero.intValue());
+                    else
+                        direccionV.setText(direccion);
                 }
 
                 String codigo = tienda.getCodigo_postal();
@@ -221,15 +264,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        ImageView v = (ImageView) findViewById(R.id.localization_image);
-        v.setVisibility(View.VISIBLE);
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                localizacion1();
-            }
-        });
-
         flag = true;
         synchronized (object) {
             object.notify();
@@ -249,51 +283,79 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    @Override
-    public boolean onMyLocationButtonClick() {
+    private void enableLocation() {
 
-        /*Location l = map.getMyLocation();
-        CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(l.getLatitude(), l.getLongitude()), 12);
-        map.moveCamera(camUpd);
-        return true;*/
-        return true;
+        locRequest = new LocationRequest();
+        locRequest.setInterval(2000);
+        locRequest.setFastestInterval(1000);
+        locRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        LocationSettingsRequest locSettingsRequest =
+                new LocationSettingsRequest.Builder()
+                        .addLocationRequest(locRequest)
+                        .build();
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(apiClient, locSettingsRequest);
+
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult locationSettingsResult) {
+
+                final Status status = locationSettingsResult.getStatus();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+
+                        Log.d(TAG, "Configuración correcta");
+                        startLocationUpdates();
+                        break;
+
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            Log.d(TAG, "Se requiere actuación del usuario");
+                            status.startResolutionForResult(MapsActivity.this, PETICION_CONFIG_UBICACION);
+
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.d(TAG, "Error al intentar solucionar configuración de ubicación");
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.d(TAG, "No se puede cumplir la configuración de ubicación necesaria");
+                        Toast.makeText(MapsActivity.this, "No se puede cumplir la configuración de ubicación necesaria", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
     }
 
-    private void localizacion1() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PETICION_PERMISO_LOCALIZACION);
-        } else {
-            map.setMyLocationEnabled(true);
-            map.getUiSettings().setMyLocationButtonEnabled(false);
-            Log.d("TAG", "loc click");
-            map.setOnMyLocationButtonClickListener(this);
-            onMyLocationButtonClick();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case PETICION_CONFIG_UBICACION:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        startLocationUpdates();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.d(TAG, "El usuario no ha realizado los cambios de configuración necesarios");
+                        break;
+                }
+                break;
         }
     }
 
-    private void localizacion2() {
-
-        GoogleApiClient apiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addConnectionCallbacks(this)
-                .build();
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
+    private void startLocationUpdates() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PETICION_PERMISO_LOCALIZACION);
-        } else {
-            map.setMyLocationEnabled(true);
-            map.getUiSettings().setMyLocationButtonEnabled(false);
-            Log.d("TAG", "loc click");
-            map.setOnMyLocationButtonClickListener(this);
-            onMyLocationButtonClick();
 
+        } else {
+            Log.d(TAG, "Inicio de recepción de ubicaciones");
+            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locRequest, this);
+            is = true;
+            so = true;
         }
     }
 
@@ -304,22 +366,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (requestCode == PETICION_PERMISO_LOCALIZACION) {
 
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-                onMyLocationButtonClick();
+
+                Log.d(TAG, "Inicio de recepción de ubicaciones");
+                LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locRequest, this);
+                is = true;
+                so = true;
             }
         }
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
+    public void onLocationChanged(Location location) {
 
+        synchronized (this.location) {
+            this.location = location;
+        }
+        if (so) {
+            so = false;
+            updateLocation();
+        }
+    }
+
+    private void updateLocation() {
+
+        if (location != null) {
+            LatLng latLng;
+
+            synchronized (location) {
+                latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            }
+            CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            map.animateCamera(camUpd);
+        }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
         Toast.makeText(this, "Error grave al conectar con Google Play Services", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
     }
 
     @Override
@@ -341,5 +432,4 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
