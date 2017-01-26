@@ -43,7 +43,7 @@ public class TopVentas extends Fragment implements EBikesCallback {
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
 
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycleView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.top_ventas_recycleView);
 
         ArrayList<String> listClauses = new ArrayList<>();
         listClauses.add("valoracion_SORT1 = 5");

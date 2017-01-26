@@ -22,6 +22,7 @@ import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.backendless.data.EBike;
+import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ import java.util.List;
 
 public class EBikeListActivity extends AppCompatActivity
 {
-    public static final String WHERECLAUSE = "WHERECLAUSE";
-    public static final String SORTBY = "SORTBY";
+    private static final String TAG = EBikeListActivity.class.getSimpleName();
 
     public static final int PAGESIZE = 7;
 
@@ -62,7 +62,7 @@ public class EBikeListActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        recyclerView = (RecyclerView) findViewById(R.id.top_ventas_recycleView);
     }
 
     private void launchQuery()
@@ -71,7 +71,7 @@ public class EBikeListActivity extends AppCompatActivity
 
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
 
-        List<String> listClauses = bundle.getStringArrayList(WHERECLAUSE);
+        List<String> listClauses = bundle.getStringArrayList(Constants.WHERECLAUSE);
 
         if (listClauses != null)
         {
@@ -83,7 +83,7 @@ public class EBikeListActivity extends AppCompatActivity
 
             String whereClause = builder.substring(5);
             dataQuery.setWhereClause(whereClause);
-            Log.w("hola", whereClause);
+            Log.d(TAG, whereClause);
         }
 
         QueryOptions queryOptions = new QueryOptions();
@@ -92,7 +92,7 @@ public class EBikeListActivity extends AppCompatActivity
 
         queryOptions.setPageSize(PAGESIZE);
 
-        List<String> sortBy = bundle.getStringArrayList(SORTBY);
+        List<String> sortBy = bundle.getStringArrayList(Constants.SORTBY);
 
         if (sortBy == null)
         {
@@ -115,6 +115,7 @@ public class EBikeListActivity extends AppCompatActivity
                 if (response.getCurrentPage().size() == 0)
                 {
                     Toast.makeText(EBikeListActivity.this, "Hem de posar mes bicis al Backendless", Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
                 collection = response;

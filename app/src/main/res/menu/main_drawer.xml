@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_menu_buscador"
             android:title="Encuentra tu Bici Eléctrica"/>
         <item
+            android:id="@+id/menu_buscar_marca"
+            android:icon="@drawable/ic_menu_buscador"
+            android:title="Buscar por Marcas"/>
+        <item
             android:id="@+id/menu_antes"
             android:icon="@drawable/ic_menu_antescomprar"
             android:title="Antes de comprar"/>

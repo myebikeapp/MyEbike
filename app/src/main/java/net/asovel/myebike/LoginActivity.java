@@ -148,8 +148,8 @@ public class LoginActivity extends Activity {
         if (caller.equals(MyEBike.NAME)) {
             intent = new Intent(getBaseContext(), EBikeListActivity.class);
             Bundle bundletransmitter = new Bundle();
-            ArrayList<String> listClauses = bundle.getStringArrayList(EBikeListActivity.WHERECLAUSE);
-            bundletransmitter.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
+            ArrayList<String> listClauses = bundle.getStringArrayList(Constants.WHERECLAUSE);
+            bundletransmitter.putStringArrayList(Constants.WHERECLAUSE, listClauses);
             intent.putExtras(bundletransmitter);
             startActivity(intent);
             finish();

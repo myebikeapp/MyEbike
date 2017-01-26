@@ -331,7 +331,7 @@ public class MyEBike extends Fragment {
                 Bundle bundle = new Bundle();
 
                 ArrayList<String> listClauses = setupWhereClause();
-                bundle.putStringArrayList(EBikeListActivity.WHERECLAUSE, listClauses);
+                bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
 
                 if (email.equals("")) {
                     intent = new Intent(getContext(), LoginActivity.class);

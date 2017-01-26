@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setConnected(String email) {
 
-        MenuItem item = navigationView.getMenu().getItem(5);
+        MenuItem item = navigationView.getMenu().getItem(6);
 
         if (!email.equals("")) {
             connected = true;
@@ -142,9 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MyEBike();
                 fabVisibility = true;
                 break;
-            case R.id.menu_nosotros:
-                fragment = new WebAsovel();
-                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=484");
+            case R.id.menu_buscar_marca:
+                fragment = new BuscarMarca();
                 break;
             case R.id.menu_antes:
                 fragment = new WebAsovel();
@@ -153,6 +152,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_asovel:
                 fragment = new WebAsovel();
                 bundle.putString(Constants.URL, "http://www.asovel.net/");
+                break;
+            case R.id.menu_nosotros:
+                fragment = new WebAsovel();
+                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=484");
                 break;
             case R.id.menu_sesion:
                 if (connected) {

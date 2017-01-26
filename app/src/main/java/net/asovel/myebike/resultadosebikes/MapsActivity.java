@@ -389,14 +389,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void updateLocation() {
 
-        if (location != null) {
-            LatLng latLng;
-
-            synchronized (location) {
+        synchronized (location) {
+            if (location != null) {
+                LatLng latLng;
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                map.animateCamera(camUpd);
             }
-            CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-            map.animateCamera(camUpd);
         }
     }
 

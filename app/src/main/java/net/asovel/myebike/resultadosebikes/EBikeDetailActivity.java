@@ -126,8 +126,9 @@ public class EBikeDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (!caller.equals("")) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    NavUtils.navigateUpTo(this, intent);
+                 //   Intent intent = new Intent(this, MainActivity.class);
+                 //   NavUtils.navigateUpTo(this, intent);
+                    finish();
                 } else
                     NavUtils.navigateUpFromSameTask(this);
 
