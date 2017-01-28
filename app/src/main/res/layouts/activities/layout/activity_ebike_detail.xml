@@ -81,7 +81,7 @@
                     android:layout_below="@+id/detail_precio"
                     android:paddingTop="4dp"
                     android:progressTint="@color/color_ratingbar"
-                    android:rating="5"
+                    android:rating="0"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:transformPivotX="-10dp" />
@@ -100,6 +100,8 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
                         android:background="@drawable/maps_icon" />
 
                 </android.support.v7.widget.CardView>
@@ -205,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp"/>
+                android:paddingRight="16dp" />
 
         </LinearLayout>
 

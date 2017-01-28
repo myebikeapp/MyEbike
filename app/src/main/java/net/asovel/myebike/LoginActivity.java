@@ -145,7 +145,7 @@ public class LoginActivity extends Activity {
 
         Intent intent;
 
-        if (caller.equals(MyEBike.NAME)) {
+        if (caller.equals(MyEBike.TAG)) {
             intent = new Intent(getBaseContext(), EBikeListActivity.class);
             Bundle bundletransmitter = new Bundle();
             ArrayList<String> listClauses = bundle.getStringArrayList(Constants.WHERECLAUSE);
@@ -154,7 +154,7 @@ public class LoginActivity extends Activity {
             startActivity(intent);
             finish();
 
-        } else if (caller.equals(MainActivity.NAME)){
+        } else if (caller.equals(MainActivity.TAG)){
             intent = new Intent(getBaseContext(), MainActivity.class);
             NavUtils.navigateUpTo(this, intent);
 

@@ -12,29 +12,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,20 +41,13 @@ import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
-    private static final int PETICION_CONFIG_UBICACION = 201;
 
     private GoogleMap map;
-    private GoogleApiClient apiClient;
-    private LocationRequest locRequest;
-    private Location location;
-    private boolean is = false;
-    private boolean so = false;
 
     private List<Tienda> tiendas;
     private Object object = new Object();
@@ -84,12 +63,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        apiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .build();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -152,17 +125,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
 
         this.map = googleMap;
-
-        ImageView localizationImage = (ImageView) findViewById(R.id.localization_image);
-        localizationImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (is)
-                    updateLocation();
-                else
-                    enableLocation();
-            }
-        });
 
         //map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
@@ -283,6 +245,65 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @SuppressWarnings("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
+
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (!getIntent().getExtras().getString(Constants.CALLER, "").equals("")) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    NavUtils.navigateUpTo(this, intent);
+                } else
+                    NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+/*import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+
+implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener
+
+private static final int PETICION_CONFIG_UBICACION = 201;
+
+private GoogleApiClient apiClient;
+private LocationRequest locRequest;
+private Location location;
+
+apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+
     private void enableLocation() {
 
         locRequest = new LocationRequest();
@@ -354,24 +375,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             Log.d(TAG, "Inicio de recepción de ubicaciones");
             LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locRequest, this);
-            is = true;
-            so = true;
-        }
-    }
-
-    @SuppressWarnings("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
-
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                Log.d(TAG, "Inicio de recepción de ubicaciones");
-                LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locRequest, this);
-                is = true;
-                so = true;
-            }
         }
     }
 
@@ -380,23 +383,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         synchronized (this.location) {
             this.location = location;
-        }
-        if (so) {
-            so = false;
-            updateLocation();
-        }
-    }
-
-    private void updateLocation() {
-
-        synchronized (location) {
-            if (location != null) {
-                LatLng latLng;
-                latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-                map.animateCamera(camUpd);
-            }
         }
     }
 
@@ -413,23 +399,4 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionSuspended(int i) {
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (!getIntent().getExtras().getString(Constants.CALLER, "").equals("")) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    NavUtils.navigateUpTo(this, intent);
-                } else
-                    NavUtils.navigateUpFromSameTask(this);
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-}
+*/

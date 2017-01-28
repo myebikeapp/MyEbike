@@ -2,14 +2,12 @@ package net.asovel.myebike.resultadosebikes;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -105,13 +103,13 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onClick(View view)   {
+    public void onClick(View view) {
         listener.onClick(view);
     }
 
     public class BicicletasViewHolder extends RecyclerView.ViewHolder {
 
-        public static final int IMAGE_WIDTH = 350;
+        public static final int IMAGE_WIDTH = 384;
         public static final int IMAGE_HEIGHT = 256;
 
         private ImageView imagen;
@@ -160,23 +158,30 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .placeholder(R.drawable.ebike)
                         .resize(IMAGE_WIDTH, IMAGE_HEIGHT)
                         .into(imagen);
-            }
-            if (eBike.getMarca() != null) {
+            } else
+                imagen.setImageResource(R.drawable.ebike);
+
+            if (eBike.getMarca() != null)
                 marcaModelo.setText(eBike.getMarca().getNombre());
-                marcaModelo.setVisibility(View.VISIBLE);
-            }
-            if (eBike.getModelo() != null) {
+            else
+                marcaModelo.setText("");
+
+
+            if (eBike.getModelo() != null)
                 marcaModelo.setText(marcaModelo.getText() + " " + eBike.getModelo());
-                marcaModelo.setVisibility(View.VISIBLE);
-            }
-            if (eBike.getPrecio_SORT2() != null) {
+            else
+                marcaModelo.setText(marcaModelo.getText());
+
+
+            if (eBike.getPrecio_SORT2() != null)
                 precio.setText("" + eBike.getPrecio_SORT2() + " €");
-                precio.setVisibility(View.VISIBLE);
-            }
-            if (eBike.getValoracion_SORT1() != null) {
+            else
+                precio.setText("");
+
+            if (eBike.getValoracion_SORT1() != null)
                 valoracion.setRating(eBike.getValoracion_SORT1());
-                valoracion.setVisibility(View.VISIBLE);
-            }
+            else
+                valoracion.setRating(0f);
         }
     }
 

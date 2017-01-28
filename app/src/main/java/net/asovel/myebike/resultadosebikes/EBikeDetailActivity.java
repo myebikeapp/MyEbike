@@ -60,6 +60,8 @@ public class EBikeDetailActivity extends AppCompatActivity {
                     .placeholder(R.drawable.ebike)
                     .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
                     .into(imagen);
+        } else {
+            imagen.setImageResource(R.drawable.ebike);
         }
 
         if (parcelableEBike.getMarca() != null)

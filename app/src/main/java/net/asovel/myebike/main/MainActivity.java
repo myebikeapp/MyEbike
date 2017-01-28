@@ -11,6 +11,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +23,11 @@ import com.backendless.Backendless;
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.Defaults;
-import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.Constants;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String NAME = "MainActivity";
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -46,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
         iniUI();
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        Log.e(TAG, "" + dpWidth);
     }
 
     private void iniUI() {
@@ -102,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
@@ -111,10 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.menu_myebike_appbar:
-                MenuItem item1 = navigationView.getMenu().getItem(1);
-                onNavigationItemSelected(item1);
                 return true;
         }
         return false;
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 }
                 Intent intent = new Intent(this, LoginActivity.class);
-                bundle.putString(Constants.CALLER, NAME);
+                bundle.putString(Constants.CALLER, TAG);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 return true;

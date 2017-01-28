@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/floating_button_margin"
-        app:srcCompat="@android:drawable/ic_menu_search"
+        app:srcCompat="@drawable/ic_menu_buscador_white"
         android:visibility="invisible"/>
 
 </android.support.design.widget.CoordinatorLayout>

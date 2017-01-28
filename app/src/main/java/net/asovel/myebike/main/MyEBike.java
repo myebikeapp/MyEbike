@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 
 public class MyEBike extends Fragment {
 
-    public static final String NAME = "MyEBike";
+    public static final String TAG = MyEBike.class.getSimpleName();
 
     private static final String[] USO = {null, "ciudad", "carretera", "montaña", "trekking", "plegables", "otras"};
     private static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
@@ -103,7 +104,7 @@ public class MyEBike extends Fragment {
         spinnerAutonomia = (Spinner) getView().findViewById(R.id.spinner_autonomia);
         values = getResources().getStringArray(R.array.autonomia);
         adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
-                values, "Autonomía Km", 0, "Todas");
+                values, "Autonomía mínima", 0, "Todas");
         adaptador.setDropDownViewResource(R.layout.asistente_spinner_list);
         spinnerAutonomia.setAdapter(adaptador);
 
@@ -219,9 +220,9 @@ public class MyEBike extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                int a=8;
+                int a = 8;
                 double b = 5.3;
-                a = (int) (a*b);
+                a = (int) (a * b);
             }
         });
 
@@ -263,6 +264,29 @@ public class MyEBike extends Fragment {
         spinnerMotor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+                if ((position == 1 || position == 3) && (autonomia >= AUTONOMIA[2])) {
+                    spinnerMotor.setSelection(0);
+                    Toast.makeText(getContext(), "Sólo las e-bikes con motor central disponen de una autonomía mínima de " + autonomia + " Km", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (position == 2) {
+                    boolean toastShown = false;
+
+                    if (presupuestoSup <= PRESUPUESTO[5]) {
+                        spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
+                        presupuestoSup = PRESUPUESTO[PRESUPUESTO.length - 1]; //Sense aquesta intrucció: pressupuestoInf = +5000€;
+                        toastShown = true;
+                        Toast.makeText(getContext(), "Las e-bikes con motor central empiezan a partir de " + PRESUPUESTO[5] + "€", Toast.LENGTH_LONG).show();
+                    }
+                    if (presupuestoInf < PRESUPUESTO[5]) {
+                        spinnerPresupuestoInf.setSelection(5);
+
+                        if (!toastShown) {
+                            Toast.makeText(getContext(), "Las e-bikes con motor central empiezan a partir de " + PRESUPUESTO[5] + "€", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
                 motor = MOTOR[position];
             }
 
@@ -275,12 +299,11 @@ public class MyEBike extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-             /*   //if (position >= 2 && presupuestoInf)
-
-                if (position >= 2 && motor == "central") {
+                if (position >= 2 && (motor == MOTOR[1] || motor == MOTOR[3])) {
                     spinnerAutonomia.setSelection(0);
-                    Toast.makeText(getContext(), "No existen e-bikes con motor " + motor + " i una autonomía superior a 50 km", Toast.LENGTH_LONG).show();
-                }*/
+                    Toast.makeText(getContext(), "Sólo las e-bikes con motor central disponen de una autonomía mínima de " + AUTONOMIA[position] + " Km", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 autonomia = AUTONOMIA[position];
             }
 
@@ -292,6 +315,13 @@ public class MyEBike extends Fragment {
         spinnerPresupuestoInf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+                if (position < 5 && motor == MOTOR[2]) {
+                    spinnerPresupuestoInf.setSelection(5);
+                    Toast.makeText(getContext(), "Las e-bikes con motor central empiezan a partir de " + PRESUPUESTO[5] + "€", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (presupuestoSup < PRESUPUESTO[position]) {
                     spinnerPresupuestoInf.setSelection(spinnerPresupuestoSup.getSelectedItemPosition());
                     spinnerPresupuestoSup.setSelection(position);
@@ -308,6 +338,13 @@ public class MyEBike extends Fragment {
         spinnerPresupuestoSup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+                if (position <= 5 && motor == MOTOR[2]) {
+                    spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
+                    Toast.makeText(getContext(), "Las e-bikes con motor central empiezan a partir de " + PRESUPUESTO[5] + "€", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (presupuestoInf > PRESUPUESTO[position]) {
                     spinnerPresupuestoSup.setSelection(spinnerPresupuestoInf.getSelectedItemPosition());
                     spinnerPresupuestoInf.setSelection(position);
@@ -335,7 +372,7 @@ public class MyEBike extends Fragment {
 
                 if (email.equals("")) {
                     intent = new Intent(getContext(), LoginActivity.class);
-                    bundle.putString(Constants.CALLER, NAME);
+                    bundle.putString(Constants.CALLER, TAG);
                 } else {
                     intent = new Intent(getContext(), EBikeListActivity.class);
                 }

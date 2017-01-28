@@ -35,8 +35,7 @@
             android:layout_marginRight="@dimen/cardview_text_horizontal_margin"
             android:layout_marginTop="@dimen/cardview_text_vertical_margin"
             android:textColor="@color/color_black"
-            android:textSize="@dimen/text_marca_y_modelo"
-            android:visibility="gone" />
+            android:textSize="@dimen/text_marca_y_modelo" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:textSize="@dimen/text_precio"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:textStyle="bold" />
 
             <RatingBar
                 android:id="@+id/list_valoracion"
@@ -60,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:progressTint="@color/color_ratingbar"
-                android:rating="5"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:transformPivotX="130dp" />

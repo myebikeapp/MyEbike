@@ -7,8 +7,8 @@
         <item>Carretera</item>
         <item>Montaña</item>
         <item>Trekking</item>
-        <item>Plegables</item>
-        <item>Otras</item>
+        <item>Ciudad plegable</item>
+        <item>Otros</item>
     </string-array>
 
     <string-array name="tamano_rueda">

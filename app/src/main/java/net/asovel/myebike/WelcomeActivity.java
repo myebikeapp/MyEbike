@@ -32,7 +32,7 @@ public class WelcomeActivity extends Activity {
 
     private void initUI() {
         Button loginButton = (Button) findViewById(R.id.login_button);
-        Button sinLoginButton = (Button) findViewById(R.id.sin_login_button);
+        Button sinLoginButton = (Button) findViewById(R.id.button_comenzar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

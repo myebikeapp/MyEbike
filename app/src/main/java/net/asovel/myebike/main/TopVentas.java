@@ -94,7 +94,7 @@ public class TopVentas extends Fragment implements EBikesCallback {
         int position = getlimInf() + recyclerView.getChildAdapterPosition(view);
         ParcelableEBike parcelableEBike = ParcelableEBike.fromEBike(eBikes.get(position));
         bundle.putParcelable(ParcelableEBike.PARCELABLEEBIKE, parcelableEBike);
-        bundle.putString(Constants.CALLER, MainActivity.NAME);
+        bundle.putString(Constants.CALLER, MainActivity.TAG);
         intent.putExtras(bundle);
         getContext().startActivity(intent);
     }
