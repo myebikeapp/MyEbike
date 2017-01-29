@@ -20,17 +20,29 @@
             android:icon="@drawable/ic_menu_antescomprar"
             android:title="Antes de comprar"/>
         <item
-            android:id="@+id/menu_asovel"
-            android:icon="@drawable/ic_menu_asovel"
-            android:title="Asovel"/>
-        <item
             android:id="@+id/menu_nosotros"
             android:icon="@drawable/ic_menu_nosotros"
             android:title="Sobre nosotros"/>
-        <item
-            android:id="@+id/menu_sesion"
-            android:icon="@drawable/ic_menu_registro"
-            android:title=""/>
+
     </group>
+
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="Otras opciones">
+        <menu>
+            <item
+                android:id="@+id/menu_sesion"
+                android:icon="@drawable/ic_menu_registro"
+                android:title=""/>
+            <item
+                android:id="@+id/menu_noticias"
+                android:icon="@drawable/ic_menu_asovel"
+                android:title="Notícias"/>
+            <item
+                android:id="@+id/menu_acerca_de"
+                android:icon="@drawable/ic_menu_buscador_white"
+                android:title="Acerca de"/>
+        </menu>
+    </item>
 
 </menu>

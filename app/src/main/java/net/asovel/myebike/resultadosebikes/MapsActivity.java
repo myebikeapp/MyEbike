@@ -26,6 +26,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -41,7 +43,8 @@ import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnMyLocationButtonClickListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -115,7 +118,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (latitud != null && longitud != null) {
                 LatLng latLng = new LatLng(latitud, longitud);
-                Marker marker = map.addMarker(new MarkerOptions().position(latLng));
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(latLng));
                 marker.setTag(tienda);
             }
         }
@@ -128,6 +132,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PETICION_PERMISO_LOCALIZACION);
+
+        } else {
+            map.setMyLocationEnabled(true);
+            map.setOnMyLocationButtonClickListener(this);
+        }
 
         CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
         map.moveCamera(camUpd);
@@ -245,6 +258,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @Override
+    public boolean onMyLocationButtonClick() {
+
+        /*CameraUpdate camUpd = CameraUpdateFactory.zoomTo(14);
+        map.moveCamera(camUpd);*/
+        return false;
+    }
+
     @SuppressWarnings("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -253,7 +274,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-
+                map.setMyLocationEnabled(true);
+                map.setOnMyLocationButtonClickListener(this);
             }
         }
     }

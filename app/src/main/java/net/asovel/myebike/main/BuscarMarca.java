@@ -1,6 +1,8 @@
 package net.asovel.myebike.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.Constants;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuscarMarca extends Fragment {
+
+    public static final String TAG = BuscarMarca.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private String[] marcas;
@@ -51,12 +56,24 @@ public class BuscarMarca extends Fragment {
 
     private void onItemClick(View view)
     {
-        Intent intent = new Intent(getContext(), EBikeListActivity.class);
+        SharedPreferences prefs = getActivity().getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", "");
+
+        Intent intent;
         Bundle bundle = new Bundle();
+
+        ArrayList<String> listClauses = new ArrayList<>(1);
         int position = recyclerView.getChildAdapterPosition(view);
-        ArrayList<String> marca = new ArrayList<>(1);
-        marca.add("marca.nombre = '" + marcas[position] + "'");
-        bundle.putStringArrayList(Constants.WHERECLAUSE, marca);
+        listClauses.add("marca.nombre = '" + marcas[position] + "'");
+        bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
+
+        if (email.equals("")) {
+            intent = new Intent(getContext(), LoginActivity.class);
+            bundle.putString(Constants.CALLER, TAG);
+        } else {
+            intent = new Intent(getContext(), EBikeListActivity.class);
+        }
+
         intent.putExtras(bundle);
         startActivity(intent);
     }

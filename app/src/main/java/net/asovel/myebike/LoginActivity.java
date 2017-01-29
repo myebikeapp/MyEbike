@@ -19,6 +19,7 @@ import com.backendless.BackendlessUser;
 
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
+import net.asovel.myebike.main.BuscarMarca;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
@@ -145,7 +146,7 @@ public class LoginActivity extends Activity {
 
         Intent intent;
 
-        if (caller.equals(MyEBike.TAG)) {
+        if (caller.equals(MyEBike.TAG) || caller.equals(BuscarMarca.TAG)) {
             intent = new Intent(getBaseContext(), EBikeListActivity.class);
             Bundle bundletransmitter = new Bundle();
             ArrayList<String> listClauses = bundle.getStringArrayList(Constants.WHERECLAUSE);
