@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setConnected(String email) {
 
-        MenuItem item = navigationView.getMenu().findItem(R.id.menu_sesion);
+        MenuItem item = navigationView.getMenu().getItem(5);
 
         if (!email.equals("")) {
             connected = true;
