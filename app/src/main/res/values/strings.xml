@@ -23,4 +23,30 @@
     <string name="facebook_button_text">Facebook</string>
     <string name="google_button_text">Google+</string>
 
+    <string name="antes_de_comprar">Autonomía - ¿Cuantos km\'s puedo hacer con una e-bike?
+Una bici eléctrica moderna alcanza distancias de hasta 200km en modo "ECO", unos 150km en modo "Medio" y unos 100km en modo "Racing". Estos 3 modos están limitados a a 25km/h por normatia europea y la diferencia entre ellos radica en su mayor o menor aceleración.
+Estas distancias son para la mayoría suficientes para desplazarnos a nuestro punto de destino cómodamente y sin sudar o cansarnos en exceso. En caso que la batería se acabara la bici eléctrica nos permirá seguir pedaleando cómo si de una bici normal se tratara.
+Los factores a tener en cuenta y que afectan a la autonomía son principalmente: nuestro propio peso,  el tipo de neumático: taco, urbano o liso, el tipo de vía: asfalto, pista forestal, etc.. , la climatología: básicamente si el día es ventoso y sobre todo el desnivel que tenemos que afrontar.
+Conclusión: la autonomía dependerá de la capacidad de la batería en AH (Amperios Hora) y de los factores anteriormente mencionados. Una batería de 10Ah sería la mínima para asegurar autonomías de unos 50km.
+
+Velocidad - ¿A qué velocidad máxima puedo ir con mi ebike?
+Como hemos comentado en el punto anterior, la velocidad está limitada a 25km/h, es decir la electrónica de la ebike corta la asistencia y en caso que queramos ir más rápido dependerá de la intensidad de nuestro propio pedaleo para conseguir mayores velocidades. La velocidad no es un factor tan importante cómo sí lo es la aceleración, que en la práctica es lo que se precisa para llegar cuanto antes a la velocidad del resto de vehículos con los que se comparte la calzada y disminuir así el riesgo de accidente.
+Una e-bike de calidad deberá acelerar de forma inmediata para alcanzar los 25km/h en tan sólo unas pocas pedaladas. Esta aceleración nos dará seguridad a la hora de salir de un semáforo, de afrontar una rotonda, un cruce, un adelantamiento, etc.. Una de las sensaciones más valoradas por los usuarios de e-bikes es la "SEGURIDAD VIARIA" que transmite este tipo de vehículos ligeros, respecto a las bicis tradicionales, que para muchos son consideradas un estorbo por su poca aceleración compartiendo medio con los coches y demás vehículos pesados.
+Conclusión: la velocidad no es lo más importante, pero sí tener una e-bike con una buena aceleración. Esto nos dará seguridad en el día a día y disminuirá el riesgo cuando compartamos el medio (no siempre hay carril bici) con coches y  vehículos pesados.
+
+¿Precio de una ebike para empezar?
+Las podemos encontrar desde 900€ en oferta,  hasta los 3000€ o incluso más. Hagamos cuentas y veamos si un precio medio de 1200€ por una ebike es un un precio razonable, respecto a un desplazamiento en coche. Ej. 10km de casa al trabajo de lunes a viernes. En total realizaría 20km x 5 días = 100km a la semana y 400km al mes. Si los hubiera hecho en coche (7l/100km) me hubiera gastado unos  28litros que a 1€ serían 28€ de ahorro al mes. Sin entrar en el coste de mantenimiento de un coche (carísimo por cierto) y costes de seguro e impuestos tendríamos que en 3,5 años la bici eléctrica la tendríamos amortizada. A la práctica se amortiza mucho antes entre 1 y 2 años porque no pagaremos parking, zona azul o verde, seguro, impuestos, peajes, etc..
+Conclusión: Si utilizamos nuestra ebike cómo sustitutivo de la mayoría de desplazamientos en coche acabaremos ahorrando dinero y ganando en salud.
+
+¿Cual es el coste de una recarga?
+Las baterías tienen una capacidad de entre 10AH-20AH que permiten recorrer distancias entre 500 y 200km dependiendo del modo (Low, Medium o High) y los otros factores que hemos comentado en el primer punto.
+La recarga de una batería de 36v y 10A con una potencia de 360W es de 0,05 céntimos de euro. Para ver si esto es mucho o poco imaginemos recargar 25 veces al mes (casi 1 vez al día),  lo que sería 1,25€ /mes. Si cada carga nos permite recorrer 50km,   en  12 meses podríamos recorrer 15.000km por tan sólo  15€.
+Conclusión: Es hoy en día el transporte "motorizado" más económico que existe.
+
+¿La puedo recargar en mi centro de trabajo?
+Esto dependerá de cada empresa, pero es dificil negarse por  tan sólo 15€/año. Normalmente las compañías modernas lo consideran cómo un factor positivo y suele encajar en sus políticas de sostenibilidad, ecología, salud y bienestar.  Cómo buena práctica os recomendamos que lo soliciteis a vuestra empresa antes de adquirir una e-bike, de esa forma nos aseguramos que no pondrán pegas a la hora de realizar la recarga.
+En algunos paises europeos cómo Francia se están planteando subvencionar al trabajador con hasta 0,25€/km hasta un límite de 40€/mes por substituir su desplazamiento diario en coche por un medio más sostenible cómo una bici o ebike. Fuente:http://www.lavanguardia.com/natural/20140603/54409572606/francia-paga-transporte-trabajo-bicicleta.html
+Conclusión: Si tienes la oportunidad de recargar la batería de tu e-bike en tu lugar de trabajo no tienes excusa.. ;) invierte en  tu salud y haz con tu e-bike los 30 minutos de ejercicio diarios recomendados sin perder un minuto de tu tu tiempo libre :).... MEJOR IMPOSIBLE!!</string>
+
+
 </resources>

@@ -144,8 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new BuscarMarca();
                 break;
             case R.id.menu_antes:
-                fragment = new WebAsovel();
-                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=475");
+                fragment = new AntesDeComprar();
                 break;
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
