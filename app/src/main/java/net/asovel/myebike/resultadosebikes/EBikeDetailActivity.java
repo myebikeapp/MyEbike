@@ -58,7 +58,8 @@ public class EBikeDetailActivity extends AppCompatActivity {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
-                    .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
+                    .fit().centerCrop()
+                    //.resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
                     .into(imagen);
         } else {
             imagen.setImageResource(R.drawable.ebike);

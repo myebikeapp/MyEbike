@@ -156,7 +156,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Picasso.with(context)
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
-                        .resize(IMAGE_WIDTH, IMAGE_HEIGHT)
+                        .fit().centerInside()
+                        //.resize(IMAGE_WIDTH, IMAGE_HEIGHT)
                         .into(imagen);
             } else
                 imagen.setImageResource(R.drawable.ebike);

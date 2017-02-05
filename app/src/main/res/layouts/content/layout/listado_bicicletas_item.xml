@@ -23,8 +23,7 @@
             android:layout_marginBottom="@dimen/cardview_image_margin"
             android:layout_marginLeft="@dimen/cardview_image_margin"
             android:layout_marginRight="@dimen/cardview_image_margin"
-            android:layout_marginTop="@dimen/cardview_image_margin"
-            android:scaleType="centerCrop" />
+            android:layout_marginTop="@dimen/cardview_image_margin" />
 
         <TextView
             android:id="@+id/list_marca_modelo"

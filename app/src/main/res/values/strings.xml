@@ -22,6 +22,13 @@
     <string name="login_text">Iniciar sesión con:</string>
     <string name="facebook_button_text">Facebook</string>
     <string name="google_button_text">Google+</string>
+    <string name="proba">
+    QUIENES SOMOS:
+    ASOVEL es la primera Asociación Española para el fomento y uso de Vehículos Eléctricos Ligeros de menos de 400 kg de peso. Nuestro foco lo centramos en las bicis y motos eléctricas por la economía y rapidez de transporte que estos vehículos nos ofrecen.
+    Somos además usuarios de vehículo eléctrico ligero, algunos de nosotros desde el 2009 y cada día nos apasiona más esta nueva forma de desplazarse tan sana, ecológica, económica y silenciosa.
+    Estamos legalmente inscritos en el Registro Nacional de Asociaciones, Grupo 1º, Sección 1ª Número Nacional: 609765 con NIF: G-66768714
+    Nuestro lema es sencillo: “Save the planet”
+    APP desarrollada por: Adrià Bosch Saez</string>
 
     <string name="antes_de_comprar">Autonomía - ¿Cuantos km\'s puedo hacer con una e-bike?
 Una bici eléctrica moderna alcanza distancias de hasta 200km en modo "ECO", unos 150km en modo "Medio" y unos 100km en modo "Racing". Estos 3 modos están limitados a a 25km/h por normatia europea y la diferencia entre ellos radica en su mayor o menor aceleración.

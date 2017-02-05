@@ -7,15 +7,21 @@
         <item
             android:id="@+id/menu_top_ventas"
             android:icon="@drawable/ic_menu_top_ventas"
-            android:title="Top Ventas" />
+            android:title="Top ventas" />
         <item
             android:id="@+id/menu_myebike"
-            android:icon="@drawable/ic_menu_buscador"
-            android:title="Encuentra tu Bici Eléctrica" />
+            android:icon="@drawable/myebike"
+            android:title="Encuentra tu bici eléctrica" />
         <item
             android:id="@+id/menu_buscar_marca"
             android:icon="@drawable/ic_menu_buscador"
             android:title="Buscar por marca" />
+
+        <item
+            android:id="@+id/menu_buscar_tienda"
+            android:icon="@drawable/ic_menu_buscador"
+            android:title="Mapa de tiendas" />
+
         <item
             android:id="@+id/menu_antes"
             android:icon="@drawable/ic_menu_antescomprar"
