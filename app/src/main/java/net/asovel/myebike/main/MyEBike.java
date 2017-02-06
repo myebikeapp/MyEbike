@@ -33,7 +33,7 @@ public class MyEBike extends Fragment {
 
     public static final String TAG = MyEBike.class.getSimpleName();
 
-    private static final String[] USO = {null, "ciudad", "carretera", "montaña", "trekking", "plegables", "otras"};
+    private static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "otras"};
     private static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
     private static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
     private static final String[] MOTOR = {null, "delantero", "central", "trasero"};
@@ -205,12 +205,12 @@ public class MyEBike extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-                if ((position == 2 || position == 3 || position == 4) && diametroRuedaInf == DIAMETRO_RUEDA[2]) {
+                if ((position == 3 || position == 4 || position == 5) && diametroRuedaInf == DIAMETRO_RUEDA[2]) {
                     spinnerUso.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes de " + USO[position] + " con un diámetro de rueda pequeño", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (position == 5 && diametroRuedaInf == DIAMETRO_RUEDA[6]) {
+                if (position == 2 && diametroRuedaInf == DIAMETRO_RUEDA[6]) {
                     spinnerUso.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes " + USO[position] + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
                     return;
@@ -220,9 +220,6 @@ public class MyEBike extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                int a = 8;
-                double b = 5.3;
-                a = (int) (a * b);
             }
         });
 
@@ -231,12 +228,12 @@ public class MyEBike extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
 
-                if (position == 1 && (uso == USO[2] || uso == USO[3] || uso == USO[4])) {
+                if (position == 1 && (uso == USO[3] || uso == USO[4] || uso == USO[5])) {
                     spinnerRueda.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes de " + uso + " con un diámetro de rueda pequeño", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (position == 3 && uso == USO[5]) {
+                if (position == 3 && uso == USO[2]) {
                     spinnerRueda.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes " + uso + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
                     return;

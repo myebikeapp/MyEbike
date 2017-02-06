@@ -14,6 +14,11 @@
 
     <dimen name="myebike_bottom_margin">48dp</dimen>
 
+    <dimen name="logo_size">200dp</dimen>
+    <dimen name="logo_margin_top">50dp</dimen>
+
+    <dimen name="activity_login_text_margin_top">60dp</dimen>
+
     <dimen name="recycleview_horizontal_margin">6dp</dimen>
 
     <dimen name="floating_button_margin">16dp</dimen>

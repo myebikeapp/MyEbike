@@ -10,7 +10,7 @@
             android:title="Top ventas" />
         <item
             android:id="@+id/menu_myebike"
-            android:icon="@drawable/myebike"
+            android:icon="@drawable/ic_menu_bici"
             android:title="Encuentra tu bici eléctrica" />
         <item
             android:id="@+id/menu_buscar_marca"
@@ -19,35 +19,34 @@
 
         <item
             android:id="@+id/menu_buscar_tienda"
-            android:icon="@drawable/ic_menu_buscador"
+            android:icon="@drawable/ic_menu_tienda"
             android:title="Mapa de tiendas" />
 
         <item
-            android:id="@+id/menu_antes"
+            android:id="@+id/menu_recomendaciones"
             android:icon="@drawable/ic_menu_antescomprar"
-            android:title="Antes de comprar" />
-        <item
-            android:id="@+id/menu_nosotros"
-            android:icon="@drawable/ic_menu_nosotros"
-            android:title="Sobre nosotros" />
+            android:title="Recomendaciones" />
 
     </group>
 
     <group
         android:id="@+id/grp2"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/menu_sesion"
-            android:icon="@drawable/ic_menu_registro"
-            android:title="" />
+
         <item
             android:id="@+id/menu_noticias"
-            android:icon="@drawable/ic_menu_asovel"
+            android:icon="@drawable/ic_menu_noticias"
             android:title="Noticias" />
+
         <item
-            android:id="@+id/menu_acerca_de"
-            android:icon="@drawable/ic_menu_buscador_white"
-            android:title="Acerca de" />
+            android:id="@+id/menu_nosotros"
+            android:icon="@drawable/ic_menu_nosotros"
+            android:title="Sobre nosotros" />
+
+        <item
+            android:id="@+id/menu_sesion"
+            android:icon="@drawable/ic_menu_sesion"
+            android:title="" />
     </group>
 
 </menu>

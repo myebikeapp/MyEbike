@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setConnected(String email) {
 
-        MenuItem item = navigationView.getMenu().getItem(5);
+        MenuItem item = navigationView.getMenu().getItem(7);
 
         if (!email.equals("")) {
             connected = true;
@@ -143,8 +143,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_buscar_marca:
                 fragment = new BuscarMarca();
                 break;
-            case R.id.menu_antes:
+            case R.id.menu_buscar_tienda:
+                fragment = new BuscarMarca();
+                break;
+            case R.id.menu_recomendaciones:
                 fragment = new AntesDeComprar();
+                break;
+            case R.id.menu_noticias:
+                fragment = new WebAsovel();
+                bundle.putString(Constants.URL, "http://www.asovel.net/");
                 break;
             case R.id.menu_nosotros:
                 fragment = new WebAsovel();
@@ -163,12 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(Constants.CALLER, TAG);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                return true;
-            case R.id.menu_noticias:
-                fragment = new WebAsovel();
-                bundle.putString(Constants.URL, "http://www.asovel.net/");
-                break;
-            case R.id.menu_acerca_de:
                 return true;
         }
 

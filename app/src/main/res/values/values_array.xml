@@ -4,10 +4,10 @@
     <string-array name="uso">
         <item>Todos los usos</item>
         <item>Ciudad</item>
+        <item>Ciudad plegable</item>
         <item>Carretera</item>
         <item>Montaña</item>
         <item>Trekking</item>
-        <item>Ciudad plegable</item>
         <item>Otros</item>
     </string-array>
 
