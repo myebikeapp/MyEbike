@@ -117,6 +117,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView precio;
         private RatingBar valoracion;
 
+        private ImageView aux;
+
         private Target target;
 
         public BicicletasViewHolder(View view) {
@@ -126,6 +128,8 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             marcaModelo = (TextView) view.findViewById(R.id.list_marca_modelo);
             precio = (TextView) view.findViewById(R.id.list_precio);
             valoracion = (RatingBar) view.findViewById(R.id.list_valoracion);
+
+            aux= (ImageView) view.findViewById(R.id.a);
 
             target = new Target() {
                 @Override

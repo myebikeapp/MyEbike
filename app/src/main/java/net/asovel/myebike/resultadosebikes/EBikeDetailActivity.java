@@ -1,22 +1,24 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import net.asovel.myebike.R;
-import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
@@ -42,7 +44,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
+        final ImageView imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
         TextView marcaModelo = (TextView) findViewById(R.id.detail_marca_modelo);
         TextView precio = (TextView) findViewById(R.id.detail_precio);
         TextView uso = (TextView) findViewById(R.id.detail_uso);
@@ -54,13 +56,36 @@ public class EBikeDetailActivity extends AppCompatActivity {
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
         TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
 
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+
+                    /*int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(0.7f, 0.9f);
+                    Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);*/
+                    imagen.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable drawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable drawable) {
+
+            }
+        };
+
         if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
-                    .placeholder(R.drawable.ebike)
-                    .fit().centerCrop()
+                   // .placeholder(R.drawable.ebike)
+                  //  .fit().centerCrop()
                     //.resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
-                    .into(imagen);
+                    .into(target);
         } else {
             imagen.setImageResource(R.drawable.ebike);
         }
@@ -99,7 +124,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
 
         descripcion.setText(parcelableEBike.getDescripcion());
 
-        Button buscarTiendas = (Button) findViewById(R.id.btn_buscar_tiendas);
+        FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);
         buscarTiendas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,3 +170,24 @@ public class EBikeDetailActivity extends AppCompatActivity {
         return true;
     }
 }
+
+/*
+<android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardElevation="6dp">
+
+<Button
+android:id="@+id/btn_buscar_tiendas"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/maps_icon" />
+
+</android.support.v7.widget.CardView>*/

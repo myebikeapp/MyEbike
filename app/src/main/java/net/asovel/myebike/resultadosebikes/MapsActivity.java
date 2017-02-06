@@ -192,13 +192,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (direccion != null) {
 
                     TextView direccionV = (TextView) view.findViewById(R.id.marker_direccion);
+                    direccionV.setText(direccion);
                     direccionV.setVisibility(View.VISIBLE);
-
-                    Integer numero = tienda.getNumero();
-                    if (numero != null)
-                        direccionV.setText(direccion + " " + numero.intValue());
-                    else
-                        direccionV.setText(direccion);
                 }
 
                 String codigo = tienda.getCodigo_postal();

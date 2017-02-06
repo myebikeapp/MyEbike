@@ -12,8 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
+
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
+import net.asovel.myebike.backendless.common.DefaultCallback;
+import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.Constants;
 
@@ -25,7 +32,7 @@ public class BuscarMarca extends Fragment {
     public static final String TAG = BuscarMarca.class.getSimpleName();
 
     private RecyclerView recyclerView;
-    private String[] marcas;
+    private String[] nombresMarca;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,18 +42,47 @@ public class BuscarMarca extends Fragment {
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-        this.marcas = getResources().getStringArray(R.array.marcas);
-        iniUI();
+
+        recyclerView = (RecyclerView) getView().findViewById(R.id.buscar_marca_recycleView);
+
+        launchQuery();
     }
 
-    private void iniUI() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.buscar_marca_recycleView);
-        AdaptadorMarcas adaptador = new AdaptadorMarcas();
-        adaptador.setListener(new View.OnClickListener()
-        {
+    private void launchQuery() {
+        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+
+        QueryOptions queryOptions = new QueryOptions();
+
+        List<String> sortBy = new ArrayList<>(1);
+        sortBy.add("nombre");
+        queryOptions.setSortBy(sortBy);
+
+        dataQuery.setQueryOptions(queryOptions);
+
+        queryOptions.setPageSize(100);
+
+        Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext()) {
             @Override
-            public void onClick(View view)
-            {
+            public void handleResponse(BackendlessCollection<Marca> response) {
+                super.handleResponse(response);
+
+                List<Marca> marcas = response.getCurrentPage();
+                int size = marcas.size();
+                nombresMarca = new String[size];
+
+                for (int i = 0; i < size; i++)
+                    nombresMarca[i] = marcas.get(i).getNombre();
+
+                setUpRecyclerView();
+            }
+        });
+    }
+
+    private void setUpRecyclerView() {
+        AdaptadorMarcas adaptador = new AdaptadorMarcas();
+        adaptador.setListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 onItemClick(view);
             }
         });
@@ -54,8 +90,7 @@ public class BuscarMarca extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
-    private void onItemClick(View view)
-    {
+    private void onItemClick(View view) {
         SharedPreferences prefs = getActivity().getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
@@ -64,7 +99,7 @@ public class BuscarMarca extends Fragment {
 
         ArrayList<String> listClauses = new ArrayList<>(1);
         int position = recyclerView.getChildAdapterPosition(view);
-        listClauses.add("marca.nombre = '" + marcas[position] + "'");
+        listClauses.add("marca.nombre = '" + nombresMarca[position] + "'");
         bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
 
         if (email.equals("")) {
@@ -78,7 +113,7 @@ public class BuscarMarca extends Fragment {
         startActivity(intent);
     }
 
-    private class AdaptadorMarcas extends RecyclerView.Adapter<MarcasViewHolder> implements View.OnClickListener{
+    private class AdaptadorMarcas extends RecyclerView.Adapter<MarcasViewHolder> implements View.OnClickListener {
 
         private View.OnClickListener listener;
 
@@ -91,7 +126,7 @@ public class BuscarMarca extends Fragment {
 
         @Override
         public int getItemCount() {
-            return marcas.length;
+            return nombresMarca.length;
         }
 
         @Override
@@ -104,7 +139,7 @@ public class BuscarMarca extends Fragment {
 
         @Override
         public void onBindViewHolder(MarcasViewHolder holder, int position) {
-            holder.bindMarca(marcas[position]);
+            holder.bindMarca(nombresMarca[position]);
         }
 
         @Override

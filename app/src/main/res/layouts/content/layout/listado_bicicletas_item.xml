@@ -11,6 +11,12 @@
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="6dp">
 
+    <ImageView
+        android:id="@+id/a"
+        android:layout_width="360dp"
+        android:layout_height="@dimen/toolbar_detail_height"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +24,7 @@
 
         <ImageView
             android:id="@+id/list_imagen"
-            android:layout_width="match_parent"
+            android:layout_width="327dp"
             android:layout_height="@dimen/cardview_image_height"
             android:layout_marginBottom="@dimen/cardview_image_margin"
             android:layout_marginLeft="@dimen/cardview_image_margin"

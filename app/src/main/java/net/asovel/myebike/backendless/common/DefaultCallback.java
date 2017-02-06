@@ -10,6 +10,8 @@ import com.backendless.exceptions.BackendlessFault;
 
 public class DefaultCallback<T> extends BackendlessCallback<T>
 {
+    public static final String TAG = DefaultCallback.class.getSimpleName();
+
     private Context context;
     private ProgressDialog progressDialog;
 
@@ -35,7 +37,7 @@ public class DefaultCallback<T> extends BackendlessCallback<T>
     public void handleFault(BackendlessFault fault)
     {
         progressDialog.cancel();
-        Log.e("hola", fault.getMessage());
+        Log.d(TAG, fault.getMessage());
         Toast.makeText(context, fault.getMessage(), Toast.LENGTH_LONG).show();
     }
 }
