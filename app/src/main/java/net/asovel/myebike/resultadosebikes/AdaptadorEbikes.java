@@ -157,7 +157,7 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .load(eBike.getFoto())
                         .placeholder(R.drawable.ebike)
                         .resize(IMAGE_WIDTH, IMAGE_HEIGHT)
-                        .centerInside()
+                        .centerCrop()
                         //.resize(IMAGE_WIDTH, IMAGE_HEIGHT)
                         .into(imagen);
             } else

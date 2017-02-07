@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new BuscarMarca();
                 break;
             case R.id.menu_buscar_tienda:
-                fragment = new BuscarMarca();
+                fragment = new MapaTiendas();
                 break;
             case R.id.menu_recomendaciones:
                 fragment = new WebAsovel();

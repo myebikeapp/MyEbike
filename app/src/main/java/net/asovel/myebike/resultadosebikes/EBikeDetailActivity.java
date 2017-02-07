@@ -84,7 +84,7 @@ public class EBikeDetailActivity extends AppCompatActivity {
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
                     .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
-                    .centerInside()
+                    .centerCrop()
                     .into(imagen);
         } else {
             imagen.setImageResource(R.drawable.ebike);

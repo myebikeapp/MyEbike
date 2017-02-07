@@ -57,9 +57,8 @@ public class BuscarMarca extends Fragment {
         sortBy.add("nombre");
         queryOptions.setSortBy(sortBy);
 
-        dataQuery.setQueryOptions(queryOptions);
-
         queryOptions.setPageSize(100);
+        dataQuery.setQueryOptions(queryOptions);
 
         Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext()) {
             @Override

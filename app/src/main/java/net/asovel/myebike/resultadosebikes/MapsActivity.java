@@ -130,7 +130,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         this.map = googleMap;
 
-        //map.getUiSettings().setZoomControlsEnabled(true);
+       // map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
