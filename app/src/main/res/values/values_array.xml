@@ -57,27 +57,4 @@
         <item>+ 5.000 €</item>
     </string-array>
 
-    <string-array name="marcas">
-        <item>Ducati</item>
-        <item>E-Biker</item>
-        <item>Etnic</item>
-        <item>Felt</item>
-        <item>Flebi</item>
-        <item>Flyer</item>
-        <item>Focus</item>
-        <item>Freel</item>
-        <item>Giant</item>
-        <item>I:SY</item>
-        <item>Ducati</item>
-        <item>E-Biker</item>
-        <item>Etnic</item>
-        <item>Felt</item>
-        <item>Flebi</item>
-        <item>Flyer</item>
-        <item>Focus</item>
-        <item>Freel</item>
-        <item>Giant</item>
-        <item>I:SY</item>
-    </string-array>
-
 </resources>

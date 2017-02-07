@@ -20,21 +20,17 @@
             android:layout_margin="2dp"
             card_view:cardBackgroundColor="@color/color_white"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="2dp" >
-
+            card_view:cardElevation="2dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="@string/antes_de_comprar"
-                android:textSize="13dp"/>
+                android:textSize="13dp" />
 
 
         </android.support.v7.widget.CardView>
-
-
 
 
     </LinearLayout>

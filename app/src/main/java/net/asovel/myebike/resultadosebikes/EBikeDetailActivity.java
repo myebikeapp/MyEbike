@@ -82,10 +82,10 @@ public class EBikeDetailActivity extends AppCompatActivity {
         if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
-                   // .placeholder(R.drawable.ebike)
-                  //  .fit().centerCrop()
-                    //.resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
-                    .into(target);
+                    .placeholder(R.drawable.ebike)
+                    .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
+                    .centerInside()
+                    .into(imagen);
         } else {
             imagen.setImageResource(R.drawable.ebike);
         }
