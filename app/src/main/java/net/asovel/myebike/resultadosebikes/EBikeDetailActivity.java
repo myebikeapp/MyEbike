@@ -23,13 +23,16 @@ import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
 
-public class EBikeDetailActivity extends AppCompatActivity {
+public class EBikeDetailActivity extends AppCompatActivity
+{
+    private static final String TAG = EBikeDetailActivity.class.getSimpleName();
 
     private ParcelableEBike parcelableEBike;
     private String caller;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebike_detail);
 
@@ -38,7 +41,8 @@ public class EBikeDetailActivity extends AppCompatActivity {
         initUI();
     }
 
-    private void initUI() {
+    private void initUI()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -56,25 +60,29 @@ public class EBikeDetailActivity extends AppCompatActivity {
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
         TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
 
-        Target target = new Target() {
+        Target target = new Target()
+        {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom)
+            {
 
                     /*int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
                     Matrix matrix = new Matrix();
                     matrix.postScale(0.7f, 0.9f);
                     Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);*/
-                    imagen.setImageBitmap(bitmap);
+                imagen.setImageBitmap(bitmap);
             }
 
             @Override
-            public void onBitmapFailed(Drawable drawable) {
+            public void onBitmapFailed(Drawable drawable)
+            {
 
             }
 
             @Override
-            public void onPrepareLoad(Drawable drawable) {
+            public void onPrepareLoad(Drawable drawable)
+            {
 
             }
         };
@@ -122,22 +130,25 @@ public class EBikeDetailActivity extends AppCompatActivity {
         if (parcelableEBike.getValoracion_SORT1() != -1)
             valoracion.setRating(parcelableEBike.getValoracion_SORT1());
 
-        descripcion.setText(parcelableEBike.getDescripcion());
+        descripcion.setText(parcelableEBike.getLink());
 
         FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);
-        buscarTiendas.setOnClickListener(new View.OnClickListener() {
+        buscarTiendas.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 localizarTiendas();
             }
         });
     }
 
-    private void localizarTiendas() {
+    private void localizarTiendas()
+    {
         ParcelableMarca marca = parcelableEBike.getMarca();
-        if (marca == null)
+        if (marca == null || marca.getNombre() == null)
             return;
-        Intent intent = new Intent(EBikeDetailActivity.this, MapsActivity.class);
+        Intent intent = new Intent(EBikeDetailActivity.this, MapaActivity.class);
         Bundle bundle = new Bundle();
         String nombreMarca = marca.getNombre();
         bundle.putString(Constants.NOMBRE_MARCA, nombreMarca);
@@ -150,12 +161,13 @@ public class EBikeDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (!caller.equals("")) {
-                 //   Intent intent = new Intent(this, MainActivity.class);
-                 //   NavUtils.navigateUpTo(this, intent);
+                    //   Intent intent = new Intent(this, MainActivity.class);
+                    //   NavUtils.navigateUpTo(this, intent);
                     finish();
                 } else
                     NavUtils.navigateUpFromSameTask(this);
@@ -166,28 +178,8 @@ public class EBikeDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         return true;
     }
 }
-
-/*
-<android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        card_view:cardCornerRadius="6dp"
-        card_view:cardElevation="6dp">
-
-<Button
-android:id="@+id/btn_buscar_tiendas"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@drawable/maps_icon" />
-
-</android.support.v7.widget.CardView>*/

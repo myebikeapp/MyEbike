@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,8 +28,8 @@ import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 
-public class MyEBike extends Fragment {
-
+public class MyEBike extends Fragment
+{
     public static final String TAG = MyEBike.class.getSimpleName();
 
     private static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "otras"};
@@ -60,19 +59,22 @@ public class MyEBike extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_myebike, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle state) {
+    public void onActivityCreated(Bundle state)
+    {
         super.onActivityCreated(state);
 
         iniUI();
     }
 
-    private void iniUI() {
+    private void iniUI()
+    {
         spinnerUso = (Spinner) getView().findViewById(R.id.spinner_uso);
         String[] values = getResources().getStringArray(R.array.uso);
         CustomAdapter adaptador = new CustomAdapter(getActivity(), R.layout.asistente_spinner_title, R.id.text_spinner_subtitle,
@@ -127,7 +129,8 @@ public class MyEBike extends Fragment {
         setupListeners();
     }
 
-    public class CustomAdapter extends ArrayAdapter<String> {
+    public class CustomAdapter extends ArrayAdapter<String>
+    {
 
         private LayoutInflater inflater;
         private String title;
@@ -135,7 +138,8 @@ public class MyEBike extends Fragment {
         private String specialItem;
 
         public CustomAdapter(Activity context, int resource, int textViewResourceId, String[] values, String title,
-                             int specialPosition) {
+                             int specialPosition)
+        {
             super(context, resource, textViewResourceId, values);
             this.inflater = context.getLayoutInflater();
             this.title = title;
@@ -143,7 +147,8 @@ public class MyEBike extends Fragment {
         }
 
         public CustomAdapter(Activity context, int resource, int textViewResourceId, String[] values, String title,
-                             int specialPosition, String specialItem) {
+                             int specialPosition, String specialItem)
+        {
             super(context, resource, textViewResourceId, values);
             this.inflater = context.getLayoutInflater();
             this.title = title;
@@ -153,7 +158,8 @@ public class MyEBike extends Fragment {
 
         @Override
         @TargetApi(23)
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.asistente_spinner_title, null);
@@ -187,7 +193,8 @@ public class MyEBike extends Fragment {
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.asistente_spinner_list, null);
@@ -200,10 +207,13 @@ public class MyEBike extends Fragment {
         }
     }
 
-    public void setupListeners() {
-        spinnerUso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    public void setupListeners()
+    {
+        spinnerUso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
 
                 if ((position == 3 || position == 4 || position == 5) && diametroRuedaInf == DIAMETRO_RUEDA[2]) {
                     spinnerUso.setSelection(0);
@@ -219,15 +229,16 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerRueda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerRueda.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
                 if (position == 1 && (uso == USO[3] || uso == USO[4] || uso == USO[5])) {
                     spinnerRueda.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes de " + uso + " con un diámetro de rueda pequeño", Toast.LENGTH_LONG).show();
@@ -243,24 +254,30 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerSuspension.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerSuspension.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
                 suspension = SUSPENSION[position];
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerMotor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerMotor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
 
                 if ((position == 1 || position == 3) && (autonomia >= AUTONOMIA[2])) {
                     spinnerMotor.setSelection(0);
@@ -288,13 +305,16 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerAutonomia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerAutonomia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
 
                 if (position >= 2 && (motor == MOTOR[1] || motor == MOTOR[3])) {
                     spinnerAutonomia.setSelection(0);
@@ -305,13 +325,16 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerPresupuestoInf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPresupuestoInf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
 
                 if (position < 5 && motor == MOTOR[2]) {
                     spinnerPresupuestoInf.setSelection(5);
@@ -328,13 +351,16 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        spinnerPresupuestoSup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPresupuestoSup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
+            {
 
                 if (position <= 5 && motor == MOTOR[2]) {
                     spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
@@ -351,13 +377,16 @@ public class MyEBike extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
-        btnBuscar.setOnClickListener(new View.OnClickListener() {
+        btnBuscar.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 SharedPreferences prefs = getActivity().getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
                 String email = prefs.getString("email", "");
 
@@ -380,7 +409,8 @@ public class MyEBike extends Fragment {
         });
     }
 
-    public ArrayList<String> setupWhereClause() {
+    public ArrayList<String> setupWhereClause()
+    {
         ArrayList<String> listClauses = new ArrayList<>();
 
         if (uso != null)
@@ -407,7 +437,8 @@ public class MyEBike extends Fragment {
         return listClauses;
     }
 
-    public void limpiarSeleccion() {
+    public void limpiarSeleccion()
+    {
         spinnerUso.setSelection(0);
         spinnerRueda.setSelection(0);
         spinnerSuspension.setSelection(0);
@@ -418,13 +449,15 @@ public class MyEBike extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
         menu.clear();
         inflater.inflate(R.menu.fragment_myebike, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         switch (item.getItemId()) {
             case R.id.menu_limpiar:
                 limpiarSeleccion();

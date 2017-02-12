@@ -10,12 +10,12 @@ public class Tienda {
     private String nombre_tienda;
     private String direccion;
     private String email;
+    private String provincia;
     private String codigo_postal;
     private String ciudad;
     private Integer patrocinada_SORT0;
     private String objectId;
     private java.util.Date updated;
-    private Integer numero;
     private java.util.Date created;
     private String ownerId;
     private Double longitud;
@@ -45,6 +45,14 @@ public class Tienda {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public String getCodigo_postal() {
@@ -77,14 +85,6 @@ public class Tienda {
 
     public java.util.Date getUpdated() {
         return updated;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
     }
 
     public java.util.Date getCreated() {

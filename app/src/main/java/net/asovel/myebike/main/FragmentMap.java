@@ -26,21 +26,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
+import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
-public class MapaTiendas extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnMyLocationButtonClickListener {
-
-    private static final String TAG = MapaTiendas.class.getSimpleName();
+public class FragmentMap extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnMyLocationButtonClickListener
+{
+    private static final String TAG = FragmentMap.class.getSimpleName();
 
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
     private GoogleMap map;
 
+    private BackendlessCollection<Tienda> response;
     private List<Tienda> tiendas;
     private Object object = new Object();
     private volatile boolean flag = false;
@@ -48,17 +50,18 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
     static View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         if (view == null) {
-            view = inflater.inflate(R.layout.activity_maps, container, false);
+            view = inflater.inflate(R.layout.fragment_maps, container, false);
             return view;
         }
         return view;
     }
 
     @Override
-    public void onActivityCreated(Bundle state) {
+    public void onActivityCreated(Bundle state)
+    {
         super.onActivityCreated(state);
 
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
@@ -67,38 +70,88 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
         launchQuery();
     }
 
-    private void launchQuery() {
-
+    private void launchQuery()
+    {
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
-
         QueryOptions queryOptions = new QueryOptions();
 
-        queryOptions.setPageSize(100);
-        dataQuery.setQueryOptions(queryOptions);
+        Bundle bundle = getArguments();
 
-        Backendless.Persistence.of(Tienda.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Tienda>>(getContext()) {
+        String nombre = bundle.getString(Constants.NOMBRE_MARCA);
 
-            @Override
-            public void handleResponse(BackendlessCollection<Tienda> response) {
-                super.handleResponse(response);
+        if (nombre != null) {
+            String whereClause = "nombre = '" + nombre + "'";
+            dataQuery.setWhereClause(whereClause);
 
-                tiendas = response.getCurrentPage();
+            queryOptions.addRelated("tiendas");
+            dataQuery.setQueryOptions(queryOptions);
 
-                synchronized (object) {
-                    while (!flag) {
-                        try {
-                            object.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+            Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
+            {
+                @Override
+                public void handleResponse(BackendlessCollection<Marca> response)
+                {
+                    super.handleResponse(response);
+
+                    Marca marca = response.getCurrentPage().get(0);
+                    tiendas = marca.getTiendas();
+
+                    synchronized (object) {
+                        while (!flag) {
+                            try {
+                                object.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
+                    setUpMarcadores();
                 }
-                setUpMarcadores();
+            });
+        } else {
+            queryOptions.setPageSize(100);
+            dataQuery.setQueryOptions(queryOptions);
+
+            Backendless.Persistence.of(Tienda.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Tienda>>(getContext())
+            {
+                @Override
+                public void handleResponse(BackendlessCollection<Tienda> response)
+                {
+                    super.handleResponse(response);
+
+                    FragmentMap.this.response = response;
+                    tiendas = response.getCurrentPage();
+                    getNextPage();
+                    getNextPage();
+                    synchronized (object) {
+                        while (!flag) {
+                            try {
+                                object.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    setUpMarcadores();
+                }
+            });
+        }
+    }
+
+    private void getNextPage(){
+        response.nextPage( new DefaultCallback<BackendlessCollection<Tienda>>(getContext())
+        {
+            @Override
+            public void handleResponse(BackendlessCollection<Tienda> response)
+            {
+                super.handleResponse(response);
+                tiendas.addAll(response.getCurrentPage());
             }
         });
     }
 
-    private void setUpMarcadores() {
+    private void setUpMarcadores()
+    {
         for (int i = 0; i < tiendas.size(); i++) {
             Tienda tienda = tiendas.get(i);
 
@@ -115,8 +168,8 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-
+    public void onMapReady(GoogleMap googleMap)
+    {
         this.map = googleMap;
 
         //map.getUiSettings().setZoomControlsEnabled(true);
@@ -134,12 +187,13 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
         CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
         map.moveCamera(camUpd);
 
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(Marker marker) {
-                if (marker.isInfoWindowShown())
-                    marker.hideInfoWindow();
-                else
-                    marker.showInfoWindow();
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+
+            public boolean onMarkerClick(Marker marker)
+            {
+
+                marker.showInfoWindow();
                 LatLng latLng = marker.getPosition();
                 float zoom = map.getCameraPosition().zoom;
                 zoom = (zoom >= 15) ? zoom : 15;
@@ -150,15 +204,17 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
             }
         });
 
-        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter()
+        {
             @Override
-            public View getInfoWindow(Marker marker) {
+            public View getInfoWindow(Marker marker)
+            {
                 return null;
             }
 
             @Override
-            public View getInfoContents(Marker marker) {
+            public View getInfoContents(Marker marker)
+            {
 
                 View view = getActivity().getLayoutInflater().inflate(R.layout.maps_marker, null);
                 Tienda tienda = (Tienda) marker.getTag();
@@ -216,9 +272,11 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
             }
         });
 
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker)
+            {
                 onWindowClick(marker);
             }
         });
@@ -229,7 +287,8 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
         }
     }
 
-    private void onWindowClick(Marker marker) {
+    private void onWindowClick(Marker marker)
+    {
         Tienda tienda = (Tienda) marker.getTag();
         String url = tienda.getPagina_web();
 
@@ -243,7 +302,8 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
     }
 
     @Override
-    public boolean onMyLocationButtonClick() {
+    public boolean onMyLocationButtonClick()
+    {
 
         /*CameraUpdate camUpd = CameraUpdateFactory.zoomTo(14);
         map.moveCamera(camUpd);*/
@@ -252,7 +312,8 @@ public class MapaTiendas extends Fragment implements OnMapReadyCallback, Activit
 
     @SuppressWarnings("MissingPermission")
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
 
         if (requestCode == PETICION_PERMISO_LOCALIZACION) {
 

@@ -13,18 +13,18 @@ public class ParcelableEBike implements Parcelable
     private String suspension;
     private int autonomia;
     private int precio_SORT2;
-    private int valoracion_SORT1;
+    private float valoracion_SORT1;
     private String ubicacion_motor;
     private int peso;
     private String foto;
     private String modelo;
-    private String descripcion;
+    private String link;
     private int tamano_ruedas;
     private ParcelableMarca marca;
 
     public ParcelableEBike(String uso, String suspension, int autonomia, int precio_SORT2,
-                           int valoracion_SORT1, String ubicacion_motor, int peso, String foto, String modelo,
-                           String descripcion, int tamano_ruedas, ParcelableMarca marca)
+                           float valoracion_SORT1, String ubicacion_motor, int peso, String foto, String modelo,
+                           String link, int tamano_ruedas, ParcelableMarca marca)
     {
         this.uso = uso;
         this.suspension = suspension;
@@ -35,7 +35,7 @@ public class ParcelableEBike implements Parcelable
         this.peso = peso;
         this.foto = foto;
         this.modelo = modelo;
-        this.descripcion = descripcion;
+        this.link = link;
         this.tamano_ruedas = tamano_ruedas;
         this.marca = marca;
     }
@@ -60,7 +60,7 @@ public class ParcelableEBike implements Parcelable
         return precio_SORT2;
     }
 
-    public int getValoracion_SORT1()
+    public float getValoracion_SORT1()
     {
         return valoracion_SORT1;
     }
@@ -85,9 +85,9 @@ public class ParcelableEBike implements Parcelable
         return modelo;
     }
 
-    public String getDescripcion()
+    public String getLink()
     {
-        return descripcion;
+        return link;
     }
 
     public int getTamano_ruedas()
@@ -113,12 +113,12 @@ public class ParcelableEBike implements Parcelable
         parcel.writeString(suspension);
         parcel.writeInt(autonomia);
         parcel.writeInt(precio_SORT2);
-        parcel.writeInt(valoracion_SORT1);
+        parcel.writeFloat(valoracion_SORT1);
         parcel.writeString(ubicacion_motor);
         parcel.writeInt(peso);
         parcel.writeString(foto);
         parcel.writeString(modelo);
-        parcel.writeString(descripcion);
+        parcel.writeString(link);
         parcel.writeInt(tamano_ruedas);
         parcel.writeParcelable(marca, i);
     }
@@ -129,12 +129,12 @@ public class ParcelableEBike implements Parcelable
         suspension = in.readString();
         autonomia = in.readInt();
         precio_SORT2 = in.readInt();
-        valoracion_SORT1 = in.readInt();
+        valoracion_SORT1 = in.readFloat();
         ubicacion_motor = in.readString();
         peso = in.readInt();
         foto = in.readString();
         modelo = in.readString();
-        descripcion = in.readString();
+        link = in.readString();
         tamano_ruedas = in.readInt();
         marca = in.readParcelable(ParcelableMarca.class.getClassLoader());
     }
@@ -174,9 +174,9 @@ public class ParcelableEBike implements Parcelable
         if (eBike.getPrecio_SORT2() != null)
             precio = eBike.getPrecio_SORT2().intValue();
 
-        int valoracion = -1;
+        float valoracion = -1;
         if (eBike.getValoracion_SORT1() != null)
-            valoracion = eBike.getValoracion_SORT1().intValue();
+            valoracion = eBike.getValoracion_SORT1().floatValue();
 
         String motor = eBike.getUbicacion_motor();
         if (motor == null)
@@ -186,9 +186,9 @@ public class ParcelableEBike implements Parcelable
         if (eBike.getPeso() != null)
             peso = eBike.getPeso().intValue();
 
-        String descripcion = eBike.getDescripcion();
-        if (descripcion == null)
-            descripcion = sinDatos;
+        String link = eBike.getLink();
+        if (link == null)
+            link = sinDatos;
 
         int ruedas = -1;
         if (eBike.getTamano_ruedas() != null)
@@ -208,7 +208,7 @@ public class ParcelableEBike implements Parcelable
                 peso,
                 eBike.getFoto(),
                 eBike.getModelo(),
-                descripcion,
+                link,
                 ruedas,
                 marca);
     }

@@ -180,8 +180,9 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             else
                 precio.setText("");
 
-            if (eBike.getValoracion_SORT1() != null)
-                valoracion.setRating(eBike.getValoracion_SORT1());
+            if (eBike.getValoracion_SORT1() != null) {
+                valoracion.setRating(eBike.getValoracion_SORT1().floatValue());
+            }
             else
                 valoracion.setRating(0f);
         }

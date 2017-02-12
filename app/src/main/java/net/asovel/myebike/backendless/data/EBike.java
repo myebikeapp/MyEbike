@@ -11,7 +11,7 @@ public class EBike {
     private Integer autonomia;
     private java.util.Date created;
     private Integer precio_SORT2;
-    private Integer valoracion_SORT1;
+    private Double valoracion_SORT1;
     private String ubicacion_motor;
     private String uso;
     private Integer peso;
@@ -19,7 +19,7 @@ public class EBike {
     private String ownerId;
     private Integer patrocinado_SORT0;
     private String modelo;
-    private String descripcion;
+    private String link;
     private String objectId;
     private Integer tamano_ruedas;
     private java.util.Date updated;
@@ -53,11 +53,11 @@ public class EBike {
         this.precio_SORT2 = precio_SORT2;
     }
 
-    public Integer getValoracion_SORT1() {
+    public Double getValoracion_SORT1() {
         return valoracion_SORT1;
     }
 
-    public void setValoracion_SORT1(Integer valoracion_SORT1) {
+    public void setValoracion_SORT1(Double valoracion_SORT1) {
         this.valoracion_SORT1 = valoracion_SORT1;
     }
 
@@ -113,12 +113,12 @@ public class EBike {
         this.modelo = modelo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getLink() {
+        return link;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public String getObjectId() {

@@ -74,7 +74,7 @@
         </activity>
 
         <activity
-            android:name=".resultadosebikes.MapsActivity"
+            android:name=".resultadosebikes.MapaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Tiendas"
             android:parentActivityName=".resultadosebikes.EBikeListActivity"

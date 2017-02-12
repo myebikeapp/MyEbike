@@ -27,9 +27,9 @@ import net.asovel.myebike.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscarMarca extends Fragment {
+public class FragmentListMarca extends Fragment {
 
-    public static final String TAG = BuscarMarca.class.getSimpleName();
+    public static final String TAG = FragmentListMarca.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private String[] nombresMarca;

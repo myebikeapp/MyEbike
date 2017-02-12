@@ -10,6 +10,7 @@ public class Marca {
     private java.util.Date updated;
     private String ownerId;
     private String objectId;
+    private Boolean peninsula;
     private String pagina_web;
     private String nombre;
     private String logo;
@@ -26,6 +27,14 @@ public class Marca {
 
     public String getObjectId() {
         return objectId;
+    }
+
+    public Boolean getPeninsula() {
+        return peninsula;
+    }
+
+    public void setPeninsula(Boolean peninsula) {
+        this.peninsula = peninsula;
     }
 
     public String getPagina_web() {

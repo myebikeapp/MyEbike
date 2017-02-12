@@ -1,52 +1,28 @@
 package net.asovel.myebike.resultadosebikes;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.asovel.myebike.R;
-import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
-import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
+import net.asovel.myebike.main.FragmentMap;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
-import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnMyLocationButtonClickListener {
-
-    private static final String TAG = MapsActivity.class.getSimpleName();
+public class MapaActivity extends AppCompatActivity
+{
+    private static final String TAG = MapaActivity.class.getSimpleName();
 
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
@@ -57,22 +33,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private volatile boolean flag = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_map);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        Fragment fragment = new FragmentMap();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Bundle receiver = getIntent().getExtras();
+        Bundle sender = new Bundle();
 
-        launchQuery();
+        String nombre = receiver.getString(Constants.NOMBRE_MARCA);
+
+        sender.putString(Constants.NOMBRE_MARCA, nombre);
+        fragment.setArguments(sender);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.principaloo, fragment, null).commit();
     }
 
-    private void launchQuery() {
+ /*   private void launchQuery() {
         Bundle bundle = getIntent().getExtras();
 
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
@@ -147,9 +131,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             public boolean onMarkerClick(Marker marker) {
-                if (marker.isInfoWindowShown())
-                    marker.hideInfoWindow();
-                else
+                Log.d(TAG, "Hola");
                     marker.showInfoWindow();
                 LatLng latLng = marker.getPosition();
                 float zoom = map.getCameraPosition().zoom;
@@ -256,8 +238,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onMyLocationButtonClick() {
 
-        /*CameraUpdate camUpd = CameraUpdateFactory.zoomTo(14);
-        map.moveCamera(camUpd);*/
+        CameraUpdate camUpd = CameraUpdateFactory.zoomTo(14);
+        map.moveCamera(camUpd);
         return false;
     }
 
@@ -273,15 +255,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 map.setOnMyLocationButtonClickListener(this);
             }
         }
-    }
+    }*/
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (!getIntent().getExtras().getString(Constants.CALLER, "").equals("")) {
@@ -351,7 +335,7 @@ apiClient = new GoogleApiClient.Builder(this)
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         try {
                             Log.d(TAG, "Se requiere actuación del usuario");
-                            status.startResolutionForResult(MapsActivity.this, PETICION_CONFIG_UBICACION);
+                            status.startResolutionForResult(MapaActivity.this, PETICION_CONFIG_UBICACION);
 
                         } catch (IntentSender.SendIntentException e) {
                             Log.d(TAG, "Error al intentar solucionar configuración de ubicación");
@@ -360,7 +344,7 @@ apiClient = new GoogleApiClient.Builder(this)
 
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         Log.d(TAG, "No se puede cumplir la configuración de ubicación necesaria");
-                        Toast.makeText(MapsActivity.this, "No se puede cumplir la configuración de ubicación necesaria", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapaActivity.this, "No se puede cumplir la configuración de ubicación necesaria", Toast.LENGTH_LONG).show();
                         break;
                 }
             }

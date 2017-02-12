@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,10 @@ import com.backendless.Backendless;
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.Defaults;
+import net.asovel.myebike.resultadosebikes.FragmentListEBike;
 import net.asovel.myebike.utils.Constants;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         iniUI();
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        Log.e(TAG, "" + dpWidth);
     }
 
     private void iniUI() {
@@ -134,17 +133,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.menu_top_ventas:
-                fragment = new TopVentas();
+                fragment = new FragmentListEBike();
+                ArrayList<String> listClauses = new ArrayList<>(1);
+                listClauses.add("patrocinado_SORT0 > 0");
+                bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
                 break;
             case R.id.menu_myebike:
                 fragment = new MyEBike();
                 fabVisibility = true;
                 break;
             case R.id.menu_buscar_marca:
-                fragment = new BuscarMarca();
+                fragment = new FragmentListMarca();
                 break;
             case R.id.menu_buscar_tienda:
-                fragment = new MapaTiendas();
+                fragment = new FragmentMap();
                 break;
             case R.id.menu_recomendaciones:
                 fragment = new WebAsovel();
