@@ -1,13 +1,12 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +15,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import net.asovel.myebike.R;
+import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
@@ -48,7 +47,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ImageView imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
+        ImageView imagen = (ImageView) findViewById(R.id.toolbar_detail_image);
         TextView marcaModelo = (TextView) findViewById(R.id.detail_marca_modelo);
         TextView precio = (TextView) findViewById(R.id.detail_precio);
         TextView uso = (TextView) findViewById(R.id.detail_uso);
@@ -59,33 +58,6 @@ public class EBikeDetailActivity extends AppCompatActivity
         TextView ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
         TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
-
-        Target target = new Target()
-        {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom)
-            {
-
-                    /*int width = bitmap.getWidth();
-                    int height = bitmap.getHeight();
-                    Matrix matrix = new Matrix();
-                    matrix.postScale(0.7f, 0.9f);
-                    Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);*/
-                imagen.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable drawable)
-            {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable drawable)
-            {
-
-            }
-        };
 
         if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
@@ -153,7 +125,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         String nombreMarca = marca.getNombre();
         bundle.putString(Constants.NOMBRE_MARCA, nombreMarca);
 
-        if (!caller.equals(""))
+        if (caller.equals(MainActivity.TAG))
             bundle.putString(Constants.CALLER, caller);
 
         intent.putExtras(bundle);

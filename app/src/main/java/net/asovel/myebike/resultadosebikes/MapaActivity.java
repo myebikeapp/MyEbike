@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -268,7 +269,8 @@ public class MapaActivity extends AppCompatActivity
     {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (!getIntent().getExtras().getString(Constants.CALLER, "").equals("")) {
+                String caller = getIntent().getExtras().getString(Constants.CALLER, "");
+                if (caller.equals(MainActivity.TAG)) {
                     Intent intent = new Intent(this, MainActivity.class);
                     NavUtils.navigateUpTo(this, intent);
                 } else

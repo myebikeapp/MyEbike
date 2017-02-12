@@ -19,6 +19,7 @@ import com.backendless.persistence.QueryOptions;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.EBike;
+import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 
@@ -143,9 +144,15 @@ public class FragmentListEBike extends Fragment
     {
         Intent intent = new Intent(getContext(), EBikeDetailActivity.class);
         Bundle bundle = new Bundle();
+
         int position = adaptador.getPage() * PAGESIZE + recyclerView.getChildAdapterPosition(view);
         ParcelableEBike parcelableEBike = ParcelableEBike.fromEBike(eBikes.get(position));
         bundle.putParcelable(ParcelableEBike.PARCELABLEEBIKE, parcelableEBike);
+
+        String caller = getArguments().getString(Constants.CALLER, "");
+        if (caller.equals(MainActivity.TAG))
+            bundle.putString(Constants.CALLER, caller);
+
         intent.putExtras(bundle);
         startActivity(intent);
     }

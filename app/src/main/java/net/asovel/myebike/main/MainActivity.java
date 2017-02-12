@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ArrayList<String> listClauses = new ArrayList<>(1);
                 listClauses.add("patrocinado_SORT0 > 0");
                 bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
+                bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_myebike:
                 fragment = new MyEBike();
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_buscar_tienda:
                 fragment = new FragmentMap();
+                bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_recomendaciones:
                 fragment = new WebAsovel();

@@ -3,9 +3,11 @@ package net.asovel.myebike.main;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,25 +39,28 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         GoogleMap.OnMyLocationButtonClickListener
 {
     private static final String TAG = FragmentMap.class.getSimpleName();
-
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
     private GoogleMap map;
-
-    private BackendlessCollection<Tienda> response;
     private List<Tienda> tiendas;
     private Object object = new Object();
     private volatile boolean flag = false;
 
-    static View view;
+    private static View view;
+    private static boolean isQueryLaunched = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_maps, container, false);
+        String caller = getArguments().getString(Constants.CALLER, "");
+        if (caller.equals(MainActivity.TAG)) {
+            if (view == null) {
+                view = inflater.inflate(R.layout.fragment_maps, container, false);
+                return view;
+            }
             return view;
         }
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
         return view;
     }
 
@@ -67,12 +72,20 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        String caller = getArguments().getString(Constants.CALLER, "");
+        if (caller.equals(MainActivity.TAG)) {
+            if (!isQueryLaunched) {
+                isQueryLaunched = true;
+                launchQuery();
+            }
+            return;
+        }
         launchQuery();
     }
 
     private void launchQuery()
     {
-        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+        final BackendlessDataQuery dataQuery = new BackendlessDataQuery();
         QueryOptions queryOptions = new QueryOptions();
 
         Bundle bundle = getArguments();
@@ -112,46 +125,60 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
             queryOptions.setPageSize(100);
             dataQuery.setQueryOptions(queryOptions);
 
-            Backendless.Persistence.of(Tienda.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Tienda>>(getContext())
-            {
-                @Override
-                public void handleResponse(BackendlessCollection<Tienda> response)
-                {
-                    super.handleResponse(response);
-
-                    FragmentMap.this.response = response;
-                    tiendas = response.getCurrentPage();
-                    getNextPage();
-                    getNextPage();
-                    synchronized (object) {
-                        while (!flag) {
-                            try {
-                                object.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    setUpMarcadores();
-                }
-            });
+            QueryTiendasTask task = new QueryTiendasTask();
+            task.execute(dataQuery);
         }
     }
 
-    private void getNextPage(){
-        response.nextPage( new DefaultCallback<BackendlessCollection<Tienda>>(getContext())
+    private class QueryTiendasTask extends AsyncTask<BackendlessDataQuery, Void, Boolean>
+    {
+        @Override
+        protected void onPreExecute()
         {
-            @Override
-            public void handleResponse(BackendlessCollection<Tienda> response)
-            {
-                super.handleResponse(response);
-                tiendas.addAll(response.getCurrentPage());
+        }
+
+        @Override
+        protected Boolean doInBackground(BackendlessDataQuery... dataQuery)
+        {
+            BackendlessCollection<Tienda> response = Backendless.Persistence.of(Tienda.class).find(dataQuery[0]);
+            Log.d(TAG, "" + response.getTotalObjects());
+            tiendas = response.getCurrentPage();
+            tiendas.addAll(response.nextPage().getCurrentPage());
+            tiendas.addAll(response.nextPage().getCurrentPage());
+
+            return true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            synchronized (object) {
+                while (!flag) {
+                    try {
+                        object.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        });
+            setUpMarcadores();
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+        }
     }
+
 
     private void setUpMarcadores()
     {
+        Log.d(TAG, "Cantidad de tiendas: " + tiendas.size());
         for (int i = 0; i < tiendas.size(); i++) {
             Tienda tienda = tiendas.get(i);
 

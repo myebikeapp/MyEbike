@@ -1,8 +1,6 @@
 package net.asovel.myebike.resultadosebikes;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,29 +124,6 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
             marcaModelo = (TextView) view.findViewById(R.id.list_marca_modelo);
             precio = (TextView) view.findViewById(R.id.list_precio);
             valoracion = (RatingBar) view.findViewById(R.id.list_valoracion);
-
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
-
-                    /*int width = bitmap.getWidth();
-                    int height = bitmap.getHeight();
-                    Matrix matrix = new Matrix();
-                    matrix.postScale(0.7f, 0.9f);
-                    Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-                    imagen.setImageBitmap(bitmap);*/
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable drawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable drawable) {
-
-                }
-            };
         }
 
         public void bindBicicleta(EBike eBike) {
