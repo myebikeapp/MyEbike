@@ -135,7 +135,9 @@ public class FragmentListEBike extends Fragment
                 setUpPage();
             }
         });
-        adaptador.setEBikes(eBikes.subList(0, PAGESIZE));
+        int numEbikes = eBikes.size();
+        int min = numEbikes < PAGESIZE ? numEbikes : PAGESIZE;
+        adaptador.setEBikes(eBikes.subList(0, min));
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }

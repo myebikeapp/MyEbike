@@ -76,61 +76,48 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         if (caller.equals(MainActivity.TAG)) {
             if (!isQueryLaunched) {
                 isQueryLaunched = true;
-                launchQuery();
+                QueryTiendasTask task = new QueryTiendasTask();
+                task.execute();
             }
             return;
         }
-        launchQuery();
+        queryMarca();
     }
 
-    private void launchQuery()
+    private void queryMarca()
     {
-        final BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
         QueryOptions queryOptions = new QueryOptions();
 
         Bundle bundle = getArguments();
 
         String nombre = bundle.getString(Constants.NOMBRE_MARCA);
 
-        if (nombre != null) {
-            String whereClause = "nombre = '" + nombre + "'";
-            dataQuery.setWhereClause(whereClause);
+        if (nombre == null)
+            return;
 
-            queryOptions.addRelated("tiendas");
-            dataQuery.setQueryOptions(queryOptions);
+        String whereClause = "nombre = '" + nombre + "'";
+        dataQuery.setWhereClause(whereClause);
 
-            Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
+        queryOptions.addRelated("tiendas");
+        dataQuery.setQueryOptions(queryOptions);
+
+        Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
+        {
+            @Override
+            public void handleResponse(BackendlessCollection<Marca> response)
             {
-                @Override
-                public void handleResponse(BackendlessCollection<Marca> response)
-                {
-                    super.handleResponse(response);
+                super.handleResponse(response);
 
-                    Marca marca = response.getCurrentPage().get(0);
-                    tiendas = marca.getTiendas();
+                Marca marca = response.getCurrentPage().get(0);
+                tiendas = marca.getTiendas();
 
-                    synchronized (object) {
-                        while (!flag) {
-                            try {
-                                object.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    setUpMarcadores();
-                }
-            });
-        } else {
-            queryOptions.setPageSize(100);
-            dataQuery.setQueryOptions(queryOptions);
-
-            QueryTiendasTask task = new QueryTiendasTask();
-            task.execute(dataQuery);
-        }
+                setUpMarcadores();
+            }
+        });
     }
 
-    private class QueryTiendasTask extends AsyncTask<BackendlessDataQuery, Void, Boolean>
+    private class QueryTiendasTask extends AsyncTask<Void, Void, Boolean>
     {
         @Override
         protected void onPreExecute()
@@ -138,13 +125,30 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         }
 
         @Override
-        protected Boolean doInBackground(BackendlessDataQuery... dataQuery)
+        protected Boolean doInBackground(Void... values)
         {
-            BackendlessCollection<Tienda> response = Backendless.Persistence.of(Tienda.class).find(dataQuery[0]);
-            Log.d(TAG, "" + response.getTotalObjects());
-            tiendas = response.getCurrentPage();
-            tiendas.addAll(response.nextPage().getCurrentPage());
-            tiendas.addAll(response.nextPage().getCurrentPage());
+            BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+            QueryOptions queryOptions = new QueryOptions();
+
+            queryOptions.setPageSize(100);
+            dataQuery.setQueryOptions(queryOptions);
+
+            BackendlessCollection<Tienda> response1 = Backendless.Data.of(Tienda.class).find(dataQuery);
+            int numObjects = response1.getTotalObjects();
+            tiendas = response1.getCurrentPage();
+
+            queryOptions.setOffset(100);
+            dataQuery.setQueryOptions(queryOptions);
+
+            BackendlessCollection<Tienda> response2 = Backendless.Data.of(Tienda.class).find(dataQuery);
+            tiendas.addAll(response2.getCurrentPage());
+
+            queryOptions.setPageSize(numObjects - 200);
+            queryOptions.setOffset(200);
+            dataQuery.setQueryOptions(queryOptions);
+
+            BackendlessCollection<Tienda> response3 = Backendless.Data.of(Tienda.class).find(dataQuery);
+            tiendas.addAll(response3.getCurrentPage());
 
             return true;
         }
@@ -157,14 +161,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         @Override
         protected void onPostExecute(Boolean result)
         {
-            synchronized (object) {
-                while (!flag) {
-                    try {
-                        object.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            for (int i = 0; i < tiendas.size(); i++) {
+                Tienda tienda = tiendas.get(i);
+                Log.d(TAG, i + " " + tienda.getNombre_tienda());
             }
             setUpMarcadores();
         }
@@ -175,10 +174,17 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         }
     }
 
-
     private void setUpMarcadores()
     {
-        Log.d(TAG, "Cantidad de tiendas: " + tiendas.size());
+        synchronized (object) {
+            while (!flag) {
+                try {
+                    object.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         for (int i = 0; i < tiendas.size(); i++) {
             Tienda tienda = tiendas.get(i);
 
