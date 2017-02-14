@@ -34,7 +34,7 @@ public class FragmentListMarca extends Fragment
     public static final String TAG = FragmentListMarca.class.getSimpleName();
 
     private RecyclerView recyclerView;
-    private int numPeninsula;
+    private int numTitle;
     private String[] nombresMarca;
 
     @Override
@@ -85,7 +85,8 @@ public class FragmentListMarca extends Fragment
             BackendlessCollection<Marca> response2 = Backendless.Data.of(Marca.class).find(dataQuery);
             List<Marca> marcas2 = response2.getCurrentPage();
 
-            numPeninsula = marcas1.size();
+            int numPeninsula = marcas1.size();
+            numTitle = numPeninsula + 1;
             int numForeign = marcas2.size();
             nombresMarca = new String[numPeninsula + numForeign];
 
@@ -132,9 +133,9 @@ public class FragmentListMarca extends Fragment
 
     private void onItemClick(View view)
     {
-        int position = recyclerView.getChildAdapterPosition(view) - 1;
+        int position = recyclerView.getChildAdapterPosition(view);
 
-        if (position > numPeninsula) {
+        if (position > numTitle) {
             Toast.makeText(getContext(), "Esta marca no esta disponible en España", Toast.LENGTH_LONG).show();
             return;
         }
@@ -146,7 +147,7 @@ public class FragmentListMarca extends Fragment
         Bundle bundle = new Bundle();
 
         ArrayList<String> listClauses = new ArrayList<>(1);
-        listClauses.add("marca.nombre = '" + nombresMarca[position] + "'");
+        listClauses.add("marca.nombre = '" + nombresMarca[position - 1] + "'");
         bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
 
         if (email.equals("")) {
@@ -188,7 +189,7 @@ public class FragmentListMarca extends Fragment
             if (position == 0)
                 return VIEW_TYPE_TITLE;
 
-            return (position != numPeninsula) ? VIEW_TYPE_ITEM : VIEW_TYPE_TITLE;
+            return (position != numTitle) ? VIEW_TYPE_ITEM : VIEW_TYPE_TITLE;
         }
 
         @Override
@@ -206,9 +207,9 @@ public class FragmentListMarca extends Fragment
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            if (position != 0 && position != numPeninsula)
+            if (position != 0 && position != numTitle)
 
-                if (position < numPeninsula)
+                if (position < numTitle)
                     ((MarcasViewHolder) holder).bindMarca(nombresMarca[position - 1]);
                 else
                     ((MarcasViewHolder) holder).bindMarca(nombresMarca[position - 2]);
@@ -253,9 +254,9 @@ public class FragmentListMarca extends Fragment
         public void bindTitle(int position)
         {
             if (position == 0)
-                titleView.setText("Marcas que se venden actualment en España");
+                titleView.setText("Marcas distribuidas en España");
             else
-                titleView.setText("Marcas que no se venden actualment en España");
+                titleView.setText("Marcas sin distribución en España");
         }
     }
 

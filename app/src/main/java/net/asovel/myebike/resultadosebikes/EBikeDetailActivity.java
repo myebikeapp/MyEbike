@@ -57,14 +57,14 @@ public class EBikeDetailActivity extends AppCompatActivity
         TextView tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
         TextView ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
-        TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
+        TextView linkView = (TextView) findViewById(R.id.detail_descripcion);
 
         if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
                     .load(parcelableEBike.getFoto())
                     .placeholder(R.drawable.ebike)
                     .resize(AdaptadorEbikes.BicicletasViewHolder.IMAGE_WIDTH, AdaptadorEbikes.BicicletasViewHolder.IMAGE_HEIGHT)
-                    .centerCrop()
+                    .centerInside()
                     .into(imagen);
         } else {
             imagen.setImageResource(R.drawable.ebike);
@@ -102,7 +102,11 @@ public class EBikeDetailActivity extends AppCompatActivity
         if (parcelableEBike.getValoracion_SORT1() != -1)
             valoracion.setRating(parcelableEBike.getValoracion_SORT1());
 
-        descripcion.setText(parcelableEBike.getLink());
+        String link = parcelableEBike.getLink();
+        if (link != null) {
+            linkView.setText(link);
+        }
+
 
         FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);
         buscarTiendas.setOnClickListener(new View.OnClickListener()

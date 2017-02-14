@@ -20,7 +20,8 @@ import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -41,26 +42,31 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     private static final String TAG = FragmentMap.class.getSimpleName();
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
+    private MapView mapView;
     private GoogleMap map;
     private List<Tienda> tiendas;
     private Object object = new Object();
     private volatile boolean flag = false;
 
-    private static View view;
-    private static boolean isQueryLaunched = false;
+    private Marker lastMarker;
+    private float lastZoom;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        String caller = getArguments().getString(Constants.CALLER, "");
-        if (caller.equals(MainActivity.TAG)) {
-            if (view == null) {
-                view = inflater.inflate(R.layout.fragment_maps, container, false);
-                return view;
-            }
-            return view;
-        }
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        mapView = (MapView) view.findViewById(R.id.map);
+
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        try {
+            MapsInitializer.initialize(getContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapView.getMapAsync(this);
+
         return view;
     }
 
@@ -69,19 +75,41 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         super.onActivityCreated(state);
 
-        MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
         String caller = getArguments().getString(Constants.CALLER, "");
         if (caller.equals(MainActivity.TAG)) {
-            if (!isQueryLaunched) {
-                isQueryLaunched = true;
-                QueryTiendasTask task = new QueryTiendasTask();
-                task.execute();
-            }
+            QueryTiendasTask task = new QueryTiendasTask();
+            task.execute();
             return;
         }
         queryMarca();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory()
+    {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 
     private void queryMarca()
@@ -193,8 +221,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
             if (latitud != null && longitud != null) {
                 LatLng latLng = new LatLng(latitud, longitud);
-                Marker marker = map.addMarker(new MarkerOptions()
-                        .position(latLng));
+                Marker marker = map.addMarker(new MarkerOptions().position(latLng));
                 marker.setTag(tienda);
             }
         }
@@ -205,7 +232,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         this.map = googleMap;
 
-        //map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -220,12 +247,24 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
         map.moveCamera(camUpd);
 
+        map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener()
+        {
+            @Override
+            public void onCameraMove()
+            {
+                if (lastMarker != null && lastMarker.isInfoWindowShown()) {
+                    if (map.getCameraPosition().zoom < lastZoom)
+                        lastMarker.hideInfoWindow();
+                }
+                lastZoom = map.getCameraPosition().zoom;
+            }
+        });
+
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
-
             public boolean onMarkerClick(Marker marker)
             {
-
+                lastMarker = marker;
                 marker.showInfoWindow();
                 LatLng latLng = marker.getPosition();
                 float zoom = map.getCameraPosition().zoom;

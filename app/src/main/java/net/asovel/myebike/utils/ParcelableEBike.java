@@ -187,8 +187,6 @@ public class ParcelableEBike implements Parcelable
             peso = eBike.getPeso().intValue();
 
         String link = eBike.getLink();
-        if (link == null)
-            link = sinDatos;
 
         int ruedas = -1;
         if (eBike.getTamano_ruedas() != null)

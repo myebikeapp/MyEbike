@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_fondo_main"
-    android:fitsSystemWindows="true"
-    tools:context=".resultadosebikes.EBikeDetailActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:background="@color/color_fondo_main"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context=".resultadosebikes.EBikeDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/activity_detail_appbarlayout"
@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/color_white"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_detail"
@@ -34,7 +34,7 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/activity_detail_toolbar_theme"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="90dp"
-                    android:textSize="@dimen/text_marca_y_modelo" />
+                    android:textSize="@dimen/text_marca_y_modelo"/>
 
                 <TextView
                     android:id="@+id/detail_precio"
@@ -71,7 +71,7 @@
                     android:layout_below="@+id/detail_marca_modelo"
                     android:textColor="?colorPrimary"
                     android:textSize="@dimen/text_marca_y_modelo"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <RatingBar
                     android:id="@+id/detail_valoracion"
@@ -84,7 +84,7 @@
                     android:rating="0"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
-                    android:transformPivotX="-10dp" />
+                    android:transformPivotX="-10dp"/>
 
             </RelativeLayout>
 
@@ -94,7 +94,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="4dp"
                 android:text="CARACTERÍSTICAS"
-                android:textColor="?colorPrimary" />
+                android:textColor="?colorPrimary"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -106,71 +106,71 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de uso :" />
+                    android:text="Tipo de uso :"/>
 
                 <TextView
                     android:id="@+id/detail_uso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp" />
+                    android:paddingLeft="16dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Autonomia :" />
+                    android:text="Autonomia :"/>
 
                 <TextView
                     android:id="@+id/detail_autonomia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos" />
+                    android:text="@string/sin_datos"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Peso :" />
+                    android:text="Peso :"/>
 
                 <TextView
                     android:id="@+id/detail_peso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos" />
+                    android:text="@string/sin_datos"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suspensión :" />
+                    android:text="Suspensión :"/>
 
                 <TextView
                     android:id="@+id/detail_suspension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp" />
+                    android:paddingLeft="16dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tamaño de rueda :" />
+                    android:text="Tamaño de rueda :"/>
 
                 <TextView
                     android:id="@+id/detail_tamano_rueda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos" />
+                    android:text="@string/sin_datos"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ubicación del Motor :" />
+                    android:text="Ubicación del Motor :"/>
 
                 <TextView
                     android:id="@+id/detail_ubicacion_motor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp" />
+                    android:paddingLeft="16dp"/>
 
             </GridLayout>
 
@@ -179,15 +179,16 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="DESCRIPCION"
-                android:textColor="?colorPrimary" />
+                android:text="DESCRIPCIÓN"
+                android:textColor="?colorPrimary"/>
 
             <TextView
                 android:id="@+id/detail_descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="web"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp" />
+                android:paddingRight="16dp"/>
 
         </LinearLayout>
 
@@ -198,9 +199,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_float_maps"
         app:layout_anchor="@id/activity_detail_appbarlayout"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_float_maps"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
