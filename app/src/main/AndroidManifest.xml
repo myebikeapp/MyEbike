@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <application
         android:name=".backendless.common.DataApplication"
         android:icon="@mipmap/ic_launcher"
@@ -19,10 +23,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAmCJ4HNTFRQZZhd_7W4eIPLMX-v8QhzEQ" />
-
-        <uses-feature
-            android:glEsVersion="0x00020000"
-            android:required="true" />
 
         <activity
             android:name=".WelcomeActivity"
