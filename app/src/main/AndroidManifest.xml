@@ -51,7 +51,7 @@
         <activity
             android:name=".resultadosebikes.EBikeListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Resultados de Búsqueda"
+            android:label="@string/EBikeListActivity_label"
             android:launchMode="singleTop"
             android:parentActivityName=".main.MainActivity"
             android:screenOrientation="portrait"
@@ -76,7 +76,7 @@
         <activity
             android:name=".resultadosebikes.MapaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Tiendas"
+            android:label="@string/FragmentMap_label"
             android:parentActivityName=".resultadosebikes.EBikeListActivity"
             android:theme="@style/AppTheme.ActionBar">
             <meta-data

@@ -32,8 +32,8 @@ public class MyEBike extends Fragment
 {
     public static final String TAG = MyEBike.class.getSimpleName();
 
-    private static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "otras"};
-    private static final int[] DIAMETRO_RUEDA = {0, 0, 16, 24, 26, 27, 28, 29};
+    private static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "scooter", "otras"};
+    private static final int[] DIAMETRO_RUEDA = {0, 0, 14, 24, 26, 27, 28, 29};
     private static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
     private static final String[] MOTOR = {null, "delantero", "central", "trasero"};
     private static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
@@ -224,6 +224,28 @@ public class MyEBike extends Fragment
                     spinnerUso.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes " + USO[position] + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
                     return;
+                }
+                if (position == 6) {
+                    spinnerRueda.setSelection(0);
+                    spinnerSuspension.setSelection(0);
+                    spinnerMotor.setSelection(0);
+                    spinnerAutonomia.setSelection(0);
+                    spinnerPresupuestoInf.setSelection(0);
+                    spinnerPresupuestoSup.setSelection(PRESUPUESTO.length - 1);
+                    spinnerRueda.setEnabled(false);
+                    spinnerMotor.setEnabled(false);
+                    spinnerAutonomia.setEnabled(false);
+                    spinnerSuspension.setEnabled(false);
+                    spinnerPresupuestoInf.setEnabled(false);
+                    spinnerPresupuestoSup.setEnabled(false);
+                }
+                else if (uso == USO[6]) {
+                    spinnerRueda.setEnabled(true);
+                    spinnerMotor.setEnabled(true);
+                    spinnerAutonomia.setEnabled(true);
+                    spinnerSuspension.setEnabled(true);
+                    spinnerPresupuestoInf.setEnabled(true);
+                    spinnerPresupuestoSup.setEnabled(true);
                 }
                 uso = USO[position];
             }

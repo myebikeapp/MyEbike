@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
         iniUI();
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     }
 
     private void iniUI() {
@@ -188,7 +187,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment).commit();
         item.setChecked(true);
-        getSupportActionBar().setTitle(item.getTitle());
+
+        if (id != R.id.menu_buscar_tienda)
+            setTitle(item.getTitle());
 
         drawerLayout.closeDrawer(GravityCompat.START);
 

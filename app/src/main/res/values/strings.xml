@@ -4,11 +4,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="EBikeListActivity_label">Resultados</string>
+    <string name="FragmentMap_label">Mapa de tiendas</string>
+
     <string name="action_settings">Settings</string>
 
     <string name="sin_datos">sin datos</string>
 
-    <string name="limpiar_seleccion">Limpiar selección</string>
+    <string name="limpiar_seleccion">Borrar selección</string>
 
     <string name="autonomia_text">Autonomía Km</string>
     <string name="presupuesto_text">Presupuesto</string>

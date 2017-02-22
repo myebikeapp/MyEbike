@@ -102,7 +102,15 @@ public class FragmentListEBike extends Fragment
                     return;
                 }
                 eBikes.addAll(response.getCurrentPage());
-                int totalPages = getTotalPages(eBikes.size());
+                int numEbikes = eBikes.size();
+                int totalPages = getTotalPages(numEbikes);
+
+                String caller = getArguments().getString(Constants.CALLER, "");
+                if (caller.equals(EBikeListActivity.TAG)) {
+                    String label = getResources().getString(R.string.EBikeListActivity_label) + " (" + numEbikes + ")";
+                    getActivity().setTitle(label);
+                }
+
                 setUpRecyclerView(totalPages);
             }
         });

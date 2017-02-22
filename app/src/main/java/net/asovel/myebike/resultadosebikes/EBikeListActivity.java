@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class EBikeListActivity extends AppCompatActivity
 {
-    private static final String TAG = EBikeListActivity.class.getSimpleName();
+    public static final String TAG = EBikeListActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +38,7 @@ public class EBikeListActivity extends AppCompatActivity
         ArrayList<String> listClauses = receiver.getStringArrayList(Constants.WHERECLAUSE);
         ArrayList<String> sortBy = receiver.getStringArrayList(Constants.SORTBY);
 
+        sender.putString(Constants.CALLER, TAG);
         sender.putStringArrayList(Constants.WHERECLAUSE, listClauses);
         sender.putStringArrayList(Constants.SORTBY, sortBy);
         fragment.setArguments(sender);

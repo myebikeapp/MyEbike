@@ -20,7 +20,7 @@
         <item
             android:id="@+id/menu_buscar_tienda"
             android:icon="@drawable/ic_menu_tienda"
-            android:title="Mapa de tiendas" />
+            android:title="@string/FragmentMap_label" />
 
         <item
             android:id="@+id/menu_recomendaciones"

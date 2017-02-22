@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import net.asovel.myebike.R;
 
-public class AntesDeComprar extends Fragment
+public class FragmentRecomendaciones extends Fragment
 {
 
     @Override

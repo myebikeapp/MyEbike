@@ -8,14 +8,15 @@
         <item>Carretera</item>
         <item>Montaña</item>
         <item>Trekking</item>
+        <item>E-Scooter</item>
         <item>Otros</item>
     </string-array>
 
     <string-array name="tamano_rueda">
         <item>Todos los tamaños</item>
-        <item>Pequeña 16-24</item>
-        <item>Mediana 26-27.5</item>
-        <item>Grande 28-29</item>
+        <item>Pequeña 14 - 24</item>
+        <item>Mediana 26 - 27.5</item>
+        <item>Grande 28 - 29</item>
     </string-array>
 
     <string-array name="suspension">

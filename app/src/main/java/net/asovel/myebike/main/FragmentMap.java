@@ -31,6 +31,7 @@ import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
+import net.asovel.myebike.backendless.data.TiendaLista;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.WebActivity;
 
@@ -75,10 +76,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         super.onActivityCreated(state);
 
+        String label = getResources().getString(R.string.FragmentMap_label);
+        getActivity().setTitle(label);
+
         String caller = getArguments().getString(Constants.CALLER, "");
         if (caller.equals(MainActivity.TAG)) {
-            QueryTiendasTask task = new QueryTiendasTask();
-            task.execute();
+            queryTiendas();
+            //QueryTiendasTask task = new QueryTiendasTask();
+            //task.execute();
             return;
         }
         queryMarca();
@@ -130,7 +135,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         queryOptions.addRelated("tiendas");
         dataQuery.setQueryOptions(queryOptions);
 
-        Backendless.Persistence.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
+        Backendless.Data.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
         {
             @Override
             public void handleResponse(BackendlessCollection<Marca> response)
@@ -139,6 +144,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
                 Marca marca = response.getCurrentPage().get(0);
                 tiendas = marca.getTiendas();
+
+                setUpMarcadores();
+            }
+        });
+    }
+
+    private void queryTiendas()
+    {
+        Backendless.Data.of(TiendaLista.class).find(new DefaultCallback<BackendlessCollection<TiendaLista>>(getContext())
+        {
+            @Override
+            public void handleResponse(BackendlessCollection<TiendaLista> response)
+            {
+                super.handleResponse(response);
+
+                TiendaLista tiendaLista = response.getCurrentPage().get(0);
+                tiendas = tiendaLista.getLista();
 
                 setUpMarcadores();
             }
@@ -189,10 +211,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         @Override
         protected void onPostExecute(Boolean result)
         {
-            for (int i = 0; i < tiendas.size(); i++) {
-                Tienda tienda = tiendas.get(i);
-                Log.d(TAG, i + " " + tienda.getNombre_tienda());
-            }
             setUpMarcadores();
         }
 
@@ -213,7 +231,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
                 }
             }
         }
-        for (int i = 0; i < tiendas.size(); i++) {
+        int numTiendas = tiendas.size();
+        String label = getResources().getString(R.string.FragmentMap_label) + " (" + numTiendas + ")";
+        getActivity().setTitle(label);
+
+        for (int i = 0; i < numTiendas; i++) {
             Tienda tienda = tiendas.get(i);
 
             Double latitud = tienda.getLatitud();

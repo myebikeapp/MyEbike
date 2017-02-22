@@ -4,7 +4,7 @@
               android:layout_height="@dimen/list_marcas_title_height"
               android:layout_marginBottom="@dimen/list_marcas_title_margin"
               android:layout_marginTop="@dimen/list_marcas_title_margin"
-              android:background="@color/colorPrimary"
+              android:background="@color/colorAccent"
               android:gravity="center"
               android:orientation="vertical">
 
