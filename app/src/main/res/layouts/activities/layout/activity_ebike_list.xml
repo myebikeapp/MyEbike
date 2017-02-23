@@ -27,18 +27,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        android:id="@+id/principaloo"
+        android:id="@+id/principal"
         layout="@layout/fragment_list_ebikes" />
-
-    <!--
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/top_ventas_recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/recycleview_horizontal_margin"
-        android:layout_marginRight="@dimen/recycleview_horizontal_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        -->
 
 </android.support.design.widget.CoordinatorLayout>
 

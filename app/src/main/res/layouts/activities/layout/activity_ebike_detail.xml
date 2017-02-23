@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                                                  xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
@@ -45,152 +46,165 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/cardview_margin"
+            android:layout_marginLeft="@dimen/cardview_margin"
+            android:layout_marginRight="@dimen/cardview_margin"
+            android:layout_marginTop="@dimen/cardview_margin"
+            card_view:cardBackgroundColor="#ffffff"
+            card_view:cardCornerRadius="6dp"
+            card_view:cardElevation="6dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/text_marca_y_modelo">
-
-                <TextView
-                    android:id="@+id/detail_marca_modelo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="90dp"
-                    android:textSize="@dimen/text_marca_y_modelo"/>
-
-                <TextView
-                    android:id="@+id/detail_precio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_marca_modelo"
-                    android:textColor="?colorPrimary"
-                    android:textSize="@dimen/text_marca_y_modelo"
-                    android:textStyle="bold"/>
-
-                <RatingBar
-                    android:id="@+id/detail_valoracion"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_precio"
-                    android:paddingTop="4dp"
-                    android:progressTint="@color/color_ratingbar"
-                    android:rating="0"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:transformPivotX="-10dp"/>
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="4dp"
-                android:text="CARACTERÍSTICAS"
-                android:textColor="?colorPrimary"/>
-
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnCount="2"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:rowCount="11">
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/text_marca_y_modelo">
+
+                    <TextView
+                        android:id="@+id/detail_marca_modelo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="90dp"
+                        android:textSize="@dimen/text_marca_y_modelo"/>
+
+                    <TextView
+                        android:id="@+id/detail_precio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_marca_modelo"
+                        android:textColor="?colorPrimary"
+                        android:textSize="@dimen/text_marca_y_modelo"
+                        android:textStyle="bold"/>
+
+                    <RatingBar
+                        android:id="@+id/detail_valoracion"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_precio"
+                        android:paddingTop="4dp"
+                        android:progressTint="@color/color_ratingbar"
+                        android:rating="0"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:transformPivotX="-10dp"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de uso :"/>
+                    android:paddingBottom="8dp"
+                    android:paddingTop="4dp"
+                    android:text="CARACTERÍSTICAS"
+                    android:textColor="?colorPrimary"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnCount="2"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:rowCount="11">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de uso :"/>
+
+                    <TextView
+                        android:id="@+id/detail_uso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Autonomia :"/>
+
+                    <TextView
+                        android:id="@+id/detail_autonomia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:text="@string/sin_datos"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Peso :"/>
+
+                    <TextView
+                        android:id="@+id/detail_peso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:text="@string/sin_datos"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Suspensión :"/>
+
+                    <TextView
+                        android:id="@+id/detail_suspension"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tamaño de rueda :"/>
+
+                    <TextView
+                        android:id="@+id/detail_tamano_rueda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:text="@string/sin_datos"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ubicación del Motor :"/>
+
+                    <TextView
+                        android:id="@+id/detail_ubicacion_motor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"/>
+
+                </GridLayout>
 
                 <TextView
-                    android:id="@+id/detail_uso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="DESCRIPCIÓN"
+                    android:textColor="@color/color_black"/>
 
                 <TextView
+                    android:id="@+id/detail_descripcion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Autonomia :"/>
-
-                <TextView
-                    android:id="@+id/detail_autonomia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:autoLink="web"
                     android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
+                    android:paddingRight="16dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Peso :"/>
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/detail_peso"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Suspensión :"/>
-
-                <TextView
-                    android:id="@+id/detail_suspension"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tamaño de rueda :"/>
-
-                <TextView
-                    android:id="@+id/detail_tamano_rueda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:text="@string/sin_datos"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ubicación del Motor :"/>
-
-                <TextView
-                    android:id="@+id/detail_ubicacion_motor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"/>
-
-            </GridLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="DESCRIPCIÓN"
-                android:textColor="?colorPrimary"/>
-
-            <TextView
-                android:id="@+id/detail_descripcion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"/>
-
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
     </android.support.v4.widget.NestedScrollView>
 

@@ -3,7 +3,6 @@ package net.asovel.myebike.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,30 +11,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
 
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
+import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
+import net.asovel.myebike.backendless.data.MarcaLista;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.Constants;
+import net.asovel.myebike.utils.WebActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FragmentListMarca extends Fragment
 {
-
     public static final String TAG = FragmentListMarca.class.getSimpleName();
 
     private RecyclerView recyclerView;
+    private List<Marca> marcas;
     private int numTitle;
-    private String[] nombresMarca;
+    private int numPeninsula;
+    private int numPeninsulaFalse;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,71 +51,50 @@ public class FragmentListMarca extends Fragment
         super.onActivityCreated(state);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.buscar_marca_recycleView);
-
-        QueryMarcasTask task = new QueryMarcasTask();
-        task.execute();
+        marcas = new ArrayList<Marca>();
+        queryMarcas();
     }
 
-    private class QueryMarcasTask extends AsyncTask<Void, Void, Integer>
+    private void queryMarcas()
     {
-        @Override
-        protected void onPreExecute()
+        Backendless.Data.of(MarcaLista.class).find(new DefaultCallback<BackendlessCollection<MarcaLista>>(getContext())
         {
-        }
+            @Override
+            public void handleResponse(BackendlessCollection<MarcaLista> response)
+            {
+                super.handleResponse(response);
 
-        @Override
-        protected Integer doInBackground(Void... values)
-        {
-            BackendlessDataQuery dataQuery = new BackendlessDataQuery();
-            QueryOptions queryOptions = new QueryOptions();
+                MarcaLista marcaLista = response.getCurrentPage().get(0);
+                List<Marca> listaAux = marcaLista.getLista();
 
-            List<String> sortBy = new ArrayList<>(1);
-            sortBy.add("nombre");
-            queryOptions.setSortBy(sortBy);
-            queryOptions.setPageSize(100);
-            dataQuery.setQueryOptions(queryOptions);
+                Collections.sort(listaAux, new Comparator<Marca>()
+                {
+                    @Override
+                    public int compare(final Marca object1, final Marca object2)
+                    {
+                        return object1.getNombre().compareToIgnoreCase(object2.getNombre());
+                    }
+                });
 
-            String whereClause = "peninsula = True";
-            dataQuery.setWhereClause(whereClause);
 
-            BackendlessCollection<Marca> response1 = Backendless.Data.of(Marca.class).find(dataQuery);
-            List<Marca> marcas1 = response1.getCurrentPage();
+                int size = listaAux.size();
+                for (int i = 0; i < size; ++i) {
+                    Marca marca = listaAux.get(i);
+                    if ((marca.getPeninsula() != null) && marca.getPeninsula())
+                        marcas.add(marca);
+                }
+                numPeninsula = marcas.size();
+                numTitle = marcas.size() + 1;
 
-            whereClause = "peninsula = False";
-            dataQuery.setWhereClause(whereClause);
-
-            BackendlessCollection<Marca> response2 = Backendless.Data.of(Marca.class).find(dataQuery);
-            List<Marca> marcas2 = response2.getCurrentPage();
-
-            int numPeninsula = marcas1.size();
-            numTitle = numPeninsula + 1;
-            int numForeign = marcas2.size();
-            nombresMarca = new String[numPeninsula + numForeign];
-
-            for (int i = 0; i < numPeninsula; i++)
-                nombresMarca[i] = marcas1.get(i).getNombre();
-
-            for (int i = 0; i < numForeign; i++)
-                nombresMarca[i + numPeninsula] = marcas2.get(i).getNombre();
-
-            return 0;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values)
-        {
-        }
-
-        @Override
-        protected void onPostExecute(Integer result)
-        {
-            setUpRecyclerView();
-        }
-
-        @Override
-        protected void onCancelled()
-        {
-        }
+                for (int i = 0; i < size; ++i) {
+                    Marca marca = listaAux.get(i);
+                    if ((marca.getPeninsula() != null) && !marca.getPeninsula())
+                        marcas.add(marca);
+                }
+                numPeninsulaFalse = marcas.size() - numPeninsula;
+                setUpRecyclerView();
+            }
+        });
     }
 
     private void setUpRecyclerView()
@@ -135,24 +116,28 @@ public class FragmentListMarca extends Fragment
     {
         int position = recyclerView.getChildAdapterPosition(view);
 
+        Intent intent;
+        Bundle bundle = new Bundle();
+
         if (position > numTitle) {
-            Toast.makeText(getContext(), "Esta marca no esta disponible en España", Toast.LENGTH_LONG).show();
+
+            intent = new Intent(getContext(), WebActivity.class);
+            bundle.putString(Constants.URL, marcas.get(position - 2).getPagina_web());
+            intent.putExtras(bundle);
+            startActivity(intent);
             return;
         }
 
         SharedPreferences prefs = getActivity().getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
-        Intent intent;
-        Bundle bundle = new Bundle();
-
         ArrayList<String> listClauses = new ArrayList<>(1);
-        listClauses.add("marca.nombre = '" + nombresMarca[position - 1] + "'");
+        listClauses.add("marca.nombre = '" + marcas.get(position - 1).getNombre() + "'");
         bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
+        bundle.putString(Constants.CALLER, TAG);
 
         if (email.equals("")) {
             intent = new Intent(getContext(), LoginActivity.class);
-            bundle.putString(Constants.CALLER, TAG);
         } else {
             intent = new Intent(getContext(), EBikeListActivity.class);
         }
@@ -180,7 +165,7 @@ public class FragmentListMarca extends Fragment
         @Override
         public int getItemCount()
         {
-            return nombresMarca.length + 2;
+            return marcas.size() + 2;
         }
 
         @Override
@@ -210,9 +195,9 @@ public class FragmentListMarca extends Fragment
             if (position != 0 && position != numTitle)
 
                 if (position < numTitle)
-                    ((MarcasViewHolder) holder).bindMarca(nombresMarca[position - 1]);
+                    ((MarcasViewHolder) holder).bindMarca(marcas.get(position - 1).getNombre());
                 else
-                    ((MarcasViewHolder) holder).bindMarca(nombresMarca[position - 2]);
+                    ((MarcasViewHolder) holder).bindMarca(marcas.get(position - 2).getNombre());
             else
                 ((MarcasTitleViewHolder) holder).bindTitle(position);
         }
@@ -254,9 +239,9 @@ public class FragmentListMarca extends Fragment
         public void bindTitle(int position)
         {
             if (position == 0)
-                titleView.setText("Marcas distribuidas en España");
+                titleView.setText("Marcas distribuidas en España (" + numPeninsula + " )");
             else
-                titleView.setText("Marcas sin distribución en España");
+                titleView.setText("Marcas sin distribución en España (" + numPeninsulaFalse + " )");
         }
     }
 

@@ -19,7 +19,9 @@ import com.backendless.persistence.QueryOptions;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.EBike;
+import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
+import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 
@@ -98,7 +100,7 @@ public class FragmentListEBike extends Fragment
                 super.handleResponse(response);
 
                 if (response.getCurrentPage().size() == 0) {
-                    Toast.makeText(getContext(), "Hem de posar mes bicis al Backendless", Toast.LENGTH_LONG).show();
+                    finishActivity();
                     return;
                 }
                 eBikes.addAll(response.getCurrentPage());
@@ -106,7 +108,7 @@ public class FragmentListEBike extends Fragment
                 int totalPages = getTotalPages(numEbikes);
 
                 String caller = getArguments().getString(Constants.CALLER, "");
-                if (caller.equals(EBikeListActivity.TAG)) {
+                if (caller.equals(FragmentListMarca.TAG) || caller.equals(MyEBike.TAG)) {
                     String label = getResources().getString(R.string.EBikeListActivity_label) + " (" + numEbikes + ")";
                     getActivity().setTitle(label);
                 }
@@ -114,6 +116,29 @@ public class FragmentListEBike extends Fragment
                 setUpRecyclerView(totalPages);
             }
         });
+    }
+
+    private void finishActivity()
+    {
+        if (getArguments().getString(Constants.CALLER, "").equals(FragmentListMarca.TAG))
+            Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados de esta marca", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getContext(), "Lo sentimos pero hay que poner mas modelos en el Backendless", Toast.LENGTH_LONG).show();
+
+        Thread thread = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    Thread.sleep(3500);
+                    getActivity().finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
     }
 
     private int getTotalPages(int totalObjects)

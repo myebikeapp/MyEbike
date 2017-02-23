@@ -38,12 +38,12 @@ public class EBikeListActivity extends AppCompatActivity
         ArrayList<String> listClauses = receiver.getStringArrayList(Constants.WHERECLAUSE);
         ArrayList<String> sortBy = receiver.getStringArrayList(Constants.SORTBY);
 
-        sender.putString(Constants.CALLER, TAG);
+        sender.putString(Constants.CALLER, receiver.getString(Constants.CALLER));
         sender.putStringArrayList(Constants.WHERECLAUSE, listClauses);
         sender.putStringArrayList(Constants.SORTBY, sortBy);
         fragment.setArguments(sender);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.principaloo, fragment, null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.principal, fragment, null).commit();
     }
 
     private void iniUI()

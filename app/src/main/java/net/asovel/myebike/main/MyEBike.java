@@ -417,10 +417,10 @@ public class MyEBike extends Fragment
 
                 ArrayList<String> listClauses = setupWhereClause();
                 bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
+                bundle.putString(Constants.CALLER, TAG);
 
                 if (email.equals("")) {
                     intent = new Intent(getContext(), LoginActivity.class);
-                    bundle.putString(Constants.CALLER, TAG);
                 } else {
                     intent = new Intent(getContext(), EBikeListActivity.class);
                 }

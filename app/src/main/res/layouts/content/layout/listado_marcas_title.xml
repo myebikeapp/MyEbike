@@ -4,7 +4,7 @@
               android:layout_height="@dimen/list_marcas_title_height"
               android:layout_marginBottom="@dimen/list_marcas_title_margin"
               android:layout_marginTop="@dimen/list_marcas_title_margin"
-              android:background="@color/colorAccent"
+              android:background="@color/color_white"
               android:gravity="center"
               android:orientation="vertical">
 
@@ -12,9 +12,9 @@
         android:id="@+id/list_marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
         android:gravity="center"
-        android:textColor="@color/color_white"
+        android:padding="15dp"
+        android:textColor="@color/color_black"
         android:textSize="@dimen/text_medium"/>
 
 </LinearLayout>
