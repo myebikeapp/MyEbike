@@ -32,12 +32,12 @@ public class MyEBike extends Fragment
 {
     public static final String TAG = MyEBike.class.getSimpleName();
 
-    private static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "scooter", "otras"};
-    private static final int[] DIAMETRO_RUEDA = {0, 0, 14, 24, 26, 27, 28, 29};
-    private static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
-    private static final String[] MOTOR = {null, "delantero", "central", "trasero"};
-    private static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
-    private static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
+    public static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "scooter", "otras"};
+    public static final int[] DIAMETRO_RUEDA = {0, 0, 14, 24, 26, 27, 28, 29};
+    public static final String[] SUSPENSION = {null, "no susp", "delantera", "full susp"};
+    public static final String[] MOTOR = {null, "delantero", "central", "trasero"};
+    public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
+    public static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
 
     private Spinner spinnerUso;
     private Spinner spinnerRueda;

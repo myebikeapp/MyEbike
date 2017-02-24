@@ -42,7 +42,7 @@
     <string-array name="motor">
         <item>Todas las ubicaciones</item>
         <item>Delantero</item>
-        <item>Central</item>
+        <item>Central o pedalier</item>
         <item>Trasero</item>
     </string-array>
 
