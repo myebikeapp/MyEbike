@@ -10,7 +10,7 @@
         android:required="true" />
 
     <application
-        android:name=".backendless.common.DataApplication"
+        android:name=".utils.AnalyticsApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"

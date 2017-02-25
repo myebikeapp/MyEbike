@@ -1,16 +1,19 @@
 package net.asovel.myebike.main;
 
 import android.Manifest;
-import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -33,7 +36,6 @@ import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.backendless.data.TiendaLista;
 import net.asovel.myebike.utils.Constants;
-import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
@@ -384,7 +386,36 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     private void onWindowClick(Marker marker)
     {
         Tienda tienda = (Tienda) marker.getTag();
-        String url = tienda.getPagina_web();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Contactar con la tienda");
+
+        String phone = String.valueOf(tienda.getTelefono());
+        String web = tienda.getPagina_web();
+
+        String[] values = new String[]{"phone", "web"};
+        CustomAdapter adapter = new CustomAdapter(getContext(), R.layout.maps_dialog, R.id.dialog_text, values);
+
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        /*String url = tienda.getPagina_web();
 
         if (url != null) {
             Intent intent = new Intent(getContext(), WebActivity.class);
@@ -392,15 +423,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
             bundle.putString(Constants.URL, url);
             intent.putExtras(bundle);
             startActivity(intent);
-        }
+        }*/
     }
 
     @Override
     public boolean onMyLocationButtonClick()
     {
-
-        /*CameraUpdate camUpd = CameraUpdateFactory.zoomTo(14);
-        map.moveCamera(camUpd);*/
         return false;
     }
 
@@ -416,6 +444,35 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
                 map.setMyLocationEnabled(true);
                 map.setOnMyLocationButtonClickListener(this);
             }
+        }
+    }
+
+    public class CustomAdapter extends ArrayAdapter<String>
+    {
+        public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values)
+        {
+            super(context, resource, textViewResourceId, values);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.maps_dialog, null);
+            }
+
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.dialog_image);
+            TextView textView = (TextView) convertView.findViewById(R.id.dialog_text);
+
+            if (position == 0) {
+                imageView.setImageResource(R.drawable.ic_menu_buscador);
+
+            } else {
+                imageView.setImageResource(R.drawable.ic_menu_bici);
+            }
+            textView.setText(getItem(position));
+
+            return convertView;
         }
     }
 }

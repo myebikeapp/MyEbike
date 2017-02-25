@@ -14,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.main.MainActivity;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
@@ -25,6 +28,8 @@ import net.asovel.myebike.utils.ParcelableMarca;
 public class EBikeDetailActivity extends AppCompatActivity
 {
     private static final String TAG = EBikeDetailActivity.class.getSimpleName();
+
+    private Tracker tracker;
 
     private ParcelableEBike parcelableEBike;
     private String caller;
@@ -34,6 +39,9 @@ public class EBikeDetailActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebike_detail);
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        tracker = application.getDefaultTracker();
 
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
         caller = getIntent().getExtras().getString(Constants.CALLER, "");
@@ -117,6 +125,14 @@ public class EBikeDetailActivity extends AppCompatActivity
                 localizarTiendas();
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void localizarTiendas()

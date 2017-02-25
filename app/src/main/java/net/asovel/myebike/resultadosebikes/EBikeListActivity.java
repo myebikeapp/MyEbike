@@ -9,9 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.backendless.Backendless;
+import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.Defaults;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;

@@ -21,9 +21,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.Tracker;
+
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
@@ -69,6 +72,9 @@ public class MyEBike extends Fragment
     public void onActivityCreated(Bundle state)
     {
         super.onActivityCreated(state);
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        Tracker tracker = application.getDefaultTracker();
 
         iniUI();
     }
