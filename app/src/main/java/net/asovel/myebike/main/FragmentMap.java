@@ -3,7 +3,9 @@ package net.asovel.myebike.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -36,6 +38,7 @@ import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.backendless.data.TiendaLista;
 import net.asovel.myebike.utils.Constants;
+import net.asovel.myebike.utils.WebActivity;
 
 import java.util.List;
 
@@ -388,20 +391,32 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         Tienda tienda = (Tienda) marker.getTag();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Contactar con la tienda");
+        builder.setTitle("Contactar con " + tienda.getNombre_tienda());
 
-        String phone = String.valueOf(tienda.getTelefono());
-        String web = tienda.getPagina_web();
+        final String phone = String.valueOf(tienda.getTelefono());
+        final String url = tienda.getPagina_web();
+        final String email = tienda.getEmail();
 
-        String[] values = new String[]{"phone", "web"};
+        String[] values = new String[]{phone, url, email};
         CustomAdapter adapter = new CustomAdapter(getContext(), R.layout.maps_dialog, R.id.dialog_text, values);
 
         builder.setAdapter(adapter, new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which)
+            public void onClick(DialogInterface dialog, int position)
             {
+                dialog.cancel();
 
+                switch (position) {
+                    case 0:
+                        call(phone);
+                        break;
+                    case 1:
+                        showWeb(url);
+                        break;
+                    case 2:
+                        sendEmail(email);
+                }
             }
         });
 
@@ -412,18 +427,46 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
                 dialog.cancel();
             }
         });
+        builder.create();
+        builder.show();
+    }
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        /*String url = tienda.getPagina_web();
+    private void call(String phone)
+    {
+        if (phone != null) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + phone));
+            startActivity(intent);
+        }
+    }
 
+    private void showWeb(String url)
+    {
         if (url != null) {
             Intent intent = new Intent(getContext(), WebActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(Constants.URL, url);
             intent.putExtras(bundle);
             startActivity(intent);
-        }*/
+        }
+    }
+
+    private void sendEmail(String email)
+    {
+        if (email != null) {
+           /* Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.parse("mailto:?subject=" + email + "&body=" + "bodyalñkdjalñsjdañsld");
+            intent.setData(data);
+            startActivity(intent);*/
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setType("vnd.android.cursor.item/email");
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"adria.bosk@gmail.com"});
+            intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
+            intent.putExtra(Intent.EXTRA_TEXT, "My email content");
+            startActivity(Intent.createChooser(intent, "Send mail using..."));
+        }
     }
 
     @Override
@@ -449,6 +492,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
     public class CustomAdapter extends ArrayAdapter<String>
     {
+        private int[] drawables = {R.drawable.ic_menu_buscador, R.drawable.ic_menu_bici, R.drawable.ic_menu_noticias};
+
         public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values)
         {
             super(context, resource, textViewResourceId, values);
@@ -464,12 +509,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
             ImageView imageView = (ImageView) convertView.findViewById(R.id.dialog_image);
             TextView textView = (TextView) convertView.findViewById(R.id.dialog_text);
 
-            if (position == 0) {
-                imageView.setImageResource(R.drawable.ic_menu_buscador);
-
-            } else {
-                imageView.setImageResource(R.drawable.ic_menu_bici);
-            }
+            imageView.setImageResource(drawables[position]);
             textView.setText(getItem(position));
 
             return convertView;
