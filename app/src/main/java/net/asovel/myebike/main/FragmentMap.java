@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import net.asovel.myebike.backendless.data.TiendaLista;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.WebActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
@@ -63,6 +65,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         mapView = (MapView) view.findViewById(R.id.map);
 
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        int paddingBottom = (int) (50 * displayMetrics.density);
+
+        String caller = getArguments().getString(Constants.CALLER, "");
+        if (caller.equals(MainActivity.TAG))
+            mapView.setPadding(0, 0, 0, paddingBottom);
+
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         try {
@@ -85,13 +94,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         getActivity().setTitle(label);
 
         String caller = getArguments().getString(Constants.CALLER, "");
-        if (caller.equals(MainActivity.TAG)) {
+
+        if (caller.equals(MainActivity.TAG))
             queryTiendas();
-            //QueryTiendasTask task = new QueryTiendasTask();
-            //task.execute();
-            return;
-        }
-        queryMarca();
+        else
+            queryMarca();
     }
 
     @Override
@@ -389,16 +396,34 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     private void onWindowClick(Marker marker)
     {
         Tienda tienda = (Tienda) marker.getTag();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Contactar con " + tienda.getNombre_tienda());
+
+        View customTitle = getActivity().getLayoutInflater().inflate(R.layout.maps_dialog_title, null);
+        TextView textView = (TextView) customTitle.findViewById(R.id.dialog_title);
+        textView.setText("Contactar con " + tienda.getNombre_tienda());
+
+        builder.setCustomTitle(customTitle);
 
         final String phone = String.valueOf(tienda.getTelefono());
         final String url = tienda.getPagina_web();
         final String email = tienda.getEmail();
 
-        String[] values = new String[]{phone, url, email};
-        CustomAdapter adapter = new CustomAdapter(getContext(), R.layout.maps_dialog, R.id.dialog_text, values);
+        List<String> values = new ArrayList<>();
+        final List<Integer> drawables = new ArrayList<>();
+
+        if (phone != null && phone != "null") {
+            values.add(phone);
+            drawables.add(R.drawable.ic_dialog_phone);
+        }
+        if (url != null) {
+            values.add(url);
+            drawables.add(R.drawable.ic_dialog_web);
+        }
+        if (email != null) {
+            values.add(email);
+            drawables.add(R.drawable.ic_dialog_email);
+        }
+        CustomAdapter adapter = new CustomAdapter(getContext(), R.layout.maps_dialog, R.id.dialog_text, values.toArray(new String[0]), drawables.toArray(new Integer[0]));
 
         builder.setAdapter(adapter, new DialogInterface.OnClickListener()
         {
@@ -407,14 +432,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
             {
                 dialog.cancel();
 
-                switch (position) {
-                    case 0:
+                int id = drawables.get(position);
+                switch (id) {
+                    case R.drawable.ic_dialog_phone:
                         call(phone);
                         break;
-                    case 1:
+                    case R.drawable.ic_dialog_web:
                         showWeb(url);
                         break;
-                    case 2:
+                    case R.drawable.ic_dialog_email:
                         sendEmail(email);
                 }
             }
@@ -435,6 +461,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         if (phone != null) {
             Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse("tel:" + phone));
             startActivity(intent);
         }
@@ -455,14 +482,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         if (email != null) {
            /* Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:?subject=" + email + "&body=" + "bodyalñkdjalñsjdañsld");
+            Uri data = Uri.parse("mailto:?subject=" + "adria.bosk@gmail.com" + "&body=" + "bodyalñkdjalñsjdañsld");
             intent.setData(data);
             startActivity(intent);*/
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setType("vnd.android.cursor.item/email");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"adria.bosk@gmail.com"});
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"myebikeapp@gmail.com"});
             intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
             intent.putExtra(Intent.EXTRA_TEXT, "My email content");
             startActivity(Intent.createChooser(intent, "Send mail using..."));
@@ -492,11 +519,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
     public class CustomAdapter extends ArrayAdapter<String>
     {
-        private int[] drawables = {R.drawable.ic_menu_buscador, R.drawable.ic_menu_bici, R.drawable.ic_menu_noticias};
+        private Integer[] drawables;
 
-        public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values)
+        public CustomAdapter(Context context, int resource, int textViewResourceId, String[] values, Integer[] drawables)
         {
             super(context, resource, textViewResourceId, values);
+            this.drawables = drawables;
         }
 
         @Override

@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/marker_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/marker_nombre_tienda_size"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_ciudad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_codigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_telefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:textColor="@color/color_link"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_web"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:visibility="gone" />
+        android:textColor="@color/color_link"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/marker_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:textColor="@color/color_link"
+        android:visibility="gone"/>
 
 </LinearLayout>

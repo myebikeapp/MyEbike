@@ -209,6 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:autoLink="web"
+                    android:textColorLink="@color/color_link"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="@dimen/text_small"/>
