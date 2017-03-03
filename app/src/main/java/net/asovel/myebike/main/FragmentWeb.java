@@ -10,9 +10,8 @@ import android.webkit.WebView;
 import net.asovel.myebike.R;
 import net.asovel.myebike.utils.Constants;
 
-public class WebAsovel extends Fragment
+public class FragmentWeb extends Fragment
 {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -26,7 +25,7 @@ public class WebAsovel extends Fragment
         super.onActivityCreated(state);
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(Constants.URL);
+        String web = bundle.getString(Constants.URL) + "?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App";
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);

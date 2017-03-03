@@ -21,6 +21,8 @@
         Encuentra la tuya entre miles de modelos y encargala al mejor precio en tu tienda más cercana.</string>
     <string name="welcome_button_sesion">Iniciar sesión</string>
     <string name="welcome_button_sin_sesion">Comenzar</string>
+    <string name="welcome_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/">Términos de Uso</a> ]]>
+        y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/">Política de Privacidad</a> ]]>.</string>
 
     <string name="login_text">Iniciar sesión con:</string>
     <string name="facebook_button_text">Facebook</string>

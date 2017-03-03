@@ -123,7 +123,7 @@ public class FragmentListEBike extends Fragment
         if (getArguments().getString(Constants.CALLER, "").equals(FragmentListMarca.TAG))
             Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados de esta marca", Toast.LENGTH_LONG).show();
         else
-            Toast.makeText(getContext(), "Lo sentimos pero hay que poner mas modelos en el Backendless", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados para esta selección", Toast.LENGTH_LONG).show();
 
         Thread thread = new Thread()
         {

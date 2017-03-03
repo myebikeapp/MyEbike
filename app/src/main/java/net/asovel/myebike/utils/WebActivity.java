@@ -14,7 +14,7 @@ public class WebActivity extends Activity {
         setContentView(R.layout.fragment_pagina_web);
 
         Bundle bundle = getIntent().getExtras();
-        String web = bundle.getString(Constants.URL);
+        String web = bundle.getString(Constants.URL) + "?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App";
         WebView webView = (WebView) findViewById(R.id.pagina_web);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);

@@ -11,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -150,15 +149,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_recomendaciones:
-                fragment = new WebAsovel();
+                fragment = new FragmentWeb();
                 bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=475");
                 break;
             case R.id.menu_noticias:
-                fragment = new WebAsovel();
+                fragment = new FragmentWeb();
                 bundle.putString(Constants.URL, "http://www.asovel.net/");
                 break;
             case R.id.menu_nosotros:
-                fragment = new WebAsovel();
+                fragment = new FragmentWeb();
                 bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=484");
                 break;
             case R.id.menu_sesion:

@@ -5,10 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.main.MainActivity;
+import net.asovel.myebike.utils.AnalyticsApplication;
 
 public class WelcomeActivity extends Activity {
 
@@ -20,6 +27,10 @@ public class WelcomeActivity extends Activity {
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        Tracker tracker = application.getDefaultTracker();
+
+        tracker.set("&uid", email);
 
         if (!email.equals("")) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -50,6 +61,11 @@ public class WelcomeActivity extends Activity {
                 finish();
             }
         });
+
+        TextView textView = (TextView) findViewById(R.id.welcome_text_links);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        String links = getString(R.string.welcome_links);
+        textView.setText(Html.fromHtml(links));
     }
 
 }

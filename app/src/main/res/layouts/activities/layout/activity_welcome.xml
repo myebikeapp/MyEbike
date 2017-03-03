@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical">
 
     <ImageView
         android:layout_width="@dimen/logo_size"
         android:layout_height="@dimen/logo_size"
-        android:layout_marginTop="@dimen/logo_margin_top"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/myebike" />
+        android:layout_marginTop="@dimen/logo_margin_top"
+        android:src="@drawable/myebike"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -24,22 +26,20 @@
             android:layout_height="wrap_content"
             android:text="@string/welcome_title"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/text_large" />
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
             android:text="@string/welcome_text"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/text_small" />
+            android:textSize="@dimen/text_small"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -63,7 +63,7 @@
                     android:background="@color/colorPrimaryDark"
                     android:text="@string/welcome_button_sesion"
                     android:textAllCaps="false"
-                    android:textColor="@color/color_white" />
+                    android:textColor="@color/color_white"/>
 
             </android.support.v7.widget.CardView>
 
@@ -87,11 +87,20 @@
                     android:background="@color/colorPrimaryDark"
                     android:text="@string/welcome_button_sin_sesion"
                     android:textAllCaps="false"
-                    android:textColor="@color/color_white" />
+                    android:textColor="@color/color_white"/>
 
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/welcome_text_links"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/color_white"
+            android:textColorLink="@color/color_white"
+            android:textSize="@dimen/text_small"/>
 
     </LinearLayout>
 
