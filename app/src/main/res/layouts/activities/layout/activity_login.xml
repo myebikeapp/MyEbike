@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical">
 
     <ImageView
         android:layout_width="@dimen/logo_size"
         android:layout_height="@dimen/logo_size"
-        android:layout_marginTop="@dimen/logo_margin_top"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/myebike" />
+        android:layout_marginTop="@dimen/logo_margin_top"
+        android:src="@drawable/myebike"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login_text"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"/>
 
         <Button
             android:id="@+id/login_facebook_button"
@@ -32,7 +34,7 @@
             android:layout_marginTop="@dimen/login_button_vertical_margin"
             android:background="@drawable/btn_facebook"
             android:text="@string/facebook_button_text"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
 
         <Button
             android:id="@+id/login_google_button"
@@ -41,7 +43,17 @@
             android:layout_marginTop="@dimen/login_button_vertical_margin"
             android:background="@drawable/btn_google"
             android:text="@string/google_button_text"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
+
+        <TextView
+            android:id="@+id/login_text_links"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textColorLink="@color/color_white"
+            android:textSize="@dimen/text_small"/>
 
     </LinearLayout>
 

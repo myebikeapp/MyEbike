@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
@@ -23,14 +23,28 @@ import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 
-public class LoginActivity extends Activity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class LoginActivity extends Activity
+{
+    public static final String TAG = LoginActivity.class.getSimpleName();
+
+    private Tracker tracker;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        tracker = application.getDefaultTracker();
 
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
@@ -67,31 +81,52 @@ public class LoginActivity extends Activity {
         });*/
     }
 
-    private void initUI() {
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    private void initUI()
+    {
         Button facebookButton = (Button) findViewById(R.id.login_facebook_button);
         Button googleButton = (Button) findViewById(R.id.login_google_button);
 
-        facebookButton.setOnClickListener(new View.OnClickListener() {
+        facebookButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 onLoginWithFacebookButtonClicked();
             }
         });
 
-        googleButton.setOnClickListener(new View.OnClickListener() {
+        googleButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 onLoginWithGoogleButtonClicked();
             }
         });
+
+
+        TextView textView = (TextView) findViewById(R.id.login_text_links);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        String links = getString(R.string.login_links);
+        textView.setText(Html.fromHtml(links));
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         finish();
     }
 
-    private void onLoginWithFacebookButtonClicked() {
+    private void onLoginWithFacebookButtonClicked()
+    {
         Map<String, String> facebookFieldsMapping = new HashMap<>();
         facebookFieldsMapping.put("name", "name");
         facebookFieldsMapping.put("gender", "gender");
@@ -102,16 +137,19 @@ public class LoginActivity extends Activity {
         facebookPermissions.add("email");
 
         Backendless.UserService.loginWithFacebook(LoginActivity.this, null, facebookFieldsMapping, facebookPermissions,
-                new DefaultCallback<BackendlessUser>(LoginActivity.this) {
+                new DefaultCallback<BackendlessUser>(LoginActivity.this)
+                {
                     @Override
-                    public void handleResponse(BackendlessUser user) {
+                    public void handleResponse(BackendlessUser user)
+                    {
                         super.handleResponse(user);
                         onLogin(user);
                     }
                 });
     }
 
-    private void onLoginWithGoogleButtonClicked() {
+    private void onLoginWithGoogleButtonClicked()
+    {
         Map<String, String> googleFieldsMapping = new HashMap<>();
         googleFieldsMapping.put("name", "name");
         googleFieldsMapping.put("gender", "gender");
@@ -120,16 +158,19 @@ public class LoginActivity extends Activity {
         List<String> googlePermissions = new ArrayList<>();
 
         Backendless.UserService.loginWithGooglePlus(LoginActivity.this, null, googleFieldsMapping, googlePermissions,
-                new DefaultCallback<BackendlessUser>(LoginActivity.this) {
+                new DefaultCallback<BackendlessUser>(LoginActivity.this)
+                {
                     @Override
-                    public void handleResponse(BackendlessUser user) {
+                    public void handleResponse(BackendlessUser user)
+                    {
                         super.handleResponse(user);
                         onLogin(user);
                     }
                 });
     }
 
-    private void onLogin(BackendlessUser user) {
+    private void onLogin(BackendlessUser user)
+    {
         Backendless.UserService.setCurrentUser(user);
         String email = user.getEmail();
 
@@ -155,13 +196,13 @@ public class LoginActivity extends Activity {
             startActivity(intent);
             finish();
 
-        } else if (caller.equals(MainActivity.TAG)){
+        } else if (caller.equals(MainActivity.TAG)) {
             intent = new Intent(getBaseContext(), MainActivity.class);
             NavUtils.navigateUpTo(this, intent);
 
         } else {
             intent = new Intent(getBaseContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }

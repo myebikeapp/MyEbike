@@ -17,16 +17,17 @@
     <string name="presupuesto_text">Presupuesto</string>
 
     <string name="welcome_title">Bienvenidos a My e-Bike</string>
-    <string name="welcome_text">My e-Bike, el mejor buscador de bicis eléctricas del sur de Europa.
-        Encuentra la tuya entre miles de modelos y encargala al mejor precio en tu tienda más cercana.</string>
+    <string name="welcome_text"><![CDATA[ <body style="text-align:justify;">My e-Bike, el mejor buscador de bicis eléctricas del sur de Europa.
+        Encuentra la tuya entre miles de modelos y encargala al mejor precio en tu tienda más cercana.</body>]]></string>
     <string name="welcome_button_sesion">Iniciar sesión</string>
     <string name="welcome_button_sin_sesion">Comenzar</string>
-    <string name="welcome_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/">Términos de Uso</a> ]]>
-        y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/">Política de Privacidad</a> ]]>.</string>
 
     <string name="login_text">Iniciar sesión con:</string>
     <string name="facebook_button_text">Facebook</string>
     <string name="google_button_text">Google+</string>
+    <string name="login_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a> ]]>
+        y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Política de Privacidad</a> ]]>.</string>
+
     <string name="proba">
     QUIENES SOMOS:
     ASOVEL es la primera Asociación Española para el fomento y uso de Vehículos Eléctricos Ligeros de menos de 400 kg de peso. Nuestro foco lo centramos en las bicis y motos eléctricas por la economía y rapidez de transporte que estos vehículos nos ofrecen.

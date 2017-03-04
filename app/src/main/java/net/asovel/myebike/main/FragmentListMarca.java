@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
@@ -21,6 +23,7 @@ import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.MarcaLista;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.WebActivity;
 
@@ -32,6 +35,8 @@ import java.util.List;
 public class FragmentListMarca extends Fragment
 {
     public static final String TAG = FragmentListMarca.class.getSimpleName();
+
+    private Tracker tracker;
 
     private RecyclerView recyclerView;
     private List<Marca> marcas;
@@ -50,9 +55,20 @@ public class FragmentListMarca extends Fragment
     {
         super.onActivityCreated(state);
 
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
+
         recyclerView = (RecyclerView) getView().findViewById(R.id.buscar_marca_recycleView);
         marcas = new ArrayList<Marca>();
         queryMarcas();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void queryMarcas()

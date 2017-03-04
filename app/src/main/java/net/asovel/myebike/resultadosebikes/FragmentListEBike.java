@@ -15,6 +15,8 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
@@ -22,6 +24,7 @@ import net.asovel.myebike.backendless.data.EBike;
 import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.main.MyEBike;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 
@@ -33,6 +36,8 @@ public class FragmentListEBike extends Fragment
     private static final String TAG = FragmentListEBike.class.getSimpleName();
 
     public static final int PAGESIZE = 7;
+
+    private Tracker tracker;
 
     private RecyclerView recyclerView;
     private AdaptadorEbikes adaptador;
@@ -50,9 +55,20 @@ public class FragmentListEBike extends Fragment
     {
         super.onActivityCreated(state);
 
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
+
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycleView);
 
         launchQuery();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void launchQuery()

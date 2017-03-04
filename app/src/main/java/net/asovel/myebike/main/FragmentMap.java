@@ -23,6 +23,8 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +40,7 @@ import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.backendless.data.TiendaLista;
+import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.WebActivity;
 
@@ -48,7 +51,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         GoogleMap.OnMyLocationButtonClickListener
 {
     private static final String TAG = FragmentMap.class.getSimpleName();
+
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
+
+    private Tracker tracker;
 
     private MapView mapView;
     private GoogleMap map;
@@ -90,6 +96,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         super.onActivityCreated(state);
 
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
+
         String label = getResources().getString(R.string.FragmentMap_label);
         getActivity().setTitle(label);
 
@@ -105,6 +114,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     public void onResume()
     {
         super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
         mapView.onResume();
     }
 
