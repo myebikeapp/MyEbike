@@ -3,6 +3,7 @@ package net.asovel.myebike.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,6 @@ import net.asovel.myebike.backendless.data.MarcaLista;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
-import net.asovel.myebike.utils.WebActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,9 +137,8 @@ public class FragmentListMarca extends Fragment
 
         if (position > numTitle) {
 
-            intent = new Intent(getContext(), WebActivity.class);
-            bundle.putString(Constants.URL, marcas.get(position - 2).getPagina_web());
-            intent.putExtras(bundle);
+            String url = marcas.get(position - 2).getPagina_web();
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
             return;
         }

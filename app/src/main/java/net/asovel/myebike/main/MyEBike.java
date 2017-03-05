@@ -231,6 +231,11 @@ public class MyEBike extends Fragment
                     Toast.makeText(getContext(), "No existen e-bikes " + USO[position] + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if (position == 4 && motor == MOTOR[1]) {
+                    spinnerUso.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + USO[position] + " con motor " + MOTOR[1], Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (position == 6) {
                     spinnerRueda.setSelection(0);
                     spinnerSuspension.setSelection(0);
@@ -307,11 +312,17 @@ public class MyEBike extends Fragment
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
             {
 
-                if ((position == 1 || position == 3) && (autonomia >= AUTONOMIA[2])) {
+               /* if ((position == 1 || position == 3) && (autonomia >= AUTONOMIA[2])) {
                     spinnerMotor.setSelection(0);
                     Toast.makeText(getContext(), "Sólo las e-bikes con motor central disponen de una autonomía mínima de " + autonomia + " Km", Toast.LENGTH_LONG).show();
                     return;
+                }*/
+                if ((position == 1) && (uso == USO[4])) {
+                    spinnerMotor.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + USO[4] + " con motor " + MOTOR[1], Toast.LENGTH_LONG).show();
+                    return;
                 }
+
                 if (position == 2) {
                     boolean toastShown = false;
 
@@ -344,11 +355,11 @@ public class MyEBike extends Fragment
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
             {
 
-                if (position >= 2 && (motor == MOTOR[1] || motor == MOTOR[3])) {
+               /* if (position >= 2 && (motor == MOTOR[1] || motor == MOTOR[3])) {
                     spinnerAutonomia.setSelection(0);
                     Toast.makeText(getContext(), "Sólo las e-bikes con motor central disponen de una autonomía mínima de " + AUTONOMIA[position] + " Km", Toast.LENGTH_LONG).show();
                     return;
-                }
+                }*/
                 autonomia = AUTONOMIA[position];
             }
 

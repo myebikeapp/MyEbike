@@ -21,8 +21,8 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             card_view:cardBackgroundColor="@color/color_white"
-            card_view:cardCornerRadius="6dp"
-            card_view:cardElevation="6dp">
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp">
 
             <Spinner
                 android:id="@+id/spinner_uso"
@@ -38,8 +38,8 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             card_view:cardBackgroundColor="@color/color_white"
-            card_view:cardCornerRadius="6dp"
-            card_view:cardElevation="6dp">
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp">
 
             <Spinner
                 android:id="@+id/spinner_rueda"
@@ -55,8 +55,8 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             card_view:cardBackgroundColor="@color/color_white"
-            card_view:cardCornerRadius="6dp"
-            card_view:cardElevation="6dp">
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp">
 
             <Spinner
                 android:id="@+id/spinner_suspension"
@@ -72,8 +72,8 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             card_view:cardBackgroundColor="@color/color_white"
-            card_view:cardCornerRadius="6dp"
-            card_view:cardElevation="6dp">
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp">
 
             <Spinner
                 android:id="@+id/spinner_motor"
@@ -89,8 +89,8 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             card_view:cardBackgroundColor="@color/color_white"
-            card_view:cardCornerRadius="6dp"
-            card_view:cardElevation="6dp">
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp">
 
             <Spinner
                 android:id="@+id/spinner_autonomia"
@@ -122,8 +122,8 @@
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
                 card_view:cardBackgroundColor="@color/color_white"
-                card_view:cardCornerRadius="6dp"
-                card_view:cardElevation="6dp">
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="3dp">
 
                 <Spinner
                     android:id="@+id/spinner_presupuesto_inf"
@@ -140,8 +140,8 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 card_view:cardBackgroundColor="@color/color_white"
-                card_view:cardCornerRadius="6dp"
-                card_view:cardElevation="6dp">
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="3dp">
 
                 <Spinner
                     android:id="@+id/spinner_presupuesto_sup"

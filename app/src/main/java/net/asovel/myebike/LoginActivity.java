@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -137,13 +141,19 @@ public class LoginActivity extends Activity
         facebookPermissions.add("email");
 
         Backendless.UserService.loginWithFacebook(LoginActivity.this, null, facebookFieldsMapping, facebookPermissions,
-                new DefaultCallback<BackendlessUser>(LoginActivity.this)
+                new AsyncCallback<BackendlessUser>()
                 {
                     @Override
                     public void handleResponse(BackendlessUser user)
                     {
-                        super.handleResponse(user);
                         onLogin(user);
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault fault)
+                    {
+                        Log.d(TAG, fault.getMessage());
+                        Toast.makeText(LoginActivity.this, fault.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -158,13 +168,19 @@ public class LoginActivity extends Activity
         List<String> googlePermissions = new ArrayList<>();
 
         Backendless.UserService.loginWithGooglePlus(LoginActivity.this, null, googleFieldsMapping, googlePermissions,
-                new DefaultCallback<BackendlessUser>(LoginActivity.this)
+                new AsyncCallback<BackendlessUser>()
                 {
                     @Override
                     public void handleResponse(BackendlessUser user)
                     {
-                        super.handleResponse(user);
                         onLogin(user);
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault fault)
+                    {
+                        Log.d(TAG, fault.getMessage());
+                        Toast.makeText(LoginActivity.this, fault.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

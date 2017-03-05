@@ -12,15 +12,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.analytics.HitBuilders;
@@ -36,13 +40,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.asovel.myebike.R;
-import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.backendless.data.TiendaLista;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
-import net.asovel.myebike.utils.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,34 +160,44 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         queryOptions.addRelated("tiendas");
         dataQuery.setQueryOptions(queryOptions);
 
-        Backendless.Data.of(Marca.class).find(dataQuery, new DefaultCallback<BackendlessCollection<Marca>>(getContext())
+        Backendless.Data.of(Marca.class).find(dataQuery, new AsyncCallback<BackendlessCollection<Marca>>()
         {
             @Override
             public void handleResponse(BackendlessCollection<Marca> response)
             {
-                super.handleResponse(response);
-
                 Marca marca = response.getCurrentPage().get(0);
                 tiendas = marca.getTiendas();
 
                 setUpMarcadores();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault)
+            {
+                Log.d(TAG, fault.getMessage());
+                Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void queryTiendas()
     {
-        Backendless.Data.of(TiendaLista.class).find(new DefaultCallback<BackendlessCollection<TiendaLista>>(getContext())
+        Backendless.Data.of(TiendaLista.class).find(new AsyncCallback<BackendlessCollection<TiendaLista>>()
         {
             @Override
             public void handleResponse(BackendlessCollection<TiendaLista> response)
             {
-                super.handleResponse(response);
-
                 TiendaLista tiendaLista = response.getCurrentPage().get(0);
                 tiendas = tiendaLista.getLista();
 
                 setUpMarcadores();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault)
+            {
+                Log.d(TAG, fault.getMessage());
+                Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -481,11 +493,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     private void showWeb(String url)
     {
         if (url != null) {
-            Intent intent = new Intent(getContext(), WebActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(Constants.URL, url);
-            intent.putExtras(bundle);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
+            return;
         }
     }
 
@@ -493,7 +503,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     {
         if (email != null) {
            /* Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:?subject=" + "adria.bosk@gmail.com" + "&body=" + "bodyalñkdjalñsjdañsld");
+            Uri data = Uri.parse("mailto:?subject=" + "myebikeapp@gmail.com" + "&body=" + "bodyalñkdjalñsjdañsld");
             intent.setData(data);
             startActivity(intent);*/
 
