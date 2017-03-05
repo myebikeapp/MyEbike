@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -200,59 +199,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
                 Toast.makeText(getContext(), fault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private class QueryTiendasTask extends AsyncTask<Void, Void, Boolean>
-    {
-        @Override
-        protected void onPreExecute()
-        {
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... values)
-        {
-            BackendlessDataQuery dataQuery = new BackendlessDataQuery();
-            QueryOptions queryOptions = new QueryOptions();
-
-            queryOptions.setPageSize(100);
-            dataQuery.setQueryOptions(queryOptions);
-
-            BackendlessCollection<Tienda> response1 = Backendless.Data.of(Tienda.class).find(dataQuery);
-            int numObjects = response1.getTotalObjects();
-            tiendas = response1.getCurrentPage();
-
-            queryOptions.setOffset(100);
-            dataQuery.setQueryOptions(queryOptions);
-
-            BackendlessCollection<Tienda> response2 = Backendless.Data.of(Tienda.class).find(dataQuery);
-            tiendas.addAll(response2.getCurrentPage());
-
-            queryOptions.setPageSize(numObjects - 200);
-            queryOptions.setOffset(200);
-            dataQuery.setQueryOptions(queryOptions);
-
-            BackendlessCollection<Tienda> response3 = Backendless.Data.of(Tienda.class).find(dataQuery);
-            tiendas.addAll(response3.getCurrentPage());
-
-            return true;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values)
-        {
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            setUpMarcadores();
-        }
-
-        @Override
-        protected void onCancelled()
-        {
-        }
     }
 
     private void setUpMarcadores()
@@ -482,18 +428,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
     private void call(String phone)
     {
-        if (phone != null) {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setData(Uri.parse("tel:" + phone));
-            startActivity(intent);
-        }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("hola")
+                .setAction("hola")
+                .setLabel("hola")
+                .build());
+
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse("tel:" + phone));
+        startActivity(intent);
+
     }
 
     private void showWeb(String url)
     {
         if (url != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Constants.UTM));
             startActivity(intent);
             return;
         }

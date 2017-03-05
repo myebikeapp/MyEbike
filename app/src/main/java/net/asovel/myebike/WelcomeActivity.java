@@ -34,9 +34,15 @@ public class WelcomeActivity extends Activity
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
-        //tracker.set("&uid", email);
-
         if (!email.equals("")) {
+
+            tracker.set("&uid", email);
+
+            tracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("UX")
+                    .setAction("User Sign In")
+                    .build());
+
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
             finish();

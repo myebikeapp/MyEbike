@@ -137,7 +137,7 @@ public class FragmentListMarca extends Fragment
 
         if (position > numTitle) {
 
-            String url = marcas.get(position - 2).getPagina_web();
+            String url = marcas.get(position - 2).getPagina_web() + Constants.UTM;
             intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
             return;

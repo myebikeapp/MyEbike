@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.LoginActivity;
@@ -41,6 +42,8 @@ public class MyEBike extends Fragment
     public static final String[] MOTOR = {null, "delantero", "central", "trasero"};
     public static final int[] AUTONOMIA = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 121};
     public static final int[] PRESUPUESTO = {600, 800, 1000, 1200, 1500, 1800, 2500, 5000, 5001};
+
+    private Tracker tracker;
 
     private Spinner spinnerUso;
     private Spinner spinnerRueda;
@@ -74,9 +77,17 @@ public class MyEBike extends Fragment
         super.onActivityCreated(state);
 
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        Tracker tracker = application.getDefaultTracker();
+        tracker = application.getDefaultTracker();
 
         iniUI();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void iniUI()

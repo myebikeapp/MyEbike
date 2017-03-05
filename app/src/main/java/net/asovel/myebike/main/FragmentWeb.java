@@ -36,7 +36,7 @@ public class FragmentWeb extends Fragment
         tracker = application.getDefaultTracker();
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(Constants.URL) + "?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App";
+        String web = bundle.getString(Constants.URL) + Constants.UTM;
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);

@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +47,14 @@ public class EBikeDetailActivity extends AppCompatActivity
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
         caller = getIntent().getExtras().getString(Constants.CALLER, "");
         initUI();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        tracker.setScreenName("Image~" + TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void initUI()
@@ -112,7 +122,8 @@ public class EBikeDetailActivity extends AppCompatActivity
         String link = parcelableEBike.getLink();
         if (link != null) {
 
-            linkText.setText(link);
+            linkText.setMovementMethod(LinkMovementMethod.getInstance());
+            linkText.setText(Html.fromHtml("<a href=\"" + link + Constants.UTM + "\">Página web</a>"));
         }
 
         FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);
@@ -124,14 +135,6 @@ public class EBikeDetailActivity extends AppCompatActivity
                 localizarTiendas();
             }
         });
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        tracker.setScreenName("Image~" + TAG);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void localizarTiendas()

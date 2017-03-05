@@ -21,7 +21,6 @@ import com.backendless.exceptions.BackendlessFault;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
@@ -189,6 +188,13 @@ public class LoginActivity extends Activity
     {
         Backendless.UserService.setCurrentUser(user);
         String email = user.getEmail();
+
+        tracker.set("&uid", email);
+
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("UX")
+                .setAction("User Sign In")
+                .build());
 
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
