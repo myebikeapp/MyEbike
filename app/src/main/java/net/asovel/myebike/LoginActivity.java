@@ -24,7 +24,7 @@ import com.google.android.gms.analytics.Tracker;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
-import net.asovel.myebike.main.MyEBike;
+import net.asovel.myebike.main.FragmentMyEBike;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
@@ -88,7 +88,7 @@ public class LoginActivity extends Activity
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+        tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -192,8 +192,9 @@ public class LoginActivity extends Activity
         tracker.set("&uid", email);
 
         tracker.send(new HitBuilders.EventBuilder()
-                .setCategory("UX")
-                .setAction("User Sign In")
+                .setCategory("Usuario")
+                .setAction("Sesión iniciada")
+                .setLabel(email)
                 .build());
 
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
@@ -209,11 +210,16 @@ public class LoginActivity extends Activity
 
         Intent intent;
 
-        if (caller.equals(MyEBike.TAG) || caller.equals(FragmentListMarca.TAG)) {
+        if (caller.equals(FragmentMyEBike.TAG) || caller.equals(FragmentListMarca.TAG)) {
+
             intent = new Intent(getBaseContext(), EBikeListActivity.class);
             Bundle sender = new Bundle();
+
             ArrayList<String> listClauses = receiver.getStringArrayList(Constants.WHERECLAUSE);
             sender.putStringArrayList(Constants.WHERECLAUSE, listClauses);
+
+            sender.putString(Constants.CALLER, caller);
+
             intent.putExtras(sender);
             startActivity(intent);
             finish();

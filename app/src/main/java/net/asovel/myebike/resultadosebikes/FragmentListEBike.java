@@ -17,13 +17,14 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.analytics.ecommerce.Product;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.EBike;
 import net.asovel.myebike.main.FragmentListMarca;
+import net.asovel.myebike.main.FragmentMyEBike;
 import net.asovel.myebike.main.MainActivity;
-import net.asovel.myebike.main.MyEBike;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
@@ -39,6 +40,7 @@ public class FragmentListEBike extends Fragment
 
     private Tracker tracker;
 
+    private String caller;
     private RecyclerView recyclerView;
     private AdaptadorEbikes adaptador;
     private List<EBike> eBikes = new ArrayList<>();
@@ -58,6 +60,8 @@ public class FragmentListEBike extends Fragment
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         tracker = application.getDefaultTracker();
 
+        caller = getArguments().getString(Constants.CALLER, "");
+
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycleView);
 
         launchQuery();
@@ -67,7 +71,16 @@ public class FragmentListEBike extends Fragment
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+
+        if (caller.equals(MainActivity.TAG))
+            tracker.setScreenName(MainActivity.TAG + " --> " + TAG);
+
+        else if (caller.equals(FragmentListMarca.TAG))
+            tracker.setScreenName(FragmentListMarca.TAG + " --> " + TAG);
+
+        else
+            tracker.setScreenName(FragmentMyEBike.TAG + " --> " + TAG);
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -124,7 +137,7 @@ public class FragmentListEBike extends Fragment
                 int totalPages = getTotalPages(numEbikes);
 
                 String caller = getArguments().getString(Constants.CALLER, "");
-                if (caller.equals(FragmentListMarca.TAG) || caller.equals(MyEBike.TAG)) {
+                if (caller.equals(FragmentListMarca.TAG) || caller.equals(FragmentMyEBike.TAG)) {
                     String label = getResources().getString(R.string.EBikeListActivity_label) + " (" + numEbikes + ")";
                     getActivity().setTitle(label);
                 }
@@ -136,10 +149,14 @@ public class FragmentListEBike extends Fragment
 
     private void finishActivity()
     {
-        if (getArguments().getString(Constants.CALLER, "").equals(FragmentListMarca.TAG))
+        if (caller.equals(FragmentListMarca.TAG))
             Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados de esta marca", Toast.LENGTH_LONG).show();
-        else
+
+        else if (caller.equals(FragmentMyEBike.TAG))
             Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados para esta selección", Toast.LENGTH_LONG).show();
+
+        else
+            return;
 
         Thread thread = new Thread()
         {
@@ -200,7 +217,15 @@ public class FragmentListEBike extends Fragment
         ParcelableEBike parcelableEBike = ParcelableEBike.fromEBike(eBikes.get(position));
         bundle.putParcelable(ParcelableEBike.PARCELABLEEBIKE, parcelableEBike);
 
-        String caller = getArguments().getString(Constants.CALLER, "");
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
+        builder.addProduct(new Product()
+                .setPosition(position + 1)
+                .setBrand(parcelableEBike.getMarca().getNombre())
+                .setName(parcelableEBike.getModelo())
+                .setPrice(parcelableEBike.getPrecio_SORT2())
+                .setCategory(parcelableEBike.getUso()));
+        tracker.send(builder.build());
+
         if (caller.equals(MainActivity.TAG))
             bundle.putString(Constants.CALLER, caller);
 

@@ -67,7 +67,7 @@ public class FragmentListMarca extends Fragment
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+        tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 

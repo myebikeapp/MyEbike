@@ -12,13 +12,13 @@ import com.backendless.Backendless;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.Defaults;
-import net.asovel.myebike.main.FragmentMap;
+import net.asovel.myebike.main.FragmentMapa;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
 
 public class MapaActivity extends AppCompatActivity
 {
-    private static final String TAG = MapaActivity.class.getSimpleName();
+    public static final String TAG = MapaActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class MapaActivity extends AppCompatActivity
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
-        Fragment fragment = new FragmentMap();
+        Fragment fragment = new FragmentMapa();
 
         Bundle receiver = getIntent().getExtras();
         Bundle sender = new Bundle();

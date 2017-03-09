@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import net.asovel.myebike.backendless.data.EBike;
-import net.asovel.myebike.main.MyEBike;
+import net.asovel.myebike.main.FragmentMyEBike;
 
 public class ParcelableEBike implements Parcelable
 {
@@ -162,22 +162,22 @@ public class ParcelableEBike implements Parcelable
         String uso = eBike.getUso();
         if (uso == null)
             uso = sinDatos;
-        else if (uso.equals(MyEBike.USO[2]))
+        else if (uso.equals(FragmentMyEBike.USO[2]))
             uso = "plegable";
         else if (uso.equals("montana"))
             uso = "montaña";
-        else if (uso.equals(MyEBike.USO[6]))
+        else if (uso.equals(FragmentMyEBike.USO[6]))
             uso = "e-scooter";
-        else if (uso.equals(MyEBike.USO[7]))
+        else if (uso.equals(FragmentMyEBike.USO[7]))
             uso = "otros";
 
 
         String suspension = eBike.getSuspension();
         if (suspension == null)
             suspension = sinDatos;
-        else if (suspension.equals(MyEBike.SUSPENSION[1]))
+        else if (suspension.equals(FragmentMyEBike.SUSPENSION[1]))
             suspension = "sin suspensión";
-        else if (suspension.equals(MyEBike.SUSPENSION[3]))
+        else if (suspension.equals(FragmentMyEBike.SUSPENSION[3]))
             suspension = "delantera y trasera";
 
         int autonomia = -1;
@@ -195,7 +195,7 @@ public class ParcelableEBike implements Parcelable
         String motor = eBike.getUbicacion_motor();
         if (motor == null)
             motor = sinDatos;
-        else if (motor.equals(MyEBike.MOTOR[2]))
+        else if (motor.equals(FragmentMyEBike.MOTOR[2]))
             motor = "central o pedalier";
 
         int peso = -1;

@@ -32,9 +32,9 @@ import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 
-public class MyEBike extends Fragment
+public class FragmentMyEBike extends Fragment
 {
-    public static final String TAG = MyEBike.class.getSimpleName();
+    public static final String TAG = FragmentMyEBike.class.getSimpleName();
 
     public static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "scooter", "otras"};
     public static final int[] DIAMETRO_RUEDA = {0, 0, 14, 24, 26, 27, 28, 29};
@@ -86,7 +86,7 @@ public class MyEBike extends Fragment
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+        tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -260,8 +260,7 @@ public class MyEBike extends Fragment
                     spinnerSuspension.setEnabled(false);
                     spinnerPresupuestoInf.setEnabled(false);
                     spinnerPresupuestoSup.setEnabled(false);
-                }
-                else if (uso == USO[6]) {
+                } else if (uso == USO[6]) {
                     spinnerRueda.setEnabled(true);
                     spinnerMotor.setEnabled(true);
                     spinnerAutonomia.setEnabled(true);
@@ -444,6 +443,8 @@ public class MyEBike extends Fragment
                 Bundle bundle = new Bundle();
 
                 ArrayList<String> listClauses = setupWhereClause();
+                sendEvent(listClauses);
+
                 bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
                 bundle.putString(Constants.CALLER, TAG);
 
@@ -459,15 +460,17 @@ public class MyEBike extends Fragment
         });
     }
 
-    public ArrayList<String> setupWhereClause()
+    private ArrayList<String> setupWhereClause()
     {
         ArrayList<String> listClauses = new ArrayList<>();
 
-        if (uso != null)
+        if (uso != null) {
+
             if (uso != "montaña")
                 listClauses.add("uso = '" + uso + "'");
             else
                 listClauses.add("uso = 'montana'");
+        }
         if (diametroRuedaInf != 0)
             listClauses.add("tamano_ruedas >= " + diametroRuedaInf + " and tamano_ruedas <= " + diametroRuedaSup);
         if (suspension != null)
@@ -487,7 +490,28 @@ public class MyEBike extends Fragment
         return listClauses;
     }
 
-    public void limpiarSeleccion()
+    private void sendEvent(ArrayList<String> listClauses)
+    {
+        String label = "";
+
+        if (listClauses != null) {
+
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < listClauses.size(); ++i)
+                builder.append(listClauses.get(i) + "; ");
+
+            label = builder.toString();
+        }
+
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_EBIKE)
+                .setAction("Buscar")
+                .setLabel(label)
+                .build());
+    }
+
+    private void limpiarSeleccion()
     {
         spinnerUso.setSelection(0);
         spinnerRueda.setSelection(0);

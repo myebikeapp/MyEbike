@@ -25,8 +25,8 @@
     <string name="login_text">Iniciar sesión con:</string>
     <string name="facebook_button_text">Facebook</string>
     <string name="google_button_text">Google+</string>
-    <string name="login_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a> ]]>
-        y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Política de Privacidad</a> ]]>.</string>
+    <string name="login_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a> ]]>
+        y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Política de Privacidad</a> ]]>.</string>
 
     <string name="proba">
     QUIENES SOMOS:

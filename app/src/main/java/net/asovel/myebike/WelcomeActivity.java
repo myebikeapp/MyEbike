@@ -39,8 +39,9 @@ public class WelcomeActivity extends Activity
             tracker.set("&uid", email);
 
             tracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("UX")
-                    .setAction("User Sign In")
+                    .setCategory("Usuario")
+                    .setAction("Sesión iniciada")
+                    .setLabel(email)
                     .build());
 
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -55,7 +56,7 @@ public class WelcomeActivity extends Activity
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+        tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 

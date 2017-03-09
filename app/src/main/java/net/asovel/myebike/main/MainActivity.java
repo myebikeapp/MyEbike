@@ -138,14 +138,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_myebike:
-                fragment = new MyEBike();
+                fragment = new FragmentMyEBike();
                 fabVisibility = true;
                 break;
             case R.id.menu_buscar_marca:
                 fragment = new FragmentListMarca();
                 break;
             case R.id.menu_buscar_tienda:
-                fragment = new FragmentMap();
+                fragment = new FragmentMapa();
                 bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_recomendaciones:

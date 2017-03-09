@@ -42,16 +42,17 @@ import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.data.Marca;
 import net.asovel.myebike.backendless.data.Tienda;
 import net.asovel.myebike.backendless.data.TiendaLista;
+import net.asovel.myebike.resultadosebikes.MapaActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentMap extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
+public class FragmentMapa extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleMap.OnMyLocationButtonClickListener
 {
-    private static final String TAG = FragmentMap.class.getSimpleName();
+    private static final String TAG = FragmentMapa.class.getSimpleName();
 
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
 
@@ -115,7 +116,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+
+        String caller = getArguments().getString(Constants.CALLER, "");
+
+        if (caller.equals(MainActivity.TAG))
+            tracker.setScreenName(MainActivity.TAG + " --> " + TAG);
+        else
+            tracker.setScreenName(MapaActivity.TAG + " --> " + TAG);
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
         mapView.onResume();
     }
@@ -364,7 +372,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
     private void onWindowClick(Marker marker)
     {
-        Tienda tienda = (Tienda) marker.getTag();
+        final Tienda tienda = (Tienda) marker.getTag();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         View customTitle = getActivity().getLayoutInflater().inflate(R.layout.maps_dialog_title, null);
@@ -404,13 +412,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
                 int id = drawables.get(position);
                 switch (id) {
                     case R.drawable.ic_dialog_phone:
-                        call(phone);
+                        call(phone, tienda.getNombre_tienda());
                         break;
                     case R.drawable.ic_dialog_web:
-                        showWeb(url);
+                        showWeb(url, tienda.getNombre_tienda());
                         break;
                     case R.drawable.ic_dialog_email:
-                        sendEmail(email);
+                        sendEmail(email, tienda.getNombre_tienda());
                 }
             }
         });
@@ -426,12 +434,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
         builder.show();
     }
 
-    private void call(String phone)
+    private void call(String phone, String nombreTienda)
     {
         tracker.send(new HitBuilders.EventBuilder()
-                .setCategory("hola")
-                .setAction("hola")
-                .setLabel("hola")
+                .setCategory(Constants.CATEGORY_TIENDA)
+                .setAction("Teléfono")
+                .setLabel(nombreTienda)
                 .build());
 
         Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -441,31 +449,39 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, Activit
 
     }
 
-    private void showWeb(String url)
+    private void showWeb(String url, String nombreTienda)
     {
-        if (url != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Constants.UTM));
-            startActivity(intent);
-            return;
-        }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_TIENDA)
+                .setAction("Web")
+                .setLabel(nombreTienda)
+                .build());
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + Constants.UTM));
+        startActivity(intent);
     }
 
-    private void sendEmail(String email)
+    private void sendEmail(String email, String nombreTienda)
     {
-        if (email != null) {
+
            /* Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri data = Uri.parse("mailto:?subject=" + "myebikeapp@gmail.com" + "&body=" + "bodyalñkdjalñsjdañsld");
             intent.setData(data);
             startActivity(intent);*/
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setType("vnd.android.cursor.item/email");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"myebikeapp@gmail.com"});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
-            intent.putExtra(Intent.EXTRA_TEXT, "My email content");
-            startActivity(Intent.createChooser(intent, "Send mail using..."));
-        }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_TIENDA)
+                .setAction("Correo")
+                .setLabel(nombreTienda)
+                .build());
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setType("vnd.android.cursor.item/email");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"myebikeapp@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
+        intent.putExtra(Intent.EXTRA_TEXT, "My email content");
+        startActivity(Intent.createChooser(intent, "Send mail using..."));
     }
 
     @Override

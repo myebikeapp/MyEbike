@@ -53,7 +53,7 @@ public class EBikeDetailActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        tracker.setScreenName("Image~" + TAG);
+        tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
