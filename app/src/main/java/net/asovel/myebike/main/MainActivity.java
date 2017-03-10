@@ -150,15 +150,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_recomendaciones:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=475");
+                bundle.putString(Constants.URL, "http://sites.google.com/asovel.org/web/e-bikes/antes-de-comprar");
                 break;
             case R.id.menu_noticias:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://www.asovel.net/");
+                bundle.putString(Constants.URL, "http://asovel.blogspot.com.es/?m=1");
                 break;
             case R.id.menu_nosotros:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://www.asovel.net/?page_id=484");
+                bundle.putString(Constants.URL, "http://sites.google.com/asovel.org/web/asociación/sobre-nosotros");
                 break;
             case R.id.menu_sesion:
                 if (connected) {

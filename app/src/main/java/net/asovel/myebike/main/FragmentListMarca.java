@@ -210,11 +210,21 @@ public class FragmentListMarca extends Fragment
             if (position != 0 && position != numTitle)
 
                 if (position < numTitle)
-                    ((MarcasViewHolder) holder).bindMarca(marcas.get(position - 1).getNombre());
+                    ((MarcasViewHolder) holder).bindMarca(getLabel(position - 1));
+
                 else
-                    ((MarcasViewHolder) holder).bindMarca(marcas.get(position - 2).getNombre());
+                    ((MarcasViewHolder) holder).bindMarca(getLabel(position - 2));
+
             else
                 ((MarcasTitleViewHolder) holder).bindTitle(position);
+        }
+
+        private String getLabel(int position)
+        {
+            Marca marca = marcas.get(position);
+            String pais = marca.getPais();
+            String label = (pais != null) ? marca.getNombre() + "  " + pais : marca.getNombre();
+            return label;
         }
 
         @Override

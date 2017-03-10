@@ -31,6 +31,9 @@
 
     <dimen name="spinner_text_horizontal_margin">12dp</dimen>
 
+    <dimen name="grid_view_left_margin">10dp</dimen>
+    <dimen name="grid_view_text">16sp</dimen>
+
     <dimen name="cardview_margin">3dp</dimen>
     <dimen name="cardview_image_height">218dp</dimen>
     <dimen name="cardview_image_margin">4dp</dimen>

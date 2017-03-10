@@ -242,11 +242,17 @@ public class FragmentMyEBike extends Fragment
                     Toast.makeText(getContext(), "No existen e-bikes " + USO[position] + " con un diámetro de rueda grande", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if (position == 3 && (suspension == SUSPENSION[2] || suspension == SUSPENSION[3])) {
+                    spinnerUso.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + USO[position] + " con suspensión", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (position == 4 && motor == MOTOR[1]) {
                     spinnerUso.setSelection(0);
                     Toast.makeText(getContext(), "No existen e-bikes de " + USO[position] + " con motor " + MOTOR[1], Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 if (position == 6) {
                     spinnerRueda.setSelection(0);
                     spinnerSuspension.setSelection(0);
@@ -307,6 +313,11 @@ public class FragmentMyEBike extends Fragment
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
             {
+                if ((position == 2 || position == 3) && uso == USO[3]) {
+                    spinnerSuspension.setSelection(0);
+                    Toast.makeText(getContext(), "No existen e-bikes de " + USO[3] + " con suspensión", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 suspension = SUSPENSION[position];
             }
 

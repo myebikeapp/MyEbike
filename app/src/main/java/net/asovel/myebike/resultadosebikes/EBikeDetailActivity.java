@@ -74,7 +74,8 @@ public class EBikeDetailActivity extends AppCompatActivity
         TextView tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
         TextView ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
-        TextView linkText = (TextView) findViewById(R.id.detail_descripcion);
+        TextView link = (TextView) findViewById(R.id.detail_link);
+        TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
 
         if (parcelableEBike.getFoto() != null) {
             Picasso.with(getBaseContext())
@@ -119,11 +120,17 @@ public class EBikeDetailActivity extends AppCompatActivity
         if (parcelableEBike.getValoracion_SORT1() != -1)
             valoracion.setRating(parcelableEBike.getValoracion_SORT1());
 
-        String link = parcelableEBike.getLink();
-        if (link != null) {
+        String url = parcelableEBike.getLink();
+        if (url != null) {
+            link.setVisibility(View.VISIBLE);
+            link.setMovementMethod(LinkMovementMethod.getInstance());
+            link.setText(Html.fromHtml("<a href=\"" + url + Constants.UTM + "\">" + url + "</a>"));
+        }
 
-            linkText.setMovementMethod(LinkMovementMethod.getInstance());
-            linkText.setText(Html.fromHtml("<a href=\"" + link + Constants.UTM + "\">Página web</a>"));
+        String descripcionText = parcelableEBike.getDescripcion();
+        if (descripcionText != null) {
+            descripcion.setVisibility(View.VISIBLE);
+            descripcion.setText(descripcionText);
         }
 
         FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);

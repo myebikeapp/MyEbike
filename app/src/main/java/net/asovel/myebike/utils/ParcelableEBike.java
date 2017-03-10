@@ -20,12 +20,13 @@ public class ParcelableEBike implements Parcelable
     private String foto;
     private String modelo;
     private String link;
+    private String descripcion;
     private int tamano_ruedas;
     private ParcelableMarca marca;
 
     public ParcelableEBike(String uso, String suspension, int autonomia, int precio_SORT2,
                            float valoracion_SORT1, String ubicacion_motor, int peso, String foto, String modelo,
-                           String link, int tamano_ruedas, ParcelableMarca marca)
+                           String link, String descripcion, int tamano_ruedas, ParcelableMarca marca)
     {
         this.uso = uso;
         this.suspension = suspension;
@@ -37,6 +38,7 @@ public class ParcelableEBike implements Parcelable
         this.foto = foto;
         this.modelo = modelo;
         this.link = link;
+        this.descripcion = descripcion;
         this.tamano_ruedas = tamano_ruedas;
         this.marca = marca;
     }
@@ -91,6 +93,11 @@ public class ParcelableEBike implements Parcelable
         return link;
     }
 
+    public String getDescripcion()
+    {
+        return descripcion;
+    }
+
     public int getTamano_ruedas()
     {
         return tamano_ruedas;
@@ -120,6 +127,7 @@ public class ParcelableEBike implements Parcelable
         parcel.writeString(foto);
         parcel.writeString(modelo);
         parcel.writeString(link);
+        parcel.writeString(descripcion);
         parcel.writeInt(tamano_ruedas);
         parcel.writeParcelable(marca, i);
     }
@@ -136,6 +144,7 @@ public class ParcelableEBike implements Parcelable
         foto = in.readString();
         modelo = in.readString();
         link = in.readString();
+        descripcion = in.readString();
         tamano_ruedas = in.readInt();
         marca = in.readParcelable(ParcelableMarca.class.getClassLoader());
     }
@@ -157,7 +166,7 @@ public class ParcelableEBike implements Parcelable
 
     public static ParcelableEBike fromEBike(EBike eBike)
     {
-        String sinDatos = "sin datos";
+        String sinDatos = "";
 
         String uso = eBike.getUso();
         if (uso == null)
@@ -203,6 +212,7 @@ public class ParcelableEBike implements Parcelable
             peso = eBike.getPeso().intValue();
 
         String link = eBike.getLink();
+        String descripcion = eBike.getDescripcion();
 
         int ruedas = -1;
         if (eBike.getTamano_ruedas() != null)
@@ -223,6 +233,7 @@ public class ParcelableEBike implements Parcelable
                 eBike.getFoto(),
                 eBike.getModelo(),
                 link,
+                descripcion,
                 ruedas,
                 marca);
     }

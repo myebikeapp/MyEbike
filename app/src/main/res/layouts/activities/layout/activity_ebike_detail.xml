@@ -116,82 +116,79 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tipo de uso :"
-                        android:textSize="16sp"/>
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_uso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Autonomia :"
-                        android:textSize="16sp"/>
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_autonomia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:text="@string/sin_datos"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Peso :"
-                        android:textSize="16sp"/>
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_peso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:text="@string/sin_datos"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Suspensión :"
-                        android:textSize="16sp"/>
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_suspension"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tamaño de rueda :"
-                        android:textSize="16sp"/>
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_tamano_rueda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:text="@string/sin_datos"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ubicación del Motor :"
-                        android:textSize="16sp"/>
+                        android:text="Ubicación motor :"
+                        android:textSize="@dimen/grid_view_text"/>
 
                     <TextView
                         android:id="@+id/detail_ubicacion_motor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:textSize="16sp"/>
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
 
                 </GridLayout>
 
@@ -204,14 +201,25 @@
                     android:textSize="@dimen/text_medium"/>
 
                 <TextView
+                    android:id="@+id/detail_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:textColorLink="@color/color_link"
+                    android:textSize="@dimen/text_small"
+                    android:visibility="gone"/>
+
+                <TextView
                     android:id="@+id/detail_descripcion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:textColorLink="@color/color_gray"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="@dimen/text_small"/>
+                    android:layout_marginTop="6dp"
+                    android:textSize="@dimen/text_small"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

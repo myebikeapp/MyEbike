@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -36,8 +37,9 @@ public class FragmentWeb extends Fragment
         tracker = application.getDefaultTracker();
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(Constants.URL) + Constants.UTM;
+        String web = bundle.getString(Constants.URL);
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
+        webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(web);
     }
