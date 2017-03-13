@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(Constants.CALLER, TAG);
                 break;
             case R.id.menu_myebike:
-                fragment = new FragmentMyEBike();
+                fragment = new FragmentAsistente();
                 fabVisibility = true;
                 break;
             case R.id.menu_buscar_marca:

@@ -11,7 +11,7 @@
         <item
             android:id="@+id/menu_myebike"
             android:icon="@drawable/ic_menu_bici"
-            android:title="Encuentra tu bici eléctrica" />
+            android:title="Asistente" />
         <item
             android:id="@+id/menu_buscar_marca"
             android:icon="@drawable/ic_menu_buscador"

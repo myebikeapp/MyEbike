@@ -110,7 +110,7 @@
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="6dp"
                     android:columnCount="2"
-                    android:rowCount="11">
+                    android:rowCount="7">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -185,6 +185,19 @@
 
                     <TextView
                         android:id="@+id/detail_ubicacion_motor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/grid_view_left_margin"
+                        android:textSize="@dimen/grid_view_text"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Temporada :"
+                        android:textSize="@dimen/grid_view_text"/>
+
+                    <TextView
+                        android:id="@+id/detail_temporada"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/grid_view_left_margin"

@@ -24,7 +24,7 @@ import com.google.android.gms.analytics.Tracker;
 import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.FragmentListMarca;
 import net.asovel.myebike.main.MainActivity;
-import net.asovel.myebike.main.FragmentMyEBike;
+import net.asovel.myebike.main.FragmentAsistente;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
@@ -189,7 +189,7 @@ public class LoginActivity extends Activity
         Backendless.UserService.setCurrentUser(user);
         String email = user.getEmail();
 
-        tracker.set("&uid", email);
+        tracker.set("&uid", user.getUserId());
 
         tracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Usuario")
@@ -210,7 +210,7 @@ public class LoginActivity extends Activity
 
         Intent intent;
 
-        if (caller.equals(FragmentMyEBike.TAG) || caller.equals(FragmentListMarca.TAG)) {
+        if (caller.equals(FragmentAsistente.TAG) || caller.equals(FragmentListMarca.TAG)) {
 
             intent = new Intent(getBaseContext(), EBikeListActivity.class);
             Bundle sender = new Bundle();

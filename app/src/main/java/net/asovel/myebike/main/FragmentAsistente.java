@@ -32,9 +32,9 @@ import net.asovel.myebike.utils.Constants;
 
 import java.util.ArrayList;
 
-public class FragmentMyEBike extends Fragment
+public class FragmentAsistente extends Fragment
 {
-    public static final String TAG = FragmentMyEBike.class.getSimpleName();
+    public static final String TAG = FragmentAsistente.class.getSimpleName();
 
     public static final String[] USO = {null, "ciudad", "plegables", "carretera", "montaña", "trekking", "scooter", "otras"};
     public static final int[] DIAMETRO_RUEDA = {0, 0, 14, 24, 26, 27, 28, 29};

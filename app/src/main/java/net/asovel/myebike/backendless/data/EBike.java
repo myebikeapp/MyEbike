@@ -15,6 +15,7 @@ public class EBike
     private String ubicacion_motor;
     private String uso;
     private Integer peso;
+    private Integer any;
     private String foto;
     private String ownerId;
     private Integer patrocinado_SORT0;
@@ -99,6 +100,16 @@ public class EBike
     public void setPeso(Integer peso)
     {
         this.peso = peso;
+    }
+
+    public Integer getAny()
+    {
+        return any;
+    }
+
+    public void setAny(Integer any)
+    {
+        this.any = any;
     }
 
     public String getFoto()

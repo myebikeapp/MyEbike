@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import net.asovel.myebike.backendless.data.EBike;
-import net.asovel.myebike.main.FragmentMyEBike;
+import net.asovel.myebike.main.FragmentAsistente;
 
 public class ParcelableEBike implements Parcelable
 {
@@ -17,6 +17,7 @@ public class ParcelableEBike implements Parcelable
     private float valoracion_SORT1;
     private String ubicacion_motor;
     private int peso;
+    private int any;
     private String foto;
     private String modelo;
     private String link;
@@ -25,7 +26,7 @@ public class ParcelableEBike implements Parcelable
     private ParcelableMarca marca;
 
     public ParcelableEBike(String uso, String suspension, int autonomia, int precio_SORT2,
-                           float valoracion_SORT1, String ubicacion_motor, int peso, String foto, String modelo,
+                           float valoracion_SORT1, String ubicacion_motor, int peso, int any, String foto, String modelo,
                            String link, String descripcion, int tamano_ruedas, ParcelableMarca marca)
     {
         this.uso = uso;
@@ -35,6 +36,7 @@ public class ParcelableEBike implements Parcelable
         this.valoracion_SORT1 = valoracion_SORT1;
         this.ubicacion_motor = ubicacion_motor;
         this.peso = peso;
+        this.any = any;
         this.foto = foto;
         this.modelo = modelo;
         this.link = link;
@@ -76,6 +78,11 @@ public class ParcelableEBike implements Parcelable
     public int getPeso()
     {
         return peso;
+    }
+
+    public int getAny()
+    {
+        return any;
     }
 
     public String getFoto()
@@ -124,6 +131,7 @@ public class ParcelableEBike implements Parcelable
         parcel.writeFloat(valoracion_SORT1);
         parcel.writeString(ubicacion_motor);
         parcel.writeInt(peso);
+        parcel.writeInt(any);
         parcel.writeString(foto);
         parcel.writeString(modelo);
         parcel.writeString(link);
@@ -141,6 +149,7 @@ public class ParcelableEBike implements Parcelable
         valoracion_SORT1 = in.readFloat();
         ubicacion_motor = in.readString();
         peso = in.readInt();
+        any = in.readInt();
         foto = in.readString();
         modelo = in.readString();
         link = in.readString();
@@ -171,22 +180,22 @@ public class ParcelableEBike implements Parcelable
         String uso = eBike.getUso();
         if (uso == null)
             uso = sinDatos;
-        else if (uso.equals(FragmentMyEBike.USO[2]))
+        else if (uso.equals(FragmentAsistente.USO[2]))
             uso = "plegable";
         else if (uso.equals("montana"))
             uso = "montaña";
-        else if (uso.equals(FragmentMyEBike.USO[6]))
+        else if (uso.equals(FragmentAsistente.USO[6]))
             uso = "e-scooter";
-        else if (uso.equals(FragmentMyEBike.USO[7]))
+        else if (uso.equals(FragmentAsistente.USO[7]))
             uso = "otros";
 
 
         String suspension = eBike.getSuspension();
         if (suspension == null)
             suspension = sinDatos;
-        else if (suspension.equals(FragmentMyEBike.SUSPENSION[1]))
+        else if (suspension.equals(FragmentAsistente.SUSPENSION[1]))
             suspension = "sin suspensión";
-        else if (suspension.equals(FragmentMyEBike.SUSPENSION[3]))
+        else if (suspension.equals(FragmentAsistente.SUSPENSION[3]))
             suspension = "delantera y trasera";
 
         int autonomia = -1;
@@ -204,12 +213,16 @@ public class ParcelableEBike implements Parcelable
         String motor = eBike.getUbicacion_motor();
         if (motor == null)
             motor = sinDatos;
-        else if (motor.equals(FragmentMyEBike.MOTOR[2]))
+        else if (motor.equals(FragmentAsistente.MOTOR[2]))
             motor = "central o pedalier";
 
         int peso = -1;
         if (eBike.getPeso() != null)
             peso = eBike.getPeso().intValue();
+
+        int any = -1;
+        if (eBike.getAny() != null)
+            any = eBike.getAny().intValue();
 
         String link = eBike.getLink();
         String descripcion = eBike.getDescripcion();
@@ -230,6 +243,7 @@ public class ParcelableEBike implements Parcelable
                 valoracion,
                 motor,
                 peso,
+                any,
                 eBike.getFoto(),
                 eBike.getModelo(),
                 link,

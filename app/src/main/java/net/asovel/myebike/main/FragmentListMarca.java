@@ -210,21 +210,13 @@ public class FragmentListMarca extends Fragment
             if (position != 0 && position != numTitle)
 
                 if (position < numTitle)
-                    ((MarcasViewHolder) holder).bindMarca(getLabel(position - 1));
+                    ((MarcasViewHolder) holder).bindMarca(position - 1);
 
                 else
-                    ((MarcasViewHolder) holder).bindMarca(getLabel(position - 2));
+                    ((MarcasViewHolder) holder).bindMarca(position - 2);
 
             else
                 ((MarcasTitleViewHolder) holder).bindTitle(position);
-        }
-
-        private String getLabel(int position)
-        {
-            Marca marca = marcas.get(position);
-            String pais = marca.getPais();
-            String label = (pais != null) ? marca.getNombre() + "  " + pais : marca.getNombre();
-            return label;
         }
 
         @Override
@@ -236,18 +228,21 @@ public class FragmentListMarca extends Fragment
 
     public class MarcasViewHolder extends RecyclerView.ViewHolder
     {
-
         private TextView marcaView;
+        private TextView paisView;
 
         public MarcasViewHolder(View itemView)
         {
             super(itemView);
             marcaView = (TextView) itemView.findViewById(R.id.list_marca);
+            paisView = (TextView) itemView.findViewById(R.id.list_marca_pais);
         }
 
-        public void bindMarca(String marca)
+        public void bindMarca(int position)
         {
-            marcaView.setText(marca);
+            Marca marca = marcas.get(position);
+            marcaView.setText(marca.getNombre());
+            paisView.setText(marca.getPais());
         }
     }
 

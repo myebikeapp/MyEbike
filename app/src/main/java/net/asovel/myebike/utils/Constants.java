@@ -9,6 +9,7 @@ public class Constants {
     public static final String URL = "URL";
     public static final String NOMBRE_MARCA = "NOMBRE_MARCA";
     public static final String UTM = "?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App";
+    public static final String CATEGORY_MARCA = "Marca";
     public static final String CATEGORY_TIENDA = "Tienda";
     public static final String CATEGORY_EBIKE = "EBike";
 }

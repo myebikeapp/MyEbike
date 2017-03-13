@@ -5,7 +5,7 @@
     android:layout_marginBottom="@dimen/list_marcas_margin"
     android:background="@color/color_white"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/list_marca"
@@ -13,5 +13,13 @@
         android:layout_height="wrap_content"
         android:textColor="@color/color_black"
         android:textSize="@dimen/text_large" />
+
+    <TextView
+        android:id="@+id/list_marca_pais"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/text_medium" />
 
 </LinearLayout>

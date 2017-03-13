@@ -73,6 +73,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         TextView suspension = (TextView) findViewById(R.id.detail_suspension);
         TextView tamanoRueda = (TextView) findViewById(R.id.detail_tamano_rueda);
         TextView ubicacionMotor = (TextView) findViewById(R.id.detail_ubicacion_motor);
+        TextView temporada = (TextView) findViewById(R.id.detail_temporada);
         RatingBar valoracion = (RatingBar) findViewById(R.id.detail_valoracion);
         TextView link = (TextView) findViewById(R.id.detail_link);
         TextView descripcion = (TextView) findViewById(R.id.detail_descripcion);
@@ -96,6 +97,9 @@ public class EBikeDetailActivity extends AppCompatActivity
         if (parcelableEBike.getPrecio_SORT2() != -1)
             precio.setText("" + parcelableEBike.getPrecio_SORT2() + " €");
 
+        if (parcelableEBike.getValoracion_SORT1() != -1)
+            valoracion.setRating(parcelableEBike.getValoracion_SORT1());
+
         uso.setText(parcelableEBike.getUso());
 
         if (parcelableEBike.getAutonomia() != -1)
@@ -117,8 +121,8 @@ public class EBikeDetailActivity extends AppCompatActivity
 
         ubicacionMotor.setText(parcelableEBike.getUbicacion_motor());
 
-        if (parcelableEBike.getValoracion_SORT1() != -1)
-            valoracion.setRating(parcelableEBike.getValoracion_SORT1());
+        if (parcelableEBike.getAny() != -1)
+            temporada.setText("" + parcelableEBike.getAny());
 
         String url = parcelableEBike.getLink();
         if (url != null) {

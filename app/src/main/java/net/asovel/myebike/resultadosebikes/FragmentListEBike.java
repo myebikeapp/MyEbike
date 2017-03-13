@@ -23,7 +23,7 @@ import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.EBike;
 import net.asovel.myebike.main.FragmentListMarca;
-import net.asovel.myebike.main.FragmentMyEBike;
+import net.asovel.myebike.main.FragmentAsistente;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
 import net.asovel.myebike.utils.Constants;
@@ -79,7 +79,7 @@ public class FragmentListEBike extends Fragment
             tracker.setScreenName(FragmentListMarca.TAG + " --> " + TAG);
 
         else
-            tracker.setScreenName(FragmentMyEBike.TAG + " --> " + TAG);
+            tracker.setScreenName(FragmentAsistente.TAG + " --> " + TAG);
 
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
@@ -137,7 +137,7 @@ public class FragmentListEBike extends Fragment
                 int totalPages = getTotalPages(numEbikes);
 
                 String caller = getArguments().getString(Constants.CALLER, "");
-                if (caller.equals(FragmentListMarca.TAG) || caller.equals(FragmentMyEBike.TAG)) {
+                if (caller.equals(FragmentListMarca.TAG) || caller.equals(FragmentAsistente.TAG)) {
                     String label = getResources().getString(R.string.EBikeListActivity_label) + " (" + numEbikes + ")";
                     getActivity().setTitle(label);
                 }
@@ -152,7 +152,7 @@ public class FragmentListEBike extends Fragment
         if (caller.equals(FragmentListMarca.TAG))
             Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados de esta marca", Toast.LENGTH_LONG).show();
 
-        else if (caller.equals(FragmentMyEBike.TAG))
+        else if (caller.equals(FragmentAsistente.TAG))
             Toast.makeText(getContext(), "Lo sentimos pero no tenemos modelos registrados para esta selección", Toast.LENGTH_LONG).show();
 
         else
