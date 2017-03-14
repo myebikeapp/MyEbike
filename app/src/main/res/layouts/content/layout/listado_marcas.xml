@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:textColor="@color/color_black"
+        android:textStyle="italic"
         android:textSize="@dimen/text_medium" />
 
 </LinearLayout>

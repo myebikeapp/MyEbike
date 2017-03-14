@@ -162,9 +162,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_sesion:
                 if (connected) {
-                    SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+                    SharedPreferences prefs = getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("email", "");
+                    editor.remove(Constants.EMAIL);
+                    editor.remove(Constants.USER_ID);
                     editor.commit();
                     setConnected("");
                     return true;

@@ -463,12 +463,6 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
 
     private void sendEmail(String email, String nombreTienda)
     {
-
-           /* Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:?subject=" + "myebikeapp@gmail.com" + "&body=" + "bodyalñkdjalñsjdañsld");
-            intent.setData(data);
-            startActivity(intent);*/
-
         tracker.send(new HitBuilders.EventBuilder()
                 .setCategory(Constants.CATEGORY_TIENDA)
                 .setAction("Correo")
@@ -478,10 +472,10 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setType("vnd.android.cursor.item/email");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"myebikeapp@gmail.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
-        intent.putExtra(Intent.EXTRA_TEXT, "My email content");
-        startActivity(Intent.createChooser(intent, "Send mail using..."));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+       // intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
+       // intent.putExtra(Intent.EXTRA_TEXT, "My email content");
+        startActivity(Intent.createChooser(intent, "Enviar correo usando..."));
     }
 
     @Override

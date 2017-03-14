@@ -17,7 +17,6 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.analytics.ecommerce.Product;
 
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
@@ -217,14 +216,11 @@ public class FragmentListEBike extends Fragment
         ParcelableEBike parcelableEBike = ParcelableEBike.fromEBike(eBikes.get(position));
         bundle.putParcelable(ParcelableEBike.PARCELABLEEBIKE, parcelableEBike);
 
-        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
-        builder.addProduct(new Product()
-                .setPosition(position + 1)
-                .setBrand(parcelableEBike.getMarca().getNombre())
-                .setName(parcelableEBike.getModelo())
-                .setPrice(parcelableEBike.getPrecio_SORT2())
-                .setCategory(parcelableEBike.getUso()));
-        tracker.send(builder.build());
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_EBIKE)
+                .setAction("Detalle")
+                .setLabel(parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo())
+                .build());
 
         if (caller.equals(MainActivity.TAG))
             bundle.putString(Constants.CALLER, caller);

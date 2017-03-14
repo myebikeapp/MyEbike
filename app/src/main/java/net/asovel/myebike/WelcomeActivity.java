@@ -15,6 +15,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
+import net.asovel.myebike.utils.Constants;
 
 public class WelcomeActivity extends Activity
 {
@@ -31,12 +32,13 @@ public class WelcomeActivity extends Activity
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         tracker = application.getDefaultTracker();
 
-        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
-        String email = prefs.getString("email", "");
+        SharedPreferences prefs = getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
+        String email = prefs.getString(Constants.EMAIL, "");
 
         if (!email.equals("")) {
 
-            tracker.set("&uid", email);
+            String userId = prefs.getString(Constants.USER_ID, "");
+            tracker.set("&uid", userId);
 
             tracker.send(new HitBuilders.EventBuilder()
                     .setCategory("Usuario")

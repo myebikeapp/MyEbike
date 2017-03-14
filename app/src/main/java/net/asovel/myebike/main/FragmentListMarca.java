@@ -42,7 +42,6 @@ public class FragmentListMarca extends Fragment
     private List<Marca> marcas;
     private int numTitle;
     private int numPeninsula;
-    private int numPeninsulaFalse;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -107,7 +106,6 @@ public class FragmentListMarca extends Fragment
                     if ((marca.getPeninsula() != null) && !marca.getPeninsula())
                         marcas.add(marca);
                 }
-                numPeninsulaFalse = marcas.size() - numPeninsula;
                 setUpRecyclerView();
             }
         });
@@ -142,12 +140,19 @@ public class FragmentListMarca extends Fragment
             startActivity(intent);
             return;
         }
+        String nombreMarca = marcas.get(position - 1).getNombre();
+
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_MARCA)
+                .setAction("Buscar marca")
+                .setLabel(nombreMarca)
+                .build());
 
         SharedPreferences prefs = getActivity().getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
         ArrayList<String> listClauses = new ArrayList<>(1);
-        listClauses.add("marca.nombre = '" + marcas.get(position - 1).getNombre() + "'");
+        listClauses.add("marca.nombre = '" + nombreMarca + "'");
         bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
         bundle.putString(Constants.CALLER, TAG);
 
@@ -261,7 +266,7 @@ public class FragmentListMarca extends Fragment
             if (position == 0)
                 titleView.setText("Marcas distribuidas en España (" + numPeninsula + " )");
             else
-                titleView.setText("Marcas sin distribución en España (" + numPeninsulaFalse + " )");
+                titleView.setText("Marcas sin distribución en España (" + (marcas.size() - numPeninsula) + " )");
         }
     }
 

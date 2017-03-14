@@ -197,9 +197,10 @@ public class LoginActivity extends Activity
                 .setLabel(email)
                 .build());
 
-        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("email", email);
+        editor.putString(Constants.EMAIL, email);
+        editor.putString(Constants.USER_ID, user.getUserId());
         editor.commit();
 
         Bundle receiver = getIntent().getExtras();

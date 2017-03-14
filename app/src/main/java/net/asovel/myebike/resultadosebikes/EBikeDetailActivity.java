@@ -153,6 +153,12 @@ public class EBikeDetailActivity extends AppCompatActivity
         ParcelableMarca marca = parcelableEBike.getMarca();
         if (marca == null || marca.getNombre() == null)
             return;
+
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(Constants.CATEGORY_EBIKE)
+                .setAction("Buscar tiendas")
+                .build());
+
         Intent intent = new Intent(EBikeDetailActivity.this, MapaActivity.class);
         Bundle bundle = new Bundle();
         String nombreMarca = marca.getNombre();
