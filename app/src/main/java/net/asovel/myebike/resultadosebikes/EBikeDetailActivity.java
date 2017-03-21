@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.backendless.Backendless;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
@@ -40,6 +41,9 @@ public class EBikeDetailActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebike_detail);
+
+        Backendless.setUrl(getString(R.string.SERVER_URL));
+        Backendless.initApp(this, getString(R.string.APPLICATION_ID), getString(R.string.SECRET_KEY), getString(R.string.VERSION));
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         tracker = application.getDefaultTracker();

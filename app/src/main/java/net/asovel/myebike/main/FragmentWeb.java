@@ -37,7 +37,7 @@ public class FragmentWeb extends Fragment
         tracker = application.getDefaultTracker();
 
         Bundle bundle = getArguments();
-        String web = bundle.getString(Constants.URL);
+        String web = bundle.getString(Constants.URL) + Constants.UTM;
         WebView webView = (WebView) getView().findViewById(R.id.pagina_web);
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);

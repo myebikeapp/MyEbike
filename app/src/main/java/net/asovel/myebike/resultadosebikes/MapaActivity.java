@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import com.backendless.Backendless;
 
 import net.asovel.myebike.R;
-import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.main.FragmentMapa;
 import net.asovel.myebike.main.MainActivity;
 import net.asovel.myebike.utils.Constants;
@@ -28,8 +27,8 @@ public class MapaActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Backendless.setUrl(Defaults.SERVER_URL);
-        Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
+        Backendless.setUrl(getString(R.string.SERVER_URL));
+        Backendless.initApp(this, getString(R.string.APPLICATION_ID), getString(R.string.SECRET_KEY), getString(R.string.VERSION));
 
         Fragment fragment = new FragmentMapa();
 

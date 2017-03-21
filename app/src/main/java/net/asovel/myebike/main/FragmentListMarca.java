@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -72,7 +74,12 @@ public class FragmentListMarca extends Fragment
 
     private void queryMarcas()
     {
-        Backendless.Data.of(MarcaLista.class).find(new DefaultCallback<BackendlessCollection<MarcaLista>>(getContext())
+        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addRelated("lista");
+        dataQuery.setQueryOptions(queryOptions);
+
+        Backendless.Data.of(MarcaLista.class).find(dataQuery, new DefaultCallback<BackendlessCollection<MarcaLista>>(getContext())
         {
             @Override
             public void handleResponse(BackendlessCollection<MarcaLista> response)

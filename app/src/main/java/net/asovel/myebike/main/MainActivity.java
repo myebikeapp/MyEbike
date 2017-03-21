@@ -20,7 +20,6 @@ import com.backendless.Backendless;
 
 import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
-import net.asovel.myebike.backendless.common.Defaults;
 import net.asovel.myebike.resultadosebikes.FragmentListEBike;
 import net.asovel.myebike.utils.Constants;
 
@@ -42,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Backendless.setUrl(Defaults.SERVER_URL);
-        Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
+        Backendless.setUrl(getString(R.string.SERVER_URL));
+        Backendless.initApp(this, getString(R.string.APPLICATION_ID), getString(R.string.SECRET_KEY), getString(R.string.VERSION));
 
         iniUI();
     }
@@ -150,15 +149,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_recomendaciones:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://sites.google.com/asovel.org/web/e-bikes/antes-de-comprar");
+                bundle.putString(Constants.URL, "http://www.asovel.org/e-bikes/antes-de-comprar");
                 break;
             case R.id.menu_noticias:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://asovel.blogspot.com.es/?m=1");
+                bundle.putString(Constants.URL, "http://www.asovel.net");
                 break;
             case R.id.menu_nosotros:
                 fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://sites.google.com/asovel.org/web/asociación/sobre-nosotros");
+                bundle.putString(Constants.URL, "http://www.asovel.org/asociación/sobre-nosotros");
                 break;
             case R.id.menu_sesion:
                 if (connected) {

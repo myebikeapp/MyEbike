@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -189,7 +192,12 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
 
     private void queryTiendas()
     {
-        Backendless.Data.of(TiendaLista.class).find(new AsyncCallback<BackendlessCollection<TiendaLista>>()
+        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addRelated("lista");
+        dataQuery.setQueryOptions(queryOptions);
+
+        Backendless.Data.of(TiendaLista.class).find(dataQuery, new AsyncCallback<BackendlessCollection<TiendaLista>>()
         {
             @Override
             public void handleResponse(BackendlessCollection<TiendaLista> response)
@@ -224,6 +232,10 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
         String label = getResources().getString(R.string.FragmentMap_label) + " (" + numTiendas + ")";
         getActivity().setTitle(label);
 
+        //BitmapDrawable bitmapdrawable = (BitmapDrawable) getResources().getDrawable();
+        //Bitmap b = bitmapdraw.getBitmap();
+        //Bitmap smallMarker = Bitmap.createScaledBitmap(b, width / 2, height / 2, false);
+
         for (int i = 0; i < numTiendas; i++) {
             Tienda tienda = tiendas.get(i);
 
@@ -232,7 +244,9 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
 
             if (latitud != null && longitud != null) {
                 LatLng latLng = new LatLng(latitud, longitud);
-                Marker marker = map.addMarker(new MarkerOptions().position(latLng));
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(latLng));
+                        //.icon(BitmapDescriptorFactory.fromBitmap()));
                 marker.setTag(tienda);
             }
         }
@@ -473,8 +487,8 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setType("vnd.android.cursor.item/email");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
-       // intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
-       // intent.putExtra(Intent.EXTRA_TEXT, "My email content");
+        // intent.putExtra(Intent.EXTRA_SUBJECT, "My Email Subject");
+        // intent.putExtra(Intent.EXTRA_TEXT, "My email content");
         startActivity(Intent.createChooser(intent, "Enviar correo usando..."));
     }
 
