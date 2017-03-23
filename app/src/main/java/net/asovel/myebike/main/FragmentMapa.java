@@ -229,6 +229,10 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback, Activi
             }
         }
         int numTiendas = tiendas.size();
+
+        if (!isAdded())
+            return;
+
         String label = getResources().getString(R.string.FragmentMap_label) + " (" + numTiendas + ")";
         getActivity().setTitle(label);
 
