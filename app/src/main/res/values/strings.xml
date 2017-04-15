@@ -16,6 +16,9 @@
     <string name="autonomia_text">Autonomía Km</string>
     <string name="presupuesto_text">Presupuesto</string>
 
+    <string name="form_title">Contactar con un comercial</string>
+    <string name="edit_mensaje">Estoy interesado en esta e-bike.</string>
+
     <string name="welcome_title">Bienvenidos a My e-Bike</string>
     <string name="welcome_text"><![CDATA[ <body style="text-align:justify;">My e-Bike, el mejor buscador de bicis eléctricas del sur de Europa.
         Encuentra la tuya entre miles de modelos y encargala al mejor precio en tu tienda más cercana.</body>]]></string>
@@ -27,13 +30,5 @@
     <string name="google_button_text">Google+</string>
     <string name="login_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a> ]]>
         y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Política de Privacidad</a> ]]>.</string>
-
-    <string name="proba">
-    QUIENES SOMOS:
-    ASOVEL es la primera Asociación Española para el fomento y uso de Vehículos Eléctricos Ligeros de menos de 400 kg de peso. Nuestro foco lo centramos en las bicis y motos eléctricas por la economía y rapidez de transporte que estos vehículos nos ofrecen.
-    Somos además usuarios de vehículo eléctrico ligero, algunos de nosotros desde el 2009 y cada día nos apasiona más esta nueva forma de desplazarse tan sana, ecológica, económica y silenciosa.
-    Estamos legalmente inscritos en el Registro Nacional de Asociaciones, Grupo 1º, Sección 1ª Número Nacional: 609765 con NIF: G-66768714
-    Nuestro lema es sencillo: “Save the planet”
-    APP desarrollada por: Adrià Bosch Saez</string>
 
 </resources>

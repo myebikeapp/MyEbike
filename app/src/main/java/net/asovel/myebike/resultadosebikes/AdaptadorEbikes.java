@@ -120,15 +120,13 @@ public class AdaptadorEbikes extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class BicicletasViewHolder extends RecyclerView.ViewHolder
     {
 
-        public static final int IMAGE_WIDTH = 384;
-        public static final int IMAGE_HEIGHT = 256;
+        public static final int IMAGE_WIDTH = 402;
+        public static final int IMAGE_HEIGHT = 268;
 
         private ImageView imagen;
         private TextView marcaModelo;
         private TextView precio;
         private RatingBar valoracion;
-
-        private Target target;
 
         public BicicletasViewHolder(View view)
         {

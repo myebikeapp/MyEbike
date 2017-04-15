@@ -1,21 +1,30 @@
 package net.asovel.myebike.resultadosebikes;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
@@ -27,6 +36,9 @@ import net.asovel.myebike.utils.Constants;
 import net.asovel.myebike.utils.ParcelableEBike;
 import net.asovel.myebike.utils.ParcelableMarca;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EBikeDetailActivity extends AppCompatActivity
 {
     private static final String TAG = EBikeDetailActivity.class.getSimpleName();
@@ -35,6 +47,17 @@ public class EBikeDetailActivity extends AppCompatActivity
 
     private ParcelableEBike parcelableEBike;
     private String caller;
+
+    private EditText nameText;
+    private TextInputLayout nameLayout;
+    private EditText emailText;
+    private TextInputLayout emailLayout;
+    private EditText phoneText;
+    private TextInputLayout phoneLayout;
+    private EditText postalText;
+    private TextInputLayout postalLayout;
+    private EditText messageText;
+    private TextInputLayout messageLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +74,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
         caller = getIntent().getExtras().getString(Constants.CALLER, "");
         initUI();
+        initUserForm();
     }
 
     @Override
@@ -173,6 +197,171 @@ public class EBikeDetailActivity extends AppCompatActivity
 
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void initUserForm()
+    {
+        nameText = (EditText) findViewById(R.id.user_name);
+        nameLayout = (TextInputLayout) findViewById(R.id.tilayout_name);
+        emailText = (EditText) findViewById(R.id.user_email);
+        emailLayout = (TextInputLayout) findViewById(R.id.tilayout_email);
+        phoneText = (EditText) findViewById(R.id.user_phone);
+        phoneLayout = (TextInputLayout) findViewById(R.id.tilayout_phone);
+        postalText = (EditText) findViewById(R.id.user_postal);
+        postalLayout = (TextInputLayout) findViewById(R.id.tilayout_postal);
+        messageText = (EditText) findViewById(R.id.user_message);
+        Button contactarButton = (Button) findViewById(R.id.button_contactar);
+
+        SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", "");
+        emailText.setText(email);
+
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    checkNombre(nameText.getText().toString());
+                }
+            }
+        });
+
+        emailText.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    checkEmail(emailText.getText().toString());
+                }
+            }
+        });
+
+        phoneText.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    checkPhone(phoneText.getText().toString());
+                }
+            }
+        });
+
+        contactarButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onContactarClicked();
+            }
+        });
+    }
+
+    private void onContactarClicked()
+    {
+
+        final String nombre = nameText.getText().toString();
+        if (!checkNombre(nombre)) {
+            Toast.makeText(EBikeDetailActivity.this, "Nombre incorrecto", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final String email = emailText.getText().toString();
+        if (!checkEmail(email)){
+            Toast.makeText(EBikeDetailActivity.this, "Email incorrecto", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final String telefono = phoneText.getText().toString();
+        if (!checkPhone(telefono)){
+            Toast.makeText(EBikeDetailActivity.this, "Telefono incorrecto", Toast.LENGTH_LONG).show();
+            return;
+        }
+        final String postal = postalText.getText().toString();
+        final String mensaje = messageText.getText().toString();
+        final String referencia = parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo();
+
+        HashMap lead = new HashMap();
+        lead.put("referencia", referencia);
+        lead.put("nombre", nombre);
+        lead.put("email", email);
+        lead.put("telefono", telefono);
+        lead.put("codigo_postal", postal);
+        lead.put("mensaje", mensaje);
+
+        Backendless.Persistence.of("lead").save(lead, new AsyncCallback<Map>()
+        {
+            public void handleResponse(Map response)
+            {
+                Toast.makeText(EBikeDetailActivity.this, "Menssaje enviado", Toast.LENGTH_LONG).show();
+                cleanForm();
+
+                String messageBody = "Referencia: " + referencia + '\n'
+                        + "Nombre: " + nombre + '\n'
+                        + "Email: " + email + '\n'
+                        + "Telefono: " + telefono + '\n'
+                        + "Postal: " + postal + '\n'
+                        + "Mensaje: " + mensaje + '\n';
+
+                Backendless.Messaging.sendTextEmail("myebike: " + referencia, messageBody, "myebikeapp@gmail.com", new AsyncCallback<Void>()
+                {
+                    @Override
+                    public void handleResponse(Void aVoid)
+                    {
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault)
+                    {
+                    }
+                });
+            }
+
+            public void handleFault(BackendlessFault fault)
+            {
+                Log.d(TAG, fault.getMessage());
+                Toast.makeText(EBikeDetailActivity.this, fault.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private boolean checkNombre(String nombre){
+
+        if (nombre.equals("")){
+            nameLayout.setError("Nombre incorrecto");
+            return false;
+        }
+        nameLayout.setError(null);
+        return true;
+    }
+
+    private boolean checkEmail(String email){
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailLayout.setError(null);
+            return true;
+        }
+        emailLayout.setError("Email incorrecto");
+        return false;
+    }
+
+    private boolean checkPhone(String phone){
+        if (phone.equals("") || android.util.Patterns.PHONE.matcher(phone).matches()) {
+            phoneLayout.setError(null);
+            return true;
+        }
+        phoneLayout.setError("Telefono incorrecto");
+        return false;
+    }
+
+    private void cleanForm()
+    {
+        nameText.setText(null);
+        emailText.setText(null);
+        phoneText.setText(null);
+        postalText.setText(null);
+        messageText.setText(null);
     }
 
     @Override

@@ -16,6 +16,22 @@
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="hintTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorHintTextAppearance</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="errorTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorErrorTextAppearance</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="customEditText" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">@color/colorHintTextAppearance</item>
+        <item name="colorControlHighlight">@color/color_ratingbar</item>
+    </style>
+
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

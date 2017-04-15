@@ -46,197 +46,209 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            card_view:cardBackgroundColor="#ffffff"
-            card_view:cardCornerRadius="3dp"
-            card_view:cardElevation="3dp">
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                card_view:cardBackgroundColor="#ffffff"
+                card_view:cardCornerRadius="3dp"
+                card_view:cardElevation="3dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/detail_marca_modelo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="40dp"
+                            android:textSize="@dimen/text_medium"/>
+
+                        <TextView
+                            android:id="@+id/detail_precio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detail_marca_modelo"
+                            android:layout_marginTop="4dp"
+                            android:textColor="?colorPrimary"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold"/>
+
+                        <RatingBar
+                            android:id="@+id/detail_valoracion"
+                            style="?android:attr/ratingBarStyleIndicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detail_precio"
+                            android:layout_marginTop="4dp"
+                            android:progressTint="@color/color_ratingbar"
+                            android:rating="0"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:transformPivotX="-10dp"/>
+
+                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/detail_marca_modelo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginTop="2dp"
+                        android:text="CARACTERÍSTICAS"
+                        android:textColor="?colorPrimary"
+                        android:textSize="@dimen/text_medium"/>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="6dp"
+                        android:columnCount="2"
+                        android:rowCount="7">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tipo de uso :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_uso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Autonomia :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_autonomia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peso :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_peso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Suspensión :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_suspension"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tamaño de rueda :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_tamano_rueda"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ubicación motor :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_ubicacion_motor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temporada :"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                        <TextView
+                            android:id="@+id/detail_temporada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/grid_view_left_margin"
+                            android:textSize="@dimen/grid_view_text"/>
+
+                    </GridLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="DESCRIPCIÓN"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_medium"/>
 
                     <TextView
-                        android:id="@+id/detail_precio"
+                        android:id="@+id/detail_link"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/detail_marca_modelo"
-                        android:layout_marginTop="4dp"
-                        android:textColor="?colorPrimary"
-                        android:textSize="@dimen/text_medium"
-                        android:textStyle="bold"/>
-
-                    <RatingBar
-                        android:id="@+id/detail_valoracion"
-                        style="?android:attr/ratingBarStyleIndicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/detail_precio"
-                        android:layout_marginTop="4dp"
-                        android:progressTint="@color/color_ratingbar"
-                        android:rating="0"
-                        android:scaleX="0.8"
-                        android:scaleY="0.8"
-                        android:transformPivotX="-10dp"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="CARACTERÍSTICAS"
-                    android:textColor="?colorPrimary"
-                    android:textSize="@dimen/text_medium"/>
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="6dp"
-                    android:columnCount="2"
-                    android:rowCount="7">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="6dp"
+                        android:textColorLink="@color/color_link"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone"/>
 
                     <TextView
+                        android:id="@+id/detail_descripcion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tipo de uso :"
-                        android:textSize="@dimen/grid_view_text"/>
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="6dp"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone"/>
 
-                    <TextView
-                        android:id="@+id/detail_uso"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
+                </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Autonomia :"
-                        android:textSize="@dimen/grid_view_text"/>
+            </android.support.v7.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/detail_autonomia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
+            <include
+                layout="@layout/form"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Peso :"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:id="@+id/detail_peso"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Suspensión :"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:id="@+id/detail_suspension"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tamaño de rueda :"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:id="@+id/detail_tamano_rueda"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ubicación motor :"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:id="@+id/detail_ubicacion_motor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Temporada :"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                    <TextView
-                        android:id="@+id/detail_temporada"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/grid_view_left_margin"
-                        android:textSize="@dimen/grid_view_text"/>
-
-                </GridLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="DESCRIPCIÓN"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_medium"/>
-
-                <TextView
-                    android:id="@+id/detail_link"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="6dp"
-                    android:textColorLink="@color/color_link"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/detail_descripcion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="6dp"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

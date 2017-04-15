@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#d62222</color>
 
+    <color name="colorHintTextAppearance">#6678ff</color>
+    <color name="colorErrorTextAppearance">#9f0013</color>
+
     <color name="color_fondo_main">#dfddd4</color>
 
     <color name="color_ratingbar">#FDDB39</color>
