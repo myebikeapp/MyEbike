@@ -31,4 +31,6 @@
     <string name="login_links">Al continuar, aceptas los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a> ]]>
         y la <![CDATA[ <a href="https://sites.google.com/asovel.org/politicadeprivacidad/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Política de Privacidad</a> ]]>.</string>
 
+    <string name="form_conditions_links">Acepto los <![CDATA[ <a href="https://sites.google.com/asovel.org/terminosdeuso/?utm_source=MyeBike&utm_campaign=Asovel&utm_medium=App">Términos de Uso</a>]]>.</string>
+
 </resources>

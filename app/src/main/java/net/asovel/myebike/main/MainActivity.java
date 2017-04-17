@@ -147,9 +147,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new FragmentMapa();
                 bundle.putString(Constants.CALLER, TAG);
                 break;
-            case R.id.menu_recomendaciones:
-                fragment = new FragmentWeb();
-                bundle.putString(Constants.URL, "http://www.asovel.org/e-bikes/antes-de-comprar");
+            case R.id.menu_form:
+                fragment = new FragmentForm();
                 break;
             case R.id.menu_noticias:
                 fragment = new FragmentWeb();

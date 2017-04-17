@@ -41,10 +41,10 @@
     <dimen name="cardview_text_vertical_margin">6dp</dimen>
 
     <!--
-    User form: uf
+    User form:
     -->
 
-    <dimen name="uf_edit_text_bmargin">6dp</dimen>
+    <dimen name="form_bottom_margin">6dp</dimen>
 
 
 

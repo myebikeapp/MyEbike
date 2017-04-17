@@ -26,10 +26,8 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="customEditText" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">#c5c5c5</item>
+    <style name="customFormViews" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlActivated">@color/colorHintTextAppearance</item>
-        <item name="colorControlHighlight">@color/color_ratingbar</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">

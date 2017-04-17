@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ import java.util.Map;
 
 public class EBikeDetailActivity extends AppCompatActivity
 {
-    private static final String TAG = EBikeDetailActivity.class.getSimpleName();
+    public static final String TAG = EBikeDetailActivity.class.getSimpleName();
 
     private Tracker tracker;
 
@@ -57,7 +58,7 @@ public class EBikeDetailActivity extends AppCompatActivity
     private EditText postalText;
     private TextInputLayout postalLayout;
     private EditText messageText;
-    private TextInputLayout messageLayout;
+    private Switch switchConditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -210,11 +211,17 @@ public class EBikeDetailActivity extends AppCompatActivity
         postalText = (EditText) findViewById(R.id.user_postal);
         postalLayout = (TextInputLayout) findViewById(R.id.tilayout_postal);
         messageText = (EditText) findViewById(R.id.user_message);
+        switchConditions = (Switch) findViewById(R.id.conditions_switch);
         Button contactarButton = (Button) findViewById(R.id.button_contactar);
 
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
         emailText.setText(email);
+
+        TextView conditionsText = (TextView) findViewById(R.id.conditions_text);
+        conditionsText.setMovementMethod(LinkMovementMethod.getInstance());
+        String links = getString(R.string.form_conditions_links);
+        conditionsText.setText(Html.fromHtml(links));
 
         nameText.setOnFocusChangeListener(new View.OnFocusChangeListener()
         {
@@ -249,6 +256,17 @@ public class EBikeDetailActivity extends AppCompatActivity
             }
         });
 
+        postalText.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if (!hasFocus) {
+                    checkEmail(postalText.getText().toString());
+                }
+            }
+        });
+
         contactarButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -261,6 +279,10 @@ public class EBikeDetailActivity extends AppCompatActivity
 
     private void onContactarClicked()
     {
+        if (!switchConditions.isChecked()) {
+            Toast.makeText(EBikeDetailActivity.this, "Debes aceptar las condiciones de uso", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         final String nombre = nameText.getText().toString();
         if (!checkNombre(nombre)) {
@@ -269,17 +291,22 @@ public class EBikeDetailActivity extends AppCompatActivity
         }
 
         final String email = emailText.getText().toString();
-        if (!checkEmail(email)){
+        if (!checkEmail(email)) {
             Toast.makeText(EBikeDetailActivity.this, "Email incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
 
         final String telefono = phoneText.getText().toString();
-        if (!checkPhone(telefono)){
+        if (!checkPhone(telefono)) {
             Toast.makeText(EBikeDetailActivity.this, "Telefono incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
+
         final String postal = postalText.getText().toString();
+        if (!checkPostal(postal)) {
+            Toast.makeText(EBikeDetailActivity.this, "Codigo postal incorrecto", Toast.LENGTH_LONG).show();
+            return;
+        }
         final String mensaje = messageText.getText().toString();
         final String referencia = parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo();
 
@@ -327,9 +354,10 @@ public class EBikeDetailActivity extends AppCompatActivity
         });
     }
 
-    private boolean checkNombre(String nombre){
+    private boolean checkNombre(String nombre)
+    {
 
-        if (nombre.equals("")){
+        if (nombre.equals("")) {
             nameLayout.setError("Nombre incorrecto");
             return false;
         }
@@ -337,7 +365,8 @@ public class EBikeDetailActivity extends AppCompatActivity
         return true;
     }
 
-    private boolean checkEmail(String email){
+    private boolean checkEmail(String email)
+    {
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailLayout.setError(null);
             return true;
@@ -346,8 +375,11 @@ public class EBikeDetailActivity extends AppCompatActivity
         return false;
     }
 
-    private boolean checkPhone(String phone){
-        if (phone.equals("") || android.util.Patterns.PHONE.matcher(phone).matches()) {
+    private boolean checkPhone(String phone)
+    {
+        int length = phone.length();
+
+        if (phone.matches("[0-9]+") && length >= 9 && length <= 15) {
             phoneLayout.setError(null);
             return true;
         }
@@ -355,8 +387,20 @@ public class EBikeDetailActivity extends AppCompatActivity
         return false;
     }
 
+    private boolean checkPostal(String postal)
+    {
+
+        if (postal.matches("[0-9]+") && postal.length() == 5) {
+            postalLayout.setError(null);
+            return true;
+        }
+        postalLayout.setError("Codigo postal incorrecto");
+        return false;
+    }
+
     private void cleanForm()
     {
+        switchConditions.setChecked(false);
         nameText.setText(null);
         emailText.setText(null);
         phoneText.setText(null);

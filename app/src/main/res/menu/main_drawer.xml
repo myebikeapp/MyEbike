@@ -23,9 +23,9 @@
             android:title="@string/FragmentMap_label" />
 
         <item
-            android:id="@+id/menu_recomendaciones"
+            android:id="@+id/menu_form"
             android:icon="@drawable/ic_menu_antescomprar"
-            android:title="Recomendaciones" />
+            android:title="Contactar con experto" />
 
     </group>
 
