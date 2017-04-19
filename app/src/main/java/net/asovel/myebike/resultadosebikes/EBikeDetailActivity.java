@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -15,9 +18,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -75,6 +80,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         parcelableEBike = getIntent().getParcelableExtra(ParcelableEBike.PARCELABLEEBIKE);
         caller = getIntent().getExtras().getString(Constants.CALLER, "");
         initUI();
+
         initUserForm();
     }
 
@@ -166,8 +172,8 @@ public class EBikeDetailActivity extends AppCompatActivity
             descripcion.setText(descripcionText);
         }
 
-        FloatingActionButton buscarTiendas = (FloatingActionButton) findViewById(R.id.floating_buscar_tiendas);
-        buscarTiendas.setOnClickListener(new View.OnClickListener()
+        Button tiendasButton = (Button) findViewById(R.id.button_tiendas);
+        tiendasButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -202,6 +208,34 @@ public class EBikeDetailActivity extends AppCompatActivity
 
     private void initUserForm()
     {
+        ViewStub form = (ViewStub) findViewById(R.id.form_stub);
+        form.inflate();
+
+        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_detail_coordinatorlayout);
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.activity_detail_appbarlayout);
+        final CoordinatorLayout.LayoutParams paramsCoordinator = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        final NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
+
+        Button buscarTiendas = (Button) findViewById(R.id.button_tiendas);
+        LinearLayout.LayoutParams paramsLinear = (LinearLayout.LayoutParams)buscarTiendas.getLayoutParams();
+        paramsLinear.setMargins(0, 0, 20, 0);
+        buscarTiendas.setLayoutParams(paramsLinear);
+
+        Button comercialButton = (Button) findViewById(R.id.button_comercial);
+        comercialButton.setVisibility(View.VISIBLE);
+        comercialButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) paramsCoordinator.getBehavior();
+                if (behavior != null) {
+                    behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, 10000, true);
+                }
+                nestedScrollView.scrollTo(0, 1205);
+            }
+        });
+
         nameText = (EditText) findViewById(R.id.user_name);
         nameLayout = (TextInputLayout) findViewById(R.id.tilayout_name);
         emailText = (EditText) findViewById(R.id.user_email);
@@ -262,7 +296,7 @@ public class EBikeDetailActivity extends AppCompatActivity
             public void onFocusChange(View v, boolean hasFocus)
             {
                 if (!hasFocus) {
-                    checkEmail(postalText.getText().toString());
+                    checkPostal(postalText.getText().toString());
                 }
             }
         });
@@ -280,31 +314,31 @@ public class EBikeDetailActivity extends AppCompatActivity
     private void onContactarClicked()
     {
         if (!switchConditions.isChecked()) {
-            Toast.makeText(EBikeDetailActivity.this, "Debes aceptar las condiciones de uso", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Debes aceptar las condiciones de uso", Toast.LENGTH_LONG).show();
             return;
         }
 
         final String nombre = nameText.getText().toString();
         if (!checkNombre(nombre)) {
-            Toast.makeText(EBikeDetailActivity.this, "Nombre incorrecto", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Nombre incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
 
         final String email = emailText.getText().toString();
         if (!checkEmail(email)) {
-            Toast.makeText(EBikeDetailActivity.this, "Email incorrecto", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Email incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
 
         final String telefono = phoneText.getText().toString();
         if (!checkPhone(telefono)) {
-            Toast.makeText(EBikeDetailActivity.this, "Telefono incorrecto", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Telefono incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
 
         final String postal = postalText.getText().toString();
         if (!checkPostal(postal)) {
-            Toast.makeText(EBikeDetailActivity.this, "Codigo postal incorrecto", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Codigo postal incorrecto", Toast.LENGTH_LONG).show();
             return;
         }
         final String mensaje = messageText.getText().toString();
@@ -379,7 +413,7 @@ public class EBikeDetailActivity extends AppCompatActivity
     {
         int length = phone.length();
 
-        if (phone.matches("[0-9]+") && length >= 9 && length <= 15) {
+        if (phone.matches("[0-9]+") && length >= 9) {
             phoneLayout.setError(null);
             return true;
         }

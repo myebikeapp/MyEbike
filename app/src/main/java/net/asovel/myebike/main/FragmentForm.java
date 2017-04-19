@@ -118,7 +118,7 @@ public class FragmentForm extends Fragment
             public void onFocusChange(View v, boolean hasFocus)
             {
                 if (!hasFocus) {
-                    checkEmail(postalText.getText().toString());
+                    checkPostal(postalText.getText().toString());
                 }
             }
         });
@@ -159,6 +159,11 @@ public class FragmentForm extends Fragment
         }
 
         final String postal = postalText.getText().toString();
+        if (!checkPostal(postal)) {
+            Toast.makeText(getContext(), "Codigo postal incorrecto", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final String mensaje = messageText.getText().toString();
 
         HashMap lead = new HashMap();
@@ -228,7 +233,7 @@ public class FragmentForm extends Fragment
     {
         int length = phone.length();
 
-        if (phone.matches("[0-9]+") && length >= 9 && length <= 15) {
+        if (phone.matches("[0-9]+") && length >= 9) {
             phoneLayout.setError(null);
             return true;
         }
@@ -238,7 +243,6 @@ public class FragmentForm extends Fragment
 
     private boolean checkPostal(String postal)
     {
-
         if (postal.matches("[0-9]+") && postal.length() == 5) {
             postalLayout.setError(null);
             return true;

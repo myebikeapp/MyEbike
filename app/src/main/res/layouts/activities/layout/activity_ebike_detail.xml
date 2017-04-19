@@ -3,6 +3,7 @@
                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
                                                  xmlns:card_view="http://schemas.android.com/apk/res-auto"
                                                  xmlns:tools="http://schemas.android.com/tools"
+                                                 android:id="@+id/activity_detail_coordinatorlayout"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:background="@color/color_fondo_main"
@@ -42,6 +43,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -100,6 +102,40 @@
                             android:scaleX="0.8"
                             android:scaleY="0.8"
                             android:transformPivotX="-10dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detail_valoracion"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/button_tiendas"
+                                android:layout_width="@dimen/form_bottom_width"
+                                android:layout_height="@dimen/form_bottom_height"
+                                android:background="@drawable/contactar_button"
+                                android:drawableLeft="@drawable/ic_float_maps"
+                                android:drawablePadding="-10dp"
+                                android:text="Tiendas"
+                                android:textColor="@color/color_white"
+                                android:textSize="16dp"/>
+
+                            <Button
+                                android:id="@+id/button_comercial"
+                                android:visibility="gone"
+                                android:layout_width="@dimen/form_bottom_width"
+                                android:layout_height="@dimen/form_bottom_height"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/contactar_button"
+                                android:drawableLeft="@drawable/ic_dialog_email"
+                                android:drawablePadding="-3dp"
+                                android:text="Comercial"
+                                android:textColor="@color/color_white"
+                                android:textSize="16dp"/>
+
+
+                        </LinearLayout>
+                        L
 
                     </RelativeLayout>
 
@@ -245,21 +281,16 @@
 
             </android.support.v7.widget.CardView>
 
-            <include
-                layout="@layout/form"/>
+            <ViewStub
+                android:id="@+id/form_stub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout="@layout/form"/>
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_buscar_tiendas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_anchor="@id/activity_detail_appbarlayout"
-        app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_float_maps"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
