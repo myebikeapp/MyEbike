@@ -12,6 +12,7 @@ public class Marca
     private String ownerId;
     private String objectId;
     private Boolean peninsula;
+    private Boolean experto;
     private String pagina_web;
     private Integer nota_interna;
     private String nombre;
@@ -47,6 +48,11 @@ public class Marca
     public Boolean getPeninsula()
     {
         return peninsula;
+    }
+
+    public Boolean getExperto()
+    {
+        return experto;
     }
 
     public void setPeninsula(Boolean peninsula)

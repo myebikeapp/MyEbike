@@ -10,12 +10,14 @@ public class ParcelableMarca implements Parcelable
     private String pagina_web;
     private String nombre;
     private String logo;
+    private boolean experto;
 
-    public ParcelableMarca(String pagina_web, String nombre, String logo)
+    public ParcelableMarca(String pagina_web, String nombre, String logo, boolean experto)
     {
         this.pagina_web = pagina_web;
         this.nombre = nombre;
         this.logo = logo;
+        this.experto = experto;
     }
 
     public String getPagina_web()
@@ -33,6 +35,11 @@ public class ParcelableMarca implements Parcelable
         return logo;
     }
 
+    public boolean getExperto()
+    {
+        return experto;
+    }
+
     @Override
     public int describeContents()
     {
@@ -45,6 +52,7 @@ public class ParcelableMarca implements Parcelable
         parcel.writeString(pagina_web);
         parcel.writeString(nombre);
         parcel.writeString(logo);
+        parcel.writeByte((byte) (experto ? 1 : 0));
     }
 
     protected ParcelableMarca(Parcel in)
@@ -52,6 +60,7 @@ public class ParcelableMarca implements Parcelable
         pagina_web = in.readString();
         nombre = in.readString();
         logo = in.readString();
+        experto = in.readByte() != 0;
     }
 
     public static final Creator<ParcelableMarca> CREATOR = new Creator<ParcelableMarca>()
@@ -71,6 +80,10 @@ public class ParcelableMarca implements Parcelable
 
     public static ParcelableMarca fromMarca(Marca marca)
     {
-        return new ParcelableMarca(marca.getPagina_web(), marca.getNombre(), marca.getLogo());
+        boolean experto = false;
+        if (marca.getExperto() != null)
+            experto = marca.getExperto().booleanValue();
+
+        return new ParcelableMarca(marca.getPagina_web(), marca.getNombre(), marca.getLogo(), experto);
     }
 }

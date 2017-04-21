@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.NestedScrollView;
@@ -81,7 +80,8 @@ public class EBikeDetailActivity extends AppCompatActivity
         caller = getIntent().getExtras().getString(Constants.CALLER, "");
         initUI();
 
-        initUserForm();
+        if (parcelableEBike.getMarca().getExperto())
+            initUserForm();
     }
 
     @Override
@@ -124,10 +124,7 @@ public class EBikeDetailActivity extends AppCompatActivity
             imagen.setImageResource(R.drawable.ebike);
         }
 
-        if (parcelableEBike.getMarca() != null)
-            marcaModelo.setText(parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo());
-        else
-            marcaModelo.setText(parcelableEBike.getModelo());
+        marcaModelo.setText(parcelableEBike.getMarca().getNombre() + " " + parcelableEBike.getModelo());
 
         if (parcelableEBike.getPrecio_SORT2() != -1)
             precio.setText("" + parcelableEBike.getPrecio_SORT2() + " €");
@@ -211,15 +208,15 @@ public class EBikeDetailActivity extends AppCompatActivity
         ViewStub form = (ViewStub) findViewById(R.id.form_stub);
         form.inflate();
 
+        Button buscarTiendas = (Button) findViewById(R.id.button_tiendas);
+        LinearLayout.LayoutParams paramsLinear = (LinearLayout.LayoutParams)buscarTiendas.getLayoutParams();
+        paramsLinear.setMargins(0, 0, 30, 0);
+        buscarTiendas.setLayoutParams(paramsLinear);
+
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_detail_coordinatorlayout);
         final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.activity_detail_appbarlayout);
         final CoordinatorLayout.LayoutParams paramsCoordinator = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
         final NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
-
-        Button buscarTiendas = (Button) findViewById(R.id.button_tiendas);
-        LinearLayout.LayoutParams paramsLinear = (LinearLayout.LayoutParams)buscarTiendas.getLayoutParams();
-        paramsLinear.setMargins(0, 0, 20, 0);
-        buscarTiendas.setLayoutParams(paramsLinear);
 
         Button comercialButton = (Button) findViewById(R.id.button_comercial);
         comercialButton.setVisibility(View.VISIBLE);
@@ -232,7 +229,13 @@ public class EBikeDetailActivity extends AppCompatActivity
                 if (behavior != null) {
                     behavior.onNestedFling(coordinatorLayout, appBarLayout, null, 0, 10000, true);
                 }
-                nestedScrollView.scrollTo(0, 1205);
+                nestedScrollView.post(new Runnable()
+                {
+                    public void run()
+                    {
+                        nestedScrollView.scrollTo(0, messageText.getBottom());
+                    }
+                });
             }
         });
 

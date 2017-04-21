@@ -77,17 +77,16 @@
                             android:id="@+id/detail_marca_modelo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="40dp"
-                            android:textSize="@dimen/text_medium"/>
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/detail_precio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/detail_marca_modelo"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="10dp"
                             android:textColor="?colorPrimary"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="22sp"
                             android:textStyle="bold"/>
 
                         <RatingBar
@@ -95,18 +94,19 @@
                             style="?android:attr/ratingBarStyleIndicator"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/detail_precio"
-                            android:layout_marginTop="4dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/detail_marca_modelo"
+                            android:layout_marginTop="6dp"
                             android:progressTint="@color/color_ratingbar"
                             android:rating="0"
                             android:scaleX="0.8"
-                            android:scaleY="0.8"
-                            android:transformPivotX="-10dp"/>
+                            android:scaleY="0.8" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/detail_valoracion"
+                            android:layout_below="@+id/detail_precio"
+                            android:layout_marginTop="12dp"
                             android:gravity="center">
 
                             <Button
@@ -142,7 +142,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="14dp"
                         android:text="CARACTERÍSTICAS"
                         android:textColor="?colorPrimary"
                         android:textSize="@dimen/text_medium"/>

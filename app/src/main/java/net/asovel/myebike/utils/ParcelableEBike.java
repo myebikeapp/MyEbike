@@ -231,9 +231,7 @@ public class ParcelableEBike implements Parcelable
         if (eBike.getTamano_ruedas() != null)
             ruedas = eBike.getTamano_ruedas().intValue();
 
-        ParcelableMarca marca = null;
-        if (eBike.getMarca() != null)
-            marca = ParcelableMarca.fromMarca(eBike.getMarca());
+        ParcelableMarca marca = ParcelableMarca.fromMarca(eBike.getMarca());
 
         return new ParcelableEBike(
                 uso,
