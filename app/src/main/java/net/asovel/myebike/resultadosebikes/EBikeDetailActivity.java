@@ -369,7 +369,7 @@ public class EBikeDetailActivity extends AppCompatActivity
                         + "Postal: " + postal + '\n'
                         + "Mensaje: " + mensaje + '\n';
 
-                Backendless.Messaging.sendTextEmail("myebike: " + referencia, messageBody, "myebikeapp@gmail.com", new AsyncCallback<Void>()
+                Backendless.Messaging.sendTextEmail("myebike: " + referencia, messageBody, "leads@asovel.org", new AsyncCallback<Void>()
                 {
                     @Override
                     public void handleResponse(Void aVoid)

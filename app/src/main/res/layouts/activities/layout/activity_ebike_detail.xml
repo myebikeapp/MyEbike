@@ -129,7 +129,7 @@
                                 android:background="@drawable/contactar_button"
                                 android:drawableLeft="@drawable/ic_dialog_email"
                                 android:drawablePadding="-3dp"
-                                android:text="Comercial"
+                                android:text="ASESOR"
                                 android:textColor="@color/color_white"
                                 android:textSize="16dp"/>
 

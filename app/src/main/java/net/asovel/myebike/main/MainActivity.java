@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 
-import net.asovel.myebike.LoginActivity;
+//AFR import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.FragmentListEBike;
 import net.asovel.myebike.utils.Constants;
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences prefs = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String email = prefs.getString("email", "");
 
-        setConnected(email);
+       //AFR setConnected(email);
     }
 
-    private void setConnected(String email) {
+  /*AFR  private void setConnected(String email) {
 
         MenuItem item = navigationView.getMenu().getItem(7);
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View navHeader = navigationView.getHeaderView(0);
         TextView textEmail = (TextView) navHeader.findViewById(R.id.text_email);
         textEmail.setText(email);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new FragmentWeb();
                 bundle.putString(Constants.URL, "http://www.asovel.org/asociación/sobre-nosotros");
                 break;
-            case R.id.menu_sesion:
+          /*  case R.id.menu_sesion:
                 if (connected) {
                     SharedPreferences prefs = getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
@@ -167,12 +167,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     editor.commit();
                     setConnected("");
                     return true;
-                }
-                Intent intent = new Intent(this, LoginActivity.class);
-                bundle.putString(Constants.CALLER, TAG);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                return true;
+                }*/
+              //AFR  Intent intent = new Intent(this, LoginActivity.class);
+              //  bundle.putString(Constants.CALLER, TAG);
+              //  intent.putExtras(bundle);
+               // startActivity(intent);
+               // return true;
         }
 
         fragment.setArguments(bundle);

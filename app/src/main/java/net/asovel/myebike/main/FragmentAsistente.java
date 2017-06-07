@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import net.asovel.myebike.LoginActivity;
+//AFRimport net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.resultadosebikes.EBikeListActivity;
 import net.asovel.myebike.utils.AnalyticsApplication;
@@ -459,11 +459,11 @@ public class FragmentAsistente extends Fragment
                 bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
                 bundle.putString(Constants.CALLER, TAG);
 
-                if (email.equals("")) {
-                    intent = new Intent(getContext(), LoginActivity.class);
-                } else {
+               //AFR if (email.equals("")) {
+                   // intent = new Intent(getContext(), LoginActivity.class);
+               // } else {
                     intent = new Intent(getContext(), EBikeListActivity.class);
-                }
+               // }
 
                 intent.putExtras(bundle);
                 startActivity(intent);

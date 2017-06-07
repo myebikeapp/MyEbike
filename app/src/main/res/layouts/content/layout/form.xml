@@ -119,13 +119,16 @@
         <EditText
             android:id="@+id/user_message"
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="@dimen/form_bottom_margin"
             android:gravity="top|left"
             android:hint="@string/edit_mensaje"
             android:inputType="textCapSentences|textMultiLine"
             android:maxLength="2000"
             android:textSize="@dimen/text_small"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:overScrollMode="always"
             android:theme="@style/customFormViews"/>
 
         <RelativeLayout

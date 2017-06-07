@@ -177,7 +177,7 @@ public class FragmentForm extends Fragment
         {
             public void handleResponse(Map response)
             {
-                Toast.makeText(getContext(), "Menssaje enviado", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Menssaje enviado. Un asesor se pondrá en contacto contigo", Toast.LENGTH_LONG).show();
                 cleanForm();
 
                 String messageBody = "Nombre: " + nombre + '\n'
@@ -186,7 +186,7 @@ public class FragmentForm extends Fragment
                         + "Postal: " + postal + '\n'
                         + "Mensaje: " + mensaje + '\n';
 
-                Backendless.Messaging.sendTextEmail("myebike", messageBody, "myebikeapp@gmail.com", new AsyncCallback<Void>()
+                Backendless.Messaging.sendTextEmail("myebike", messageBody, "leads@asovel.org", new AsyncCallback<Void>()
                 {
                     @Override
                     public void handleResponse(Void aVoid)

@@ -43,10 +43,6 @@
             android:icon="@drawable/ic_menu_nosotros"
             android:title="Sobre nosotros" />
 
-        <item
-            android:id="@+id/menu_sesion"
-            android:icon="@drawable/ic_menu_sesion"
-            android:title="" />
     </group>
 
 </menu>

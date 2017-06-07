@@ -20,7 +20,7 @@ import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import net.asovel.myebike.LoginActivity;
+//AFR import net.asovel.myebike.LoginActivity;
 import net.asovel.myebike.R;
 import net.asovel.myebike.backendless.common.DefaultCallback;
 import net.asovel.myebike.backendless.data.Marca;
@@ -163,11 +163,11 @@ public class FragmentListMarca extends Fragment
         bundle.putStringArrayList(Constants.WHERECLAUSE, listClauses);
         bundle.putString(Constants.CALLER, TAG);
 
-        if (email.equals("")) {
-            intent = new Intent(getContext(), LoginActivity.class);
-        } else {
+       //AFR if (email.equals("")) {
+          //  intent = new Intent(getContext(), LoginActivity.class);
+       // } else {
             intent = new Intent(getContext(), EBikeListActivity.class);
-        }
+        //}
 
         intent.putExtras(bundle);
         startActivity(intent);
