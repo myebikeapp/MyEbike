@@ -177,7 +177,7 @@ public class FragmentForm extends Fragment
         {
             public void handleResponse(Map response)
             {
-                Toast.makeText(getContext(), "Menssaje enviado. Un asesor se pondrá en contacto contigo", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Mensaje enviado. Un asesor se pondrá en contacto contigo", Toast.LENGTH_LONG).show();
                 cleanForm();
 
                 String messageBody = "Nombre: " + nombre + '\n'

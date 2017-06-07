@@ -359,7 +359,7 @@ public class EBikeDetailActivity extends AppCompatActivity
         {
             public void handleResponse(Map response)
             {
-                Toast.makeText(EBikeDetailActivity.this, "Menssaje enviado", Toast.LENGTH_LONG).show();
+                Toast.makeText(EBikeDetailActivity.this, "Mensaje enviado. Un asesor se pondrá en contacto contigo", Toast.LENGTH_LONG).show();
                 cleanForm();
 
                 String messageBody = "Referencia: " + referencia + '\n'
